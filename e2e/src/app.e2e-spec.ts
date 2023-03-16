@@ -1,7 +1,7 @@
 import { AppPage } from './app.po';
 import { browser, logging } from 'protractor';
 
-describe('dwv-angular App', () => {
+describe('stroke-frontend App', () => {
   let page: AppPage;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('dwv-angular App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to dwv-angular!');
+    expect(page.getParagraphText()).toEqual('Welcome to stroke-frontend!');
   });
 
   afterEach(async () => {
