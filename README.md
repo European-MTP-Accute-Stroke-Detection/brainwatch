@@ -1,27 +1,42 @@
-# StrokeFrontend
+# dwv-angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.8.
+Medical viewer using [DWV](https://github.com/ivmartel/dwv) (DICOM Web Viewer) and [Angular](https://angular.io/).
 
-## Development server
+All coding/implementation contributions and comments are welcome. Releases should be ready for deployment otherwise download the code and install dependencies with a `yarn` or `npm` `install`.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+dwv-angular is not certified for diagnostic use. Released under GNU GPL-3.0 license (see [license.txt](license.txt)).
 
-## Code scaffolding
+[![Node.js CI](https://github.com/ivmartel/dwv-angular/actions/workflows/nodejs-ci.yml/badge.svg)](https://github.com/ivmartel/dwv-angular/actions/workflows/nodejs-ci.yml)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Available Scripts
 
-## Build
+ - `install`: install dependencies
+ - `start`: serve with hot reload at localhost:4200
+ - `lint`: run linting
+ - `test`:  run unit tests with hot reload
+ - `e2e`: run e2e tests
+ - `build`: build (add --prod for production)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Unit tests use [Karma](https://karma-runner.github.io) and e2e tests use [Protractor](http://www.protractortest.org/).
 
-## Running unit tests
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-## Running end-to-end tests
+## Steps to run the viewer from scratch
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```sh
+# get the code
+git clone https://github.com/ivmartel/dwv-angular.git
 
-## Further help
+# move to its folder
+cd dwv-angular
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+# install dependencies
+yarn install
+
+# call the start script to launch the viewer on a local server
+yarn run start
+```
+
+You can now open a browser at http://localhost:4200 and enjoy!

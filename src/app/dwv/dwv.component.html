@@ -1,0 +1,63 @@
+<mat-sidenav-container>
+  <!-- Sidenav -->
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+    <ng-container *ngIf="!modelRunning">
+      <mat-nav-list class="nav-list">
+        <mat-form-field appearance="fill" class="model-select">
+          <mat-label>Select Prediction Model</mat-label>
+          <mat-select [(ngModel)]="selectedValue" name="model">
+            <mat-option *ngFor="let model of models" [value]="model.value">
+              {{model.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div class="predict-button-container">
+          <button mat-raised-button color="primary" (click)="runPrediction()">Make Prediction</button>
+        </div>
+      </mat-nav-list>
+    </ng-container>
+
+    <ng-container *ngIf="modelRunning">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p style="text-align:center">Making Prediction...</p>
+    </ng-container>
+
+
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div id="dwv">
+      <mat-progress-bar mode="determinate" color="accent" value="{{ loadProgress }}"></mat-progress-bar>
+      <div class="button-row">
+        <mat-button-toggle-group name="tool" [disabled]="!dataLoaded">
+          <mat-button-toggle value="{{ tool }}" color="primary" *ngFor="let tool of toolNames" title="{{ tool }}"
+            (click)="onChangeTool(tool)" [disabled]="!dataLoaded || !canRunTool(tool)">
+            <mat-icon>{{ getToolIcon(tool) }}</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+          <mat-button-toggle color="primary" title="Reset" (click)="onReset()">
+            <mat-icon>refresh</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+          <mat-button-toggle color="primary" title="Toggle Orientation" (click)="toggleOrientation()">
+            <mat-icon>cameraswitch</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-button-toggle-group name="tags" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+          <mat-button-toggle color="primary" title="Tags" (click)="openTagsDialog()">
+            <mat-icon>library_books</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <div id="layerGroup0" class="layerGroup">
+        <div id="dropBox"></div>
+      </div>
+    </div>
+  </mat-sidenav-content>
+  <!-- Main content -->
+
+</mat-sidenav-container>

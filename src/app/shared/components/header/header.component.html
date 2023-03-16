@@ -1,0 +1,60 @@
+<mat-toolbar color="primary" class="header">
+    <span class="title-container">
+        <img src="/assets/icons/logo.svg" alt="logo" />
+        <span>BrainWatch</span>
+    </span>
+    <!-- <span class="example-spacer"></span> -->
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+        [matMenuTriggerFor]="menu">
+        <mat-icon>settings</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu" xPosition="before">
+        <!-- <button mat-menu-item>Item 1</button>
+        <button mat-menu-item>Item 2</button> -->
+        <a mat-menu-item routerLink="/settings">
+            <mat-icon>settings</mat-icon> Settings
+        </a>
+    </mat-menu>
+</mat-toolbar>
+
+
+
+<ng-content></ng-content>
+
+<!-- <mat-toolbar color="primary" class="header">
+    <span class="title-container">
+        <img src="/assets/icons/logo.svg" alt="logo" />
+        <span>BrainWatch</span>
+    </span>
+    <span class="example-spacer"></span>
+    <button (click)="sidenav.toggle()" mat-icon-button class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar> -->
+
+<!-- <mat-sidenav-container>
+    <mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true"
+        [fixedTopGap]>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/">
+                <div style="display:flex;align-items: center;">
+                    <mat-icon>workbench</mat-icon>
+                    <span>Workbench</span>
+                </div>
+
+            </a>
+            <a mat-list-item routerLink="/settings">
+                <div style="display:flex;align-items: center;">
+                    <mat-icon>settings</mat-icon>
+                    <span>Settings</span>
+                </div>
+            </a>
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <ng-content></ng-content>
+    </mat-sidenav-content>
+
+</mat-sidenav-container> -->

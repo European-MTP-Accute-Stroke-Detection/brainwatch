@@ -1,0 +1,16 @@
+.header {
+    
+    .title-container {
+        display: flex;
+        align-items: center;
+
+        img {
+            padding-right: 16px;
+            max-height: 40px;
+        }
+
+        span {
+            font-size: 20px;
+        }
+    }
+}

@@ -1,0 +1,116 @@
+@import '@angular/material/theming';
+@include mat-core();
+
+
+$emerald: (
+    50 : #e8faf4,
+    100 : #c5f2e3,
+    200 : #9eead0,
+    300 : #77e1bd,
+    400 : #59daae,
+    500 : #3cd4a0,
+    600 : #36cf98,
+    700 : #2ec98e,
+    800 : #27c384,
+    900 : #1ab973,
+    A100 : #eefff7,
+    A200 : #bbffdf,
+    A400 : #88ffc7,
+    A700 : #6effbb,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$pink: (
+    50 : #fae8ee,
+    100 : #f2c5d4,
+    200 : #ea9eb8,
+    300 : #e1779c,
+    400 : #da5986,
+    500 : #d43c71,
+    600 : #cf3669,
+    700 : #c92e5e,
+    800 : #c32754,
+    900 : #b91a42,
+    A100 : #ffeef2,
+    A200 : #ffbbca,
+    A400 : #ff88a2,
+    A700 : #ff6e8f,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$red: (
+    50 : #ffeded,
+    100 : #ffd3d3,
+    200 : #ffb5b5,
+    300 : #ff9797,
+    400 : #ff8181,
+    500 : #ff6b6b,
+    600 : #ff6363,
+    700 : #ff5858,
+    800 : #ff4e4e,
+    900 : #ff3c3c,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffe5e5,
+    A700 : #ffcbcb,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+// mandatory stuff for theming
+$palette-primary: mat-palette($emerald);
+$palette-accent:  mat-palette($pink);
+
+
+// include the custom theme components into a theme object
+$theme: mat-light-theme($palette-primary, $palette-accent);
+
+// include the custom theme object into the angular material theme
+@include angular-material-theme($theme);
