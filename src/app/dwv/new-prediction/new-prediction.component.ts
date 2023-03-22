@@ -30,16 +30,16 @@ export class NewPredictionComponent implements OnInit {
   imagePath2: any;
 
   prediction ={
-    gender: 'Male',
-    age: 30,
-    hypertension: 'True',
-    heart_disease: 'False',
-    ever_married: "Yes",
-    work_type: "Private",
-    Residence_type: "Urban",
-    avg_glucose_level: 228.69,
-    bmi: 30,
-    smoking_status: 'unknown'
+    gender: '',
+    age: null,
+    hypertension: null,
+    heart_disease: null,
+    ever_married: null,
+    work_type: "",
+    Residence_type: "",
+    avg_glucose_level: null,
+    bmi: null,
+    smoking_status: null
 }
 
   async ngOnInit(): Promise<void> {
