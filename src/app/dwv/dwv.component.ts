@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { VERSION } from '@angular/core';
 import * as dwv from 'dwv';
 import { MatDialog } from '@angular/material/dialog';
@@ -7,6 +7,7 @@ import { RequestService } from './services/request.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { PredictionResultComponent } from './prediction-result/prediction-result.component';
 import { NewPredictionComponent } from './new-prediction/new-prediction.component';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 // gui overrides
 
@@ -28,6 +29,7 @@ dwv.image.decoderScripts = {
 export class DwvComponent implements OnInit {
 
   constructor(
+    changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
     public dialog: MatDialog,
     private requestService: RequestService
   ) {
@@ -35,9 +37,29 @@ export class DwvComponent implements OnInit {
       dwv: dwv.getVersion(),
       angular: VERSION.full
     };
+    this.mobileQuery = media.matchMedia('(max-width: 800px)');
+    this._mobileQueryListener = () => {
+      changeDetectorRef.detectChanges();
+      if(window.innerWidth >= 800) {
+        this.opened = true;
+      }
+      else {
+        this.opened = false;
+      }
+      
+    }
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   selectedValue: string;
+  private _mobileQueryListener: () => void;
+  mobileQuery: MediaQueryList;
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(window.location.host);
 
   models: any[] = [
     {value: 'combined', viewValue: 'All Stroke Types'},
@@ -58,7 +80,7 @@ export class DwvComponent implements OnInit {
       const prediction$ = this.requestService.predict(formData, this.selectedValue).toPromise();
       const result = await prediction$;
       this.dialog.open(PredictionResultComponent, {
-        width: '80vw',
+        width: '90vw',
         height: '92vh',
         data: {
           predictionId: result.predictionId
@@ -71,7 +93,7 @@ export class DwvComponent implements OnInit {
 
   async strokePrediction() {
     this.dialog.open(NewPredictionComponent, {
-      width: '80vw',
+      width: '90vw',
       height: '92vh',
     });
   }

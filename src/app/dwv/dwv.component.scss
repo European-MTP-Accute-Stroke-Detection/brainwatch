@@ -62,14 +62,18 @@ mat-spinner {
   pointer-events: none;
 }
 
+.model-heading {
+  margin-left: 0;
+  text-align: center;
+  font-weight: 500;
+}
+
 .stroke-predict-button-container {
   border-top: 1px solid lightgray;
   padding-top: 0px;
-  margin: 15px 10px;
-  p {
-    text-align: center;
-  }
+  margin: 15px 0;
   div {
+    margin: 15px 0;
     display: flex;
     justify-content: center;
   }

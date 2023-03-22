@@ -1,7 +1,9 @@
 <mat-sidenav-container>
   <!-- Sidenav -->
-  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
+  <mat-sidenav [style.marginTop.px]="mobileQuery.matches ? 56 : 0" #sidenav [fixedInViewport]="mobileQuery.matches"
+    [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="opened">
     <mat-nav-list class="nav-list">
+      <p class="model-heading" style="margin-top:0">CT-Scan AI Model</p>
       <mat-form-field appearance="fill" class="model-select">
         <mat-label>Select Prediction Model</mat-label>
         <mat-select [(ngModel)]="selectedValue" name="model">
@@ -14,24 +16,28 @@
         <button mat-raised-button color="primary" (click)="runPrediction()"
           [disabled]="!selectedValue || !selectedFiles || selectedFiles!.length != 1">Make Prediction</button>
       </div>
+
+      <ng-container *ngIf="modelRunning">
+        <mat-spinner diameter="50"></mat-spinner>
+        <p style="text-align:center">Making Prediction...</p>
+      </ng-container>
+
+      <div class="stroke-predict-button-container">
+        <p class="model-heading">Tabular AI Model</p>
+        <div>
+          <button mat-raised-button color="primary" (click)="strokePrediction()">Open Dialog</button>
+        </div>
+      </div>
     </mat-nav-list>
 
-    <ng-container *ngIf="modelRunning">
-      <mat-spinner diameter="50"></mat-spinner>
-      <p style="text-align:center">Making Prediction...</p>
-    </ng-container>
 
-    <div class="stroke-predict-button-container" *ngIf="!modelRunning">
-      <p>Stroke prediction</p>
-      <div>
-        <button mat-raised-button color="primary" (click)="strokePrediction()">Open Dialog</button>
-      </div>
-    </div>
 
 
   </mat-sidenav>
   <mat-sidenav-content>
     <div id="dwv">
+      <button *ngIf="mobileQuery.matches" mat-icon-button (click)="sidenav.toggle()"
+        style="margin-right: 16px;"><mat-icon>apps</mat-icon></button>
       <div class="button-row">
         <mat-button-toggle-group name="tool" [disabled]="!dataLoaded">
           <mat-button-toggle value="{{ tool }}" color="primary" *ngFor="let tool of toolNames" title="{{ tool }}"

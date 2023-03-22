@@ -29,7 +29,7 @@ export class NewPredictionComponent implements OnInit {
   imagePath1: any;
   imagePath2: any;
 
-  prediction ={
+  prediction = {
     gender: '',
     age: null,
     hypertension: null,
