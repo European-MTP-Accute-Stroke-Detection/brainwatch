@@ -3,6 +3,10 @@ import { VERSION } from '@angular/core';
 import * as dwv from 'dwv';
 import { MatDialog } from '@angular/material/dialog';
 import { TagsDialogComponent } from './tags-dialog.component';
+import { RequestService } from './services/request.service';
+import { firstValueFrom, lastValueFrom } from 'rxjs';
+import { PredictionResultComponent } from './prediction-result/prediction-result.component';
+import { NewPredictionComponent } from './new-prediction/new-prediction.component';
 
 // gui overrides
 
@@ -23,22 +27,53 @@ dwv.image.decoderScripts = {
 
 export class DwvComponent implements OnInit {
 
+  constructor(
+    public dialog: MatDialog,
+    private requestService: RequestService
+  ) {
+    this.versions = {
+      dwv: dwv.getVersion(),
+      angular: VERSION.full
+    };
+  }
+
   selectedValue: string;
 
   models: any[] = [
-    {value: 'allStrokes', viewValue: 'All Strokes'},
+    {value: 'combined', viewValue: 'All Stroke Types'},
     {value: 'hemorrhage', viewValue: 'Hemorrhage Stroke'},
     {value: 'ischemic', viewValue: 'Ischemic Stroke'},
     
   ];
 
   modelRunning: boolean = false;
+  selectedFiles: FileList;
 
-  runPrediction() {
-    this.modelRunning = true;
-    setTimeout(() => {
+  async runPrediction() {
+    if(this.selectedFiles.length == 1) {
+      this.modelRunning = true;
+      const file = this.selectedFiles[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const prediction$ = this.requestService.predict(formData, this.selectedValue).toPromise();
+      const result = await prediction$;
+      this.dialog.open(PredictionResultComponent, {
+        width: '80vw',
+        height: '92vh',
+        data: {
+          predictionId: result.predictionId
+        }
+      });
       this.modelRunning = false;
-    }, 4000)
+    }
+    
+  }
+
+  async strokePrediction() {
+    this.dialog.open(NewPredictionComponent, {
+      width: '80vw',
+      height: '92vh',
+    });
   }
 
   public versions: any;
@@ -68,14 +103,16 @@ export class DwvComponent implements OnInit {
 
   opened = true;
 
-  constructor(public dialog: MatDialog) {
-    this.versions = {
-      dwv: dwv.getVersion(),
-      angular: VERSION.full
-    };
-  }
+  
 
   ngOnInit() {
+    // this.dialog.open(PredictionResultComponent, {
+    //   width: '80vw',
+    //   height: '92vh',
+    //   data: {
+    //     predictionId: '5522c868-c4ab-11ed-a5ba-58961dd87475'
+    //   }
+    // });
     // create app
     this.dwvApp = new dwv.App();
     // initialise app
@@ -339,6 +376,7 @@ export class DwvComponent implements OnInit {
   private onDrop = (event: DragEvent) => {
     this.defaultHandleDragEvent(event);
     // load files
+    this.selectedFiles = event.dataTransfer.files;
     this.dwvApp.loadFiles(event.dataTransfer.files);
   }
 

@@ -17,12 +17,17 @@ import { DwvComponent } from './dwv.component';
 import { TagsDialogComponent } from './tags-dialog.component';
 import { TagsTableComponent } from './tags-table.component';
 import { AngularMaterialModule } from '../angular-material.module';
-
+import { RequestService } from './services/request.service';
+import { HttpClientModule } from '@angular/common/http';
+import { PredictionResultComponent } from './prediction-result/prediction-result.component';
+import { NewPredictionComponent } from './new-prediction/new-prediction.component';
 @NgModule({
     declarations: [
         DwvComponent,
         TagsDialogComponent,
-        TagsTableComponent
+        TagsTableComponent,
+        PredictionResultComponent,
+        NewPredictionComponent
     ],
     imports: [
         BrowserModule,
@@ -37,7 +42,11 @@ import { AngularMaterialModule } from '../angular-material.module';
         MatPaginatorModule,
         MatSortModule,
         MatFormFieldModule,
-        AngularMaterialModule
+        AngularMaterialModule,
+        HttpClientModule
+    ],
+    providers: [
+        RequestService
     ],
     exports: [
         DwvComponent

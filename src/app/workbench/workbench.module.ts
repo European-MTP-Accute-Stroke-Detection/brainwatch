@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 @NgModule({
   declarations: [
     WorkbenchHomeComponent,
-    FileUploadComponent
+    FileUploadComponent,
   ],
   imports: [
     CommonModule,
