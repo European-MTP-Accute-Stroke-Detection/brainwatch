@@ -1,3 +1,8 @@
+@import './styles/custom-scrollbar.scss';
+@import './styles/theme.scss';
+@import './styles/custom-material.scss';
+@import './styles/colors.scss';
+
 html,
 body {
   height: 100%;
@@ -10,7 +15,8 @@ body {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  // background-color: var(--surface) !important;
 }
 
 .header {
@@ -206,25 +212,5 @@ mat-grid-tile {
   .hamburger {
     visibility: visible !important;
   }
-}
-
-::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	border-radius: 10px;
-	background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar
-{
-	width: 10px;
-	background-color: #F5F5F5;
-}
-
-::-webkit-scrollbar-thumb
-{
-	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-	background-color: #848484;
 }
 

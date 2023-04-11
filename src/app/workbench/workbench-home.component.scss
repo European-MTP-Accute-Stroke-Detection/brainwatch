@@ -1,0 +1,37 @@
+.root-container {
+
+    display: flex;
+    width: 100%;
+
+    > * {
+        margin: 16px;
+        
+    }
+
+    .left-container {
+        flex-grow: 1;
+
+    }
+    .center-container {
+        flex-grow: 6;
+        mat-card {
+            height: 300px;
+        }
+        
+        p {
+            background-color: var(--02-dp);
+        }
+    }
+    .right-container {
+        flex-grow: 1;
+    }
+
+    .patient-data-card {
+       height: 400px;
+       margin-bottom: 16px;
+    }
+
+    .dicom-files-card {
+        height: 400px;
+     }
+}

@@ -10,17 +10,17 @@ import { SettingsModule } from './settings/settings.module';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [ AppComponent ],
+  declarations: [AppComponent],
   imports: [
-    DwvModule, 
+    DwvModule,
     AppRoutingModule,
     AngularMaterialModule,
     SharedModule,
     WorkbenchModule,
     SettingsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }), 
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   bootstrap: [AppComponent]
 })
 
-export class AppModule {}
+export class AppModule { }

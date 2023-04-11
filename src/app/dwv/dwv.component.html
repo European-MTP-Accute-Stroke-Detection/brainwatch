@@ -1,7 +1,7 @@
-<mat-sidenav-container>
-  <!-- Sidenav -->
+<!-- <mat-sidenav-container> -->
+  <!-- Sidenav
   <mat-sidenav [style.marginTop.px]="mobileQuery.matches ? 56 : 0" #sidenav [fixedInViewport]="mobileQuery.matches"
-    [mode]="mobileQuery.matches ? 'over' : 'side'" [(opened)]="opened">
+    [mode]="mobileQuery.matches ? 'over' : 'over'" [(opened)]="opened">
     <mat-nav-list class="nav-list">
       <p class="model-heading" style="margin-top:0">CT-Scan AI Model</p>
       <mat-form-field appearance="fill" class="model-select">
@@ -33,8 +33,8 @@
 
 
 
-  </mat-sidenav>
-  <mat-sidenav-content>
+  </mat-sidenav> -->
+  <!-- <mat-sidenav-content>
     <div id="dwv">
       <button *ngIf="mobileQuery.matches" mat-icon-button (click)="sidenav.toggle()"
         style="margin-right: 16px;"><mat-icon>apps</mat-icon></button>
@@ -68,7 +68,51 @@
         <div id="dropBox"></div>
       </div>
     </div>
-  </mat-sidenav-content>
+  </mat-sidenav-content> -->
   <!-- Main content -->
 
-</mat-sidenav-container>
+<!-- </mat-sidenav-container> -->
+
+<div id="dwv">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>Shiba Inu</mat-card-title>
+        <mat-icon color="primary">add</mat-icon>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      Texttttt
+    </mat-card-content>
+  </mat-card>
+  <div class="button-row">
+    <mat-button-toggle-group name="tool" [disabled]="!dataLoaded">
+      <mat-button-toggle value="{{ tool }}" color="primary" *ngFor="let tool of toolNames" title="{{ tool }}"
+        (click)="onChangeTool(tool)" [disabled]="!dataLoaded || !canRunTool(tool)">
+        <mat-icon>{{ getToolIcon(tool) }}</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+      <mat-button-toggle color="primary" title="Reset" (click)="onReset()">
+        <mat-icon>refresh</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+      <mat-button-toggle color="primary" title="Toggle Orientation" (click)="toggleOrientation()">
+        <mat-icon>cameraswitch</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <mat-button-toggle-group name="tags" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+      <mat-button-toggle color="primary" title="Tags" (click)="openTagsDialog()">
+        <mat-icon>library_books</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div id="layerGroup0" class="layerGroup">
+    <div id="dropBox"></div>
+  </div>
+</div>
+

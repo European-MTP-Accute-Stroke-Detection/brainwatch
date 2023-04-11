@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WorkbenchHomeComponent } from './workbench/components/workbench-home/workbench-home.component';
 import { SettingsHomeComponent } from './settings/components/settings-home/settings-home.component';
+import { WorkbenchHomeComponent } from './workbench/workbench-home.component';
 
 const routes: Routes = [
   {

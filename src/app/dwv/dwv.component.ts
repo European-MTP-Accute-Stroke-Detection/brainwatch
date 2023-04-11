@@ -13,10 +13,10 @@ import { MediaMatcher } from '@angular/cdk/layout';
 
 // Image decoders (for web workers)
 dwv.image.decoderScripts = {
-    jpeg2000: 'assets/dwv/decoders/pdfjs/decode-jpeg2000.js',
-    'jpeg-lossless': 'assets/dwv/decoders/rii-mango/decode-jpegloss.js',
-    'jpeg-baseline': 'assets/dwv/decoders/pdfjs/decode-jpegbaseline.js',
-    rle: 'assets/dwv/decoders/dwv/decode-rle.js'
+  jpeg2000: 'assets/dwv/decoders/pdfjs/decode-jpeg2000.js',
+  'jpeg-lossless': 'assets/dwv/decoders/rii-mango/decode-jpegloss.js',
+  'jpeg-baseline': 'assets/dwv/decoders/pdfjs/decode-jpegbaseline.js',
+  rle: 'assets/dwv/decoders/dwv/decode-rle.js'
 };
 
 @Component({
@@ -40,13 +40,13 @@ export class DwvComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 800px)');
     this._mobileQueryListener = () => {
       changeDetectorRef.detectChanges();
-      if(window.innerWidth >= 800) {
+      if (window.innerWidth >= 800) {
         this.opened = true;
       }
       else {
         this.opened = false;
       }
-      
+
     }
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
@@ -62,17 +62,17 @@ export class DwvComponent implements OnInit {
   shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(window.location.host);
 
   models: any[] = [
-    {value: 'combined', viewValue: 'All Stroke Types'},
-    {value: 'hemorrhage', viewValue: 'Hemorrhage Stroke'},
-    {value: 'ischemic', viewValue: 'Ischemic Stroke'},
-    
+    { value: 'combined', viewValue: 'All Stroke Types' },
+    { value: 'hemorrhage', viewValue: 'Hemorrhage Stroke' },
+    { value: 'ischemic', viewValue: 'Ischemic Stroke' },
+
   ];
 
   modelRunning: boolean = false;
   selectedFiles: FileList;
 
   async runPrediction() {
-    if(this.selectedFiles.length == 1) {
+    if (this.selectedFiles.length == 1) {
       this.modelRunning = true;
       const file = this.selectedFiles[0];
       const formData = new FormData();
@@ -88,7 +88,7 @@ export class DwvComponent implements OnInit {
       });
       this.modelRunning = false;
     }
-    
+
   }
 
   async strokePrediction() {
@@ -100,12 +100,12 @@ export class DwvComponent implements OnInit {
 
   public versions: any;
   public tools = {
-      Scroll: {},
-      ZoomAndPan: {},
-      WindowLevel: {},
-      Draw: {
-          options: ['Ruler']
-      }
+    Scroll: {},
+    ZoomAndPan: {},
+    WindowLevel: {},
+    Draw: {
+      options: ['Ruler']
+    }
   };
   public toolNames: string[] = Object.keys(this.tools);
   public selectedTool = 'Select Tool';
@@ -123,9 +123,9 @@ export class DwvComponent implements OnInit {
   private borderClassName = 'dropBoxBorder';
   private hoverClassName = 'hover';
 
-  opened = true;
+  opened = false;
 
-  
+
 
   ngOnInit() {
     // this.dialog.open(PredictionResultComponent, {
@@ -139,7 +139,7 @@ export class DwvComponent implements OnInit {
     this.dwvApp = new dwv.App();
     // initialise app
     this.dwvApp.init({
-      dataViewConfigs: {'*': [{divId: 'layerGroup0'}]},
+      dataViewConfigs: { '*': [{ divId: 'layerGroup0' }] },
       tools: this.tools
     });
     // handle load events
@@ -205,7 +205,7 @@ export class DwvComponent implements OnInit {
 
     // handle key events
     this.dwvApp.addEventListener('keydown', (event) => {
-        this.dwvApp.defaultOnKeydown(event);
+      this.dwvApp.defaultOnKeydown(event);
     });
     // handle window resize
     window.addEventListener('resize', this.dwvApp.onResize);
@@ -242,7 +242,7 @@ export class DwvComponent implements OnInit {
    * @param tool The new tool name.
    */
   onChangeTool = (tool: string) => {
-    if ( this.dwvApp ) {
+    if (this.dwvApp) {
       this.selectedTool = tool;
       this.dwvApp.setTool(tool);
       if (tool === 'Draw') {
@@ -316,8 +316,8 @@ export class DwvComponent implements OnInit {
    * @param shape The new shape name.
    */
   private onChangeShape = (shape: string) => {
-    if ( this.dwvApp && this.selectedTool === 'Draw') {
-      this.dwvApp.setToolFeatures({shapeName: shape});
+    if (this.dwvApp && this.selectedTool === 'Draw') {
+      this.dwvApp.setToolFeatures({ shapeName: shape });
     }
   }
 
@@ -325,7 +325,7 @@ export class DwvComponent implements OnInit {
    * Handle a reset event.
    */
   onReset = () => {
-    if ( this.dwvApp ) {
+    if (this.dwvApp) {
       this.dwvApp.resetDisplay();
     }
   }
@@ -374,7 +374,7 @@ export class DwvComponent implements OnInit {
     // update box border
     const box = document.getElementById(this.dropboxDivId);
     if (box && box.className.indexOf(this.hoverClassName) === -1) {
-        box.className += ' ' + this.hoverClassName;
+      box.className += ' ' + this.hoverClassName;
     }
   }
 
@@ -387,7 +387,7 @@ export class DwvComponent implements OnInit {
     // update box border
     const box = document.getElementById(this.dropboxDivId);
     if (box && box.className.indexOf(this.hoverClassName) !== -1) {
-        box.className = box.className.replace(' ' + this.hoverClassName, '');
+      box.className = box.className.replace(' ' + this.hoverClassName, '');
     }
   }
 

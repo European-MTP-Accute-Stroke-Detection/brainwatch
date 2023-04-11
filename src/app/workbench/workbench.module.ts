@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WorkbenchHomeComponent } from './components/workbench-home/workbench-home.component';
+import { WorkbenchHomeComponent } from './workbench-home.component';
 import { AngularMaterialModule } from './../angular-material.module';
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
 import { DwvModule } from '../dwv/dwv.module';
@@ -16,7 +16,7 @@ import { environment } from '../../environments/environment';
     CommonModule,
     AngularMaterialModule,
     DwvModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }), 
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [
     WorkbenchHomeComponent

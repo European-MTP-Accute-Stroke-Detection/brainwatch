@@ -1,12 +1,24 @@
-<mat-toolbar color="primary" class="header">
+<mat-toolbar class="header" [color]="themeService.currentTheme.value == 'light' ? 'primary' : null">
+
+    <button mat-icon-button class="menu-button" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    
     <div style="display: flex;">
+        
         <span class="title-container" routerLink="/">
             <img src="/assets/icons/logo.svg" alt="logo" />
             <span>BrAInwatch</span>
         </span>
     </div>
 
+    
+
     <!-- <span class="example-spacer"></span> -->
+    <div>
+        <button mat-icon-button aria-label="Toggle dark or light mode" (click)="toggleTheme()">
+        <mat-icon>{{ themeService.currentTheme.value ? 'light_mode' : 'dark_mode'}}</mat-icon>
+    </button>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
         [matMenuTriggerFor]="menu">
         <mat-icon>settings</mat-icon>
@@ -18,6 +30,8 @@
             <mat-icon>settings</mat-icon> Settings
         </a>
     </mat-menu>
+    </div>
+    
 </mat-toolbar>
 
 

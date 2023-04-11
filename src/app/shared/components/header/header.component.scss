@@ -1,4 +1,8 @@
 .header {
+
+    .menu-button {
+        margin-right: 16px;
+    }
     
     .title-container {
         display: flex;
@@ -8,6 +12,7 @@
         img {
             padding-right: 16px;
             max-height: 40px;
+            fill: white;
         }
 
         span {

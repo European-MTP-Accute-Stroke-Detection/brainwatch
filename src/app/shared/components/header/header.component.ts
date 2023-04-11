@@ -1,5 +1,7 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Theme, ThemeService } from '../../services/theme.service';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +10,18 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class HeaderComponent implements OnInit {
 
-  
-  // @ViewChild('sidenav', { static: true }) 
-  // sidenav!: MatSidenav;
+  constructor(
+    public themeService: ThemeService
+  ) { }
 
   ngOnInit() {
-    
+
+  }
+
+  toggleTheme() {
+    this.themeService.currentTheme.next(
+      this.themeService.currentTheme.value == Theme.DARK ? Theme.LIGHT : Theme.DARK
+    );
   }
 
 

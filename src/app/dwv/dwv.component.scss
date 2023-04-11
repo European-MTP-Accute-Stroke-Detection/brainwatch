@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
-@import 'src/assets/theme';
+@import 'src/styles/theme';
+
 $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 

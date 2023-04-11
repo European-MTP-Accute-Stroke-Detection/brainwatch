@@ -1,7 +1,6 @@
 @import '@angular/material/theming';
 @include mat-core();
 
-
 $emerald: (
     50 : #e8faf4,
     100 : #c5f2e3,
@@ -105,12 +104,35 @@ $red: (
 
 
 // mandatory stuff for theming
-$palette-primary: mat-palette($emerald);
-$palette-accent:  mat-palette($pink);
+$primary: mat-palette($emerald);
+$accent:  mat-palette($pink);
 
 
 // include the custom theme components into a theme object
-$theme: mat-light-theme($palette-primary, $palette-accent);
+$theme: mat-light-theme((
+    color: (
+      primary: $primary,
+      accent: $accent,
+    ),
+    typography: define-typography-config(),
+    density: 0,
+   )
+);
+
+// include the custom theme components into a theme object
+$dark-theme: mat-dark-theme((
+    color: (
+      primary: $primary,
+      accent: $accent,
+    ),
+    typography: define-typography-config(),
+    density: 0,
+   )
+);
 
 // include the custom theme object into the angular material theme
 @include angular-material-theme($theme);
+
+.darkMode {
+    @include all-component-colors($dark-theme);
+}
