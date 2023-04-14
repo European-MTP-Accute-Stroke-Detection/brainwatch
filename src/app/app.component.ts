@@ -1,5 +1,6 @@
 import { Component, HostBinding } from '@angular/core';
 import { Theme, ThemeService } from './shared/services/theme.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,14 +11,16 @@ import { Theme, ThemeService } from './shared/services/theme.service';
 export class AppComponent {
   @HostBinding('class') className = '';
 
+
   constructor(
-    private themeService: ThemeService
+    private themeService: ThemeService,
+
   ) { }
 
   ngOnInit(): void {
     this.themeService.currentTheme.subscribe((theme) => {
       this.className = theme == Theme.DARK ? 'darkMode' : '';
-    })
+    });
   }
 
 }

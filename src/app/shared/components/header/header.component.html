@@ -1,6 +1,7 @@
-<mat-toolbar class="header" [color]="themeService.currentTheme.value == 'light' ? 'primary' : null">
+<!-- eslint-disable @angular-eslint/template/eqeqeq -->
+<mat-toolbar *ngIf="showHeader" class="header" [color]="themeService.currentTheme.value == 'light' ? 'primary' : null">
 
-    <button mat-icon-button class="menu-button" aria-label="Example icon-button with menu icon">
+    <button *ngIf="!reducedHeader" mat-icon-button class="menu-button" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
     
@@ -8,28 +9,26 @@
         
         <span class="title-container" routerLink="/">
             <img src="/assets/icons/logo.svg" alt="logo" />
-            <span>BrAInwatch</span>
+            <span>brAInwatch</span>
         </span>
     </div>
 
     
-
+    
     <!-- <span class="example-spacer"></span> -->
     <div>
-        <button mat-icon-button aria-label="Toggle dark or light mode" (click)="toggleTheme()">
-        <mat-icon>{{ themeService.currentTheme.value == 'dark' ? 'light_mode' : 'dark_mode'}}</mat-icon>
-    </button>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
-        [matMenuTriggerFor]="menu">
-        <mat-icon>settings</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu" xPosition="before">
-        <!-- <button mat-menu-item>Item 1</button>
-        <button mat-menu-item>Item 2</button> -->
-        <a mat-menu-item routerLink="/settings">
-            <mat-icon>settings</mat-icon> Settings
-        </a>
-    </mat-menu>
+        <app-theme-switch></app-theme-switch>
+        <button *ngIf="!reducedHeader" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+            [matMenuTriggerFor]="menu">
+            <mat-icon>settings</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+            <!-- <button mat-menu-item>Item 1</button>
+            <button mat-menu-item>Item 2</button> -->
+            <a mat-menu-item routerLink="/settings">
+                <mat-icon>settings</mat-icon> Settings
+            </a>
+        </mat-menu>
     </div>
     
 </mat-toolbar>

@@ -8,10 +8,30 @@ import { SharedModule } from './shared/shared.module';
 import { WorkbenchModule } from './workbench/workbench.module';
 import { SettingsModule } from './settings/settings.module';
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { AuthModule } from './auth/auth.module';
+import { AuthGuard } from './auth/auth.guard';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
+    AuthModule,
+    CommonModule,
+    BrowserModule,
     DwvModule,
     AppRoutingModule,
     AngularMaterialModule,
@@ -20,7 +40,12 @@ import { AppRoutingModule } from './app-routing.module';
     SettingsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  bootstrap: [AppComponent]
+  providers: [
+    AuthGuard
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 
 export class AppModule { }

@@ -1,0 +1,23 @@
+<app-auth-box title="Sign Up">
+  <form #f="ngForm">
+      <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="email" name="email">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="password" name="password">
+      </mat-form-field>
+  </form>
+  <div class="button-container">
+      <button mat-raised-button color="primary" (click)="authService.SignUp(email, password)">
+        <ng-container *ngIf="!authService.loading">
+            Continue
+        </ng-container>
+        <mat-spinner *ngIf="authService.loading" diameter="30"></mat-spinner>
+      </button>
+      <button mat-button routerLink="/login">Go to Sign In</button>
+  </div>
+</app-auth-box>
+
+

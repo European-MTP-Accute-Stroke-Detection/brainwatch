@@ -107,6 +107,36 @@ $red: (
 $primary: mat-palette($emerald);
 $accent:  mat-palette($pink);
 
+// Generate CSS variables from theme
+
+
+@mixin generateColors($prefix, $palette) {
+    $colors-map: ();
+  
+    @each $key, $value in $palette {
+      @if $key !=contrast {
+        .app-#{$prefix}-#{$key} {
+          color: map-get($palette, $key);
+        }
+  
+      $map: ();
+      $map: map-merge($map, ($key: $value));
+      $colors-map: map-merge($colors-map, $map);
+      }
+    }
+  
+    body {
+      @each $key, $value in $colors-map {
+        --app-#{$prefix}-#{$key}: #{$value};
+      }
+    }
+  }
+  
+  @mixin generate-material-classes {
+     @include generateColors(primary, $primary);
+     @include generateColors(accent, $accent);
+}
+
 
 // include the custom theme components into a theme object
 $theme: mat-light-theme((
@@ -132,7 +162,14 @@ $dark-theme: mat-dark-theme((
 
 // include the custom theme object into the angular material theme
 @include angular-material-theme($theme);
+@include generate-material-classes();
 
 .darkMode {
     @include all-component-colors($dark-theme);
+    @include angular-material-theme($dark-theme);
 }
+
+
+
+
+

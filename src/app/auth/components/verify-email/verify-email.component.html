@@ -1,0 +1,28 @@
+
+<div class="main">
+    <mat-card class="mat-elevation-z0">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>
+                Thank You for Registering
+            </mat-card-title>
+            
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+            <div *ngIf="authService.userData as user">
+                <p>We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
+                <p>Please check your email and click on the link to verfiy your email address.</p>
+            </div>
+            <div class="button-container">
+                <button mat-raised-button color="primary" (click)="authService.SendVerificationMail()">
+                    Resend Verification Email
+                </button>
+                <button mat-stroked-button routerLink="/login">
+                    Go back to Sign in
+                </button>
+            </div>
+              
+        </mat-card-content>
+    </mat-card>
+</div>

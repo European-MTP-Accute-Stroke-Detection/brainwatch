@@ -20,6 +20,11 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "@angular-eslint/template/eqeqeq": [
+          {
+            "allowNullOrUndefined": false
+          }
+        ],
         "@angular-eslint/directive-selector": [
           "error",
           {

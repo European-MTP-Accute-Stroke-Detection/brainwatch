@@ -4,11 +4,15 @@ import { HeaderComponent } from './components/header/header.component';
 import { AngularMaterialModule } from '../angular-material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    ThemeSwitchComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +21,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    ThemeSwitchComponent,
+    FooterComponent,
   ]
 })
 export class SharedModule { }

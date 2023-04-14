@@ -1,9 +1,11 @@
-body[data-theme="dark"] {
-
+app-root[class="darkMode"] {
+    --surface: #303030;
+    --surface-r: #fafafa;
+    --footer: #303030;
+    --soft-text: #bebebe;
 }
 
-body {
-    --surface: #121212;
-    --01-dp: #424242;
-    --02-dp: #626262;
+app-root {
+    --surface: #fafafa;
+    --surface-r: #303030;
 }
