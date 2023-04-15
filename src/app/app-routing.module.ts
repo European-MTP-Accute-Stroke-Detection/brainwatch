@@ -6,6 +6,7 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { VerifyEmailComponent } from './auth/components/verify-email/verify-email.component';
 import { AuthGuard } from './auth/auth.guard';
+import { UserProfileComponent } from './profile/components/user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
     path: 'settings',
     canActivate: [AuthGuard],
     component: SettingsHomeComponent
+  },
+  {
+    path: 'profile',
+    canActivate: [AuthGuard],
+    component: UserProfileComponent
   },
   {
     path: 'login',

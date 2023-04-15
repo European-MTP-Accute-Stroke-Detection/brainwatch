@@ -4,7 +4,7 @@
     <button *ngIf="!reducedHeader" mat-icon-button class="menu-button" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
-    
+
     <div style="display: flex;">
         
         <span class="title-container" routerLink="/">
@@ -17,16 +17,23 @@
     
     <!-- <span class="example-spacer"></span> -->
     <div>
-        <app-theme-switch></app-theme-switch>
+        <button *ngIf="!reducedHeader" mat-icon-button class="example-icon" aria-label="" routerLink="/profile">
+            <mat-icon>person</mat-icon>
+        </button>
+        
         <button *ngIf="!reducedHeader" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
             [matMenuTriggerFor]="menu">
-            <mat-icon>settings</mat-icon>
+            <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="before">
             <!-- <button mat-menu-item>Item 1</button>
             <button mat-menu-item>Item 2</button> -->
             <a mat-menu-item routerLink="/settings">
                 <mat-icon>settings</mat-icon> Settings
+            </a>
+            <app-theme-switch [forMenu]="true"></app-theme-switch>
+            <a mat-menu-item>
+                <mat-icon>logout</mat-icon> Logout
             </a>
         </mat-menu>
     </div>

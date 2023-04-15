@@ -1,17 +1,19 @@
 <app-auth-box title="Sign In">
-    <form #f="ngForm">
+    <form #form="ngForm">
         <mat-form-field appearance="fill">
             <mat-label>Email</mat-label>
-            <input matInput type="email" [(ngModel)]="email" name="email">
+            <input matInput type="email" [(ngModel)]="email.value" name="email" #email>
+            <mat-error>{{emailErrorMessage}}</mat-error>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Password</mat-label>
-            <input matInput [(ngModel)]="password" name="password">
+            <input matInput type="password" [(ngModel)]="password.value" name="password" #password>
+            <mat-error>{{passwordErrorMessage}}</mat-error>
         </mat-form-field>
-        
+        <mat-error *ngIf="generalErrorMessage" class="general-error">{{generalErrorMessage}}</mat-error>
     </form>
     <div class="button-container">
-        <button mat-raised-button color="primary" (click)="authService.SignIn(email, password)">
+        <button mat-raised-button color="primary" (click)="authService.SignIn(email.value, password.value)">
             <ng-container *ngIf="!authService.loading">
                 Login
             </ng-container>

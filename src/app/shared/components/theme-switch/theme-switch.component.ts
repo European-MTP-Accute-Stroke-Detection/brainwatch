@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Theme, ThemeService } from '../../services/theme.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { Theme, ThemeService } from '../../services/theme.service';
   styleUrls: ['./theme-switch.component.scss']
 })
 export class ThemeSwitchComponent {
+  @Input() forMenu = false;
+
   constructor(
     public themeService: ThemeService
   ) { }

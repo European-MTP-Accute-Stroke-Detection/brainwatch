@@ -3,12 +3,19 @@ form {
     mat-form-field {
         width: 100%;
     }
+
+    .general-error {
+        margin-bottom: 22px;
+    }
 }
+
+
 
 .button-container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 8px;
 
     :nth-child(1) {      
         width: 100%;

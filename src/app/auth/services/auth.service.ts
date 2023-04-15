@@ -4,6 +4,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { User } from '../../model/user';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { BehaviorSubject } from 'rxjs';
+import { FirebaseError } from 'firebase/app';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/compat
 export class AuthService {
   userData: any; // Save logged in user data
   loading = false;
+  errorPipe: BehaviorSubject<FirebaseError> = new BehaviorSubject(null);
 
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
@@ -40,20 +43,25 @@ export class AuthService {
       .then((result) => {
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
-          if (user) {
+          if (user.emailVerified) {
             this.router.navigate(['']);
           }
+          else {
+            this.router.navigate(['/verify-email']);
+          }
+          console.log('user');
           this.loading = false;
         });
       })
-      .catch((error) => {
-        window.alert(error.message);
+      .catch((error: FirebaseError) => {
+        this.errorPipe.next(error);
+        this.loading = false;
       });
   }
 
   // Sign up with email/password
   SignUp(email: string, password: string) {
-
+    this.loading = true;
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
@@ -61,9 +69,12 @@ export class AuthService {
         up and returns promise */
         this.SendVerificationMail();
         this.SetUserData(result.user);
+        this.router.navigate(['/verify-email']);
+        this.loading = false;
       })
       .catch((error) => {
-        window.alert(error.message);
+        this.errorPipe.next(error);
+        this.loading = false;
       });
   }
 
