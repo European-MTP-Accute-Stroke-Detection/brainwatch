@@ -15,7 +15,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
         RegisterComponent,
         LoginComponent,
         AuthBoxComponent,
-        VerifyEmailComponent
+        VerifyEmailComponent,
     ],
     imports: [
         CommonModule,

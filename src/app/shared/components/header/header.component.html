@@ -4,9 +4,7 @@
     <button *ngIf="!reducedHeader" mat-icon-button class="menu-button" aria-label="Example icon-button with menu icon">
         <mat-icon>menu</mat-icon>
     </button>
-
     <div style="display: flex;">
-        
         <span class="title-container" routerLink="/">
             <img src="/assets/icons/logo.svg" alt="logo" />
             <span>brAInwatch</span>
@@ -14,25 +12,26 @@
     </div>
 
     
-    
+    <app-theme-switch *ngIf="reducedHeader"></app-theme-switch>
     <!-- <span class="example-spacer"></span> -->
-    <div>
-        <button *ngIf="!reducedHeader" mat-icon-button class="example-icon" aria-label="" routerLink="/profile">
+    <div *ngIf="!reducedHeader">
+        <button [matMenuTriggerFor]="profileMenu" mat-icon-button >
             <mat-icon>person</mat-icon>
         </button>
+        <mat-menu #profileMenu="matMenu" xPosition="before" class="profileMenu" panelClass="profileMenu">
+            <app-profile></app-profile>
+        </mat-menu>
         
-        <button *ngIf="!reducedHeader" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+        <button mat-icon-button class="menu-button"
             [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="before">
-            <!-- <button mat-menu-item>Item 1</button>
-            <button mat-menu-item>Item 2</button> -->
             <a mat-menu-item routerLink="/settings">
                 <mat-icon>settings</mat-icon> Settings
             </a>
             <app-theme-switch [forMenu]="true"></app-theme-switch>
-            <a mat-menu-item>
+            <a mat-menu-item (click)="authService.SignOut()">
                 <mat-icon>logout</mat-icon> Logout
             </a>
         </mat-menu>

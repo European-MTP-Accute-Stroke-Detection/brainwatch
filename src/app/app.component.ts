@@ -9,8 +9,8 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 
 export class AppComponent {
-  @HostBinding('class') className = '';
 
+  bodyElement = document.body;
 
   constructor(
     private themeService: ThemeService,
@@ -19,7 +19,11 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.themeService.currentTheme.subscribe((theme) => {
-      this.className = theme == Theme.DARK ? 'darkMode' : '';
+      if (this.bodyElement.classList.contains('darkMode')) {
+        this.bodyElement.classList.remove('darkMode');
+      } else {
+        this.bodyElement.classList.add('darkMode');
+      }
     });
   }
 

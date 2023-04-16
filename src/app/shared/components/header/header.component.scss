@@ -24,3 +24,8 @@
         }
     }
 }
+
+::ng-deep .profileMenu {
+    max-width: none !important;
+    background-color: white;
+}
