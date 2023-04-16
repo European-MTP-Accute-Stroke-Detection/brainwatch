@@ -70,8 +70,6 @@ export class AuthService {
         up and returns promise */
         this.SendVerificationMail();
         this.SetUserData(result.user);
-        this.router.navigate(['/verify-email']);
-        this.loading = false;
       })
       .catch((error) => {
         this.errorPipe.next(error);
@@ -84,7 +82,8 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['verify-email-address']);
+        this.loading = false;
+        this.router.navigate(['/verify-email']);
       });
   }
 
