@@ -1,0 +1,32 @@
+<div class="main">
+  <div class="form-container">
+    <mat-form-field appearance="fill" class="model-select">
+      <mat-label>Select Prediction Model</mat-label>
+      <mat-select [(ngModel)]="selectedModel" name="model">
+        <mat-option *ngFor="let model of aiModels" [value]="model.value">
+          {{model.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="model-select">
+      <mat-label>Select Explainable AI Model</mat-label>
+      <mat-select [(ngModel)]="selectedExplainableAi" name="model">
+        <mat-option *ngFor="let model of explainableAiModels" [value]="model.value">
+          {{model.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="predict-button-container" *ngIf="!modelRunning">
+    <button mat-raised-button color="primary" (click)="runPrediction()"
+      [disabled]="!selectedModel || !selectedExplainableAi || !selectedFiles || selectedFiles!.length != 1">Make
+      Prediction</button>
+  </div>
+
+  <ng-container *ngIf="modelRunning">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p style="text-align:center">Making Prediction...</p>
+  </ng-container>
+
+</div>

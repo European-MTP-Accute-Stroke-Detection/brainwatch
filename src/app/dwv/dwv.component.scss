@@ -24,9 +24,6 @@ mat-spinner {
   justify-content: center;
 }
 
-.model-select {
-  width: 100%;
-}
 
 .button-row {
   text-align: center;
@@ -69,16 +66,7 @@ mat-spinner {
   font-weight: 500;
 }
 
-.stroke-predict-button-container {
-  border-top: 1px solid lightgray;
-  padding-top: 0px;
-  margin: 15px 0;
-  div {
-    margin: 15px 0;
-    display: flex;
-    justify-content: center;
-  }
-}
+
 
 /* drag&drop */
 .dropBox {

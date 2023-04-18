@@ -9,21 +9,18 @@
     }
 
     .left-container {
-        flex-grow: 1;
+        flex-grow: 2;
 
     }
     .center-container {
-        flex-grow: 6;
-        mat-card {
-            height: 300px;
-        }
+        flex-grow: 7;
         
         p {
             background-color: var(--02-dp);
         }
     }
     .right-container {
-        flex-grow: 1;
+        flex-grow: 2;
     }
 
     .patient-data-card {

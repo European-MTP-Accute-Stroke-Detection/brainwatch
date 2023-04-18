@@ -74,17 +74,6 @@
 <!-- </mat-sidenav-container> -->
 
 <div id="dwv">
-  <mat-card class="example-card">
-    <mat-card-header>
-      <mat-card-title-group>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-icon color="primary">add</mat-icon>
-      </mat-card-title-group>
-    </mat-card-header>
-    <mat-card-content>
-      Texttttt
-    </mat-card-content>
-  </mat-card>
   <div class="button-row">
     <mat-button-toggle-group name="tool" [disabled]="!dataLoaded">
       <mat-button-toggle value="{{ tool }}" color="primary" *ngFor="let tool of toolNames" title="{{ tool }}"

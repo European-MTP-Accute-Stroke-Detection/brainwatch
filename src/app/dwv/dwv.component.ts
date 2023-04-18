@@ -8,6 +8,7 @@ import { firstValueFrom, lastValueFrom } from 'rxjs';
 import { PredictionResultComponent } from './prediction-result/prediction-result.component';
 import { NewPredictionComponent } from './new-prediction/new-prediction.component';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { FileService } from './../shared/services/file.service';
 
 // gui overrides
 
@@ -31,7 +32,8 @@ export class DwvComponent implements OnInit {
   constructor(
     changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
     public dialog: MatDialog,
-    private requestService: RequestService
+    private requestService: RequestService,
+    private fileService: FileService
   ) {
     this.versions = {
       dwv: dwv.getVersion(),
@@ -51,7 +53,6 @@ export class DwvComponent implements OnInit {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
-  selectedValue: string;
   private _mobileQueryListener: () => void;
   mobileQuery: MediaQueryList;
 
@@ -65,31 +66,9 @@ export class DwvComponent implements OnInit {
     { value: 'combined', viewValue: 'All Stroke Types' },
     { value: 'hemorrhage', viewValue: 'Hemorrhage Stroke' },
     { value: 'ischemic', viewValue: 'Ischemic Stroke' },
-
   ];
 
   modelRunning: boolean = false;
-  selectedFiles: FileList;
-
-  async runPrediction() {
-    if (this.selectedFiles.length == 1) {
-      this.modelRunning = true;
-      const file = this.selectedFiles[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      const prediction$ = this.requestService.predict(formData, this.selectedValue).toPromise();
-      const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
-      this.modelRunning = false;
-    }
-
-  }
 
   async strokePrediction() {
     this.dialog.open(NewPredictionComponent, {
@@ -398,7 +377,7 @@ export class DwvComponent implements OnInit {
   private onDrop = (event: DragEvent) => {
     this.defaultHandleDragEvent(event);
     // load files
-    this.selectedFiles = event.dataTransfer.files;
+    this.fileService.selectedFiles = event.dataTransfer.files;
     this.dwvApp.loadFiles(event.dataTransfer.files);
   }
 
