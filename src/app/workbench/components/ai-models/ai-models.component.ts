@@ -30,6 +30,7 @@ export class AiModelsComponent {
   ];
 
   modelRunning: boolean = false;
+  xaiRunning: boolean = false;
   
   get selectedFiles () {
     return this.fileService.selectedFiles;
@@ -54,6 +55,25 @@ export class AiModelsComponent {
         }
       });
       this.modelRunning = false;
+    }
+  }
+
+  async runExplanation() {
+    if (this.selectedFiles.length == 1) {
+      this.xaiRunning = true;
+      const file = this.selectedFiles[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const prediction$ = this.requestService.explain(formData, this.selectedModel, this.selectedExplainableAi).toPromise();
+      const result = await prediction$;
+      this.dialog.open(PredictionResultComponent, {
+        width: '90vw',
+        height: '92vh',
+        data: {
+          predictionId: result.predictionId
+        }
+      });
+      this.xaiRunning = false;
     }
   }
 

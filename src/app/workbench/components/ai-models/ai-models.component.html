@@ -8,6 +8,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
     <mat-form-field appearance="fill" class="model-select">
       <mat-label>Select Explainable AI Model</mat-label>
       <mat-select [(ngModel)]="selectedExplainableAi" name="model">
@@ -18,15 +19,27 @@
     </mat-form-field>
   </div>
 
-  <div class="predict-button-container" *ngIf="!modelRunning">
-    <button mat-raised-button color="primary" (click)="runPrediction()"
-      [disabled]="!selectedModel || !selectedExplainableAi || !selectedFiles || selectedFiles!.length != 1">Make
-      Prediction</button>
+  <div class="button_alignment">
+    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning">
+      <button mat-raised-button color="primary" (click)="runPrediction()"
+        [disabled]="!selectedModel || !selectedFiles || selectedFiles!.length != 1">Predict</button>
+    </div>
+  
+    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning">
+      <button mat-raised-button color="primary" (click)="runExplanation()"
+        [disabled]="!selectedModel || !selectedExplainableAi || !selectedFiles || selectedFiles!.length != 1">Explain</button>
+    </div>
+
   </div>
 
   <ng-container *ngIf="modelRunning">
     <mat-spinner diameter="50"></mat-spinner>
     <p style="text-align:center">Making Prediction...</p>
+  </ng-container>
+
+  <ng-container *ngIf="xaiRunning">
+    <mat-spinner diameter="50"></mat-spinner>
+    <p style="text-align:center">Making Explanation...</p>
   </ng-container>
 
 </div>

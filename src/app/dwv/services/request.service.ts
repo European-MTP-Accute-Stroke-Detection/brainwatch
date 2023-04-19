@@ -19,6 +19,12 @@ export class RequestService {
       body
     );
   }
+  explain(body: any, model: string, explanation: string): Observable<any> {
+    return this.http.post<any>(    
+      this.baseUrl + '/'+ model + '_' + explanation +'/explain',
+      body
+    );
+  }
 
   predictStroke(body: any): Observable<any> {
     return this.http.post<any>(    
