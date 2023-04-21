@@ -17,6 +17,16 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <mat-form-field appearance="fill" class="model-select">
+      <mat-label>Select Explanation Complexity</mat-label>
+      <mat-select [(ngModel)]="selectedComplexity" name="model">
+        <mat-option *ngFor="let model of explainableAIComplexities" [value]="model.value">
+          {{model.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </div>
 
   <div class="button_alignment">
@@ -27,7 +37,7 @@
   
     <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning">
       <button mat-raised-button color="primary" (click)="runExplanation()"
-        [disabled]="!selectedModel || !selectedExplainableAi || !selectedFiles || selectedFiles!.length != 1">Explain</button>
+        [disabled]="!selectedModel || !selectedExplainableAi || !selectedFiles || !selectedComplexity || selectedFiles!.length != 1">Explain</button>
     </div>
 
   </div>

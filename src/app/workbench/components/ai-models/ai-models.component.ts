@@ -27,7 +27,14 @@ export class AiModelsComponent {
   explainableAiModels: any[] = [
     { value: 'lime', viewValue: 'Lime' },
     { value: 'shap', viewValue: 'Shap' },
+
   ];
+
+  explainableAIComplexities: any[] = [
+    { value: 'low', viewValue: 'low' },
+    { value: 'medium', viewValue: 'medium' },
+    { value: 'high', viewValue: 'high' }
+  ]
 
   modelRunning: boolean = false;
   xaiRunning: boolean = false;
@@ -38,6 +45,7 @@ export class AiModelsComponent {
 
   selectedModel: string;
   selectedExplainableAi: string;
+  selectedComplexity: string;
 
   async runPrediction() {
     if (this.selectedFiles.length == 1) {
@@ -64,7 +72,7 @@ export class AiModelsComponent {
       const file = this.selectedFiles[0];
       const formData = new FormData();
       formData.append("file", file);
-      const prediction$ = this.requestService.explain(formData, this.selectedModel, this.selectedExplainableAi).toPromise();
+      const prediction$ = this.requestService.explain(formData, this.selectedModel, this.selectedExplainableAi, this.selectedComplexity).toPromise();
       const result = await prediction$;
       this.dialog.open(PredictionResultComponent, {
         width: '90vw',

@@ -14,14 +14,16 @@ export class RequestService {
   ) { }
 
   predict(body: any, model: string): Observable<any> {
+    console.log(this.baseUrl + '/'+ model +'/explain');
     return this.http.post<any>(    
       this.baseUrl + '/'+ model + '/predict',
       body
     );
   }
-  explain(body: any, model: string, explanation: string): Observable<any> {
+  explain(body: any, model: string, explanation: string, complexity: string): Observable<any> {
+    console.log(this.baseUrl + '/'+ model +'/explain/'+ explanation);
     return this.http.post<any>(    
-      this.baseUrl + '/'+ model + '_' + explanation +'/explain',
+      this.baseUrl + '/'+ model +'/explain/'+ explanation +'_' + complexity,
       body
     );
   }
@@ -33,3 +35,4 @@ export class RequestService {
     );
   }
 }
+
