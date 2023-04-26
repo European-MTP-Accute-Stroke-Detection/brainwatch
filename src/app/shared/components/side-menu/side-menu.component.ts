@@ -23,12 +23,6 @@ export class SideMenuComponent implements OnInit {
 
   menuItems = [
     {
-      icon: 'dashboard',
-      title: 'Dashboard',
-      link: '/dashboard',
-      isFocussed: true
-    },
-    {
       icon: 'clinical_notes',
       title: 'Cases',
       link: '/cases'

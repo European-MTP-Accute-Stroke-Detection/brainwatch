@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     if (this.authService.isLoggedIn) {
-      this.router.navigateByUrl('/dashboard')
+      this.router.navigateByUrl('/cases')
     }
     this.authService.errorPipe.subscribe((error: FirebaseError) => {
       if (error)

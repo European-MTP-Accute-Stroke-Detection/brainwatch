@@ -7,7 +7,6 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { VerifyEmailComponent } from './auth/components/verify-email/verify-email.component';
 import { AuthGuard } from './auth/auth.guard';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { CasesComponent } from './cases/cases.component';
 import { PatientsComponent } from './patients/patients.component';
 import { TabularaiComponent } from './tabularai/tabularai.component';
@@ -28,11 +27,6 @@ const routes: Routes = [
   {
     path: 'verify-email',
     component: VerifyEmailComponent
-  },
-  {
-    path: 'dashboard',
-    canActivate: [AuthGuard],
-    component: DashboardComponent,
   },
   {
     path: 'cases',
