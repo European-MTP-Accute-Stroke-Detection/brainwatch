@@ -1,5 +1,4 @@
-
-<div class="main" *ngIf="authService.userData as user" (click) = "$event.stopPropagation()">
+<div class="main" *ngIf="user" (click) ="$event.stopPropagation()">
     <div>
       <div class="media">
         <!-- <img class="align-self-start mr-5 img-thumbnail rounded-circle" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"

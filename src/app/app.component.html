@@ -1,8 +1,18 @@
 <div class="mat-typography app-frame mat-app-background">
-    <app-header></app-header>
-    <router-outlet #outlet="outlet"></router-outlet>
+    <app-header (sidenavToggled)="sidenav.toggle()"></app-header>
+    <mat-sidenav-container>
+        <mat-sidenav #sidenav [mode]="sideNavMode" autoFocus="false" [(opened)]="opened">
+            <app-side-menu></app-side-menu>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <router-outlet #outlet="outlet"></router-outlet>
+            
+        </mat-sidenav-content>
+    </mat-sidenav-container>
     <app-footer></app-footer>
 </div>
+
+
 
 <!-- <div style="text-align: center; height: 100%">
     <app-dwv></app-dwv>

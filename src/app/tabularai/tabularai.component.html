@@ -1,0 +1,99 @@
+
+    <div class="main-container">
+        <div class="stroke-result-container" *ngIf="!loadingPred">
+            <p [ngStyle]="{'color': predictionResult.result === 0 ? 'green' : 'red' }">{{strokeMessage}}</p>
+        </div>
+        <h3 class="subheading">Enter patient info...</h3>
+        <div class="content">
+    
+            <form #f="ngForm">
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Age</mat-label>
+                        <input matInput [(ngModel)]="prediction.age" name="age" type="number" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Gender</mat-label>
+                        <mat-select matInput [(ngModel)]="prediction.gender" name="gender" required>
+                            <mat-option *ngFor="let sex of ['Male','Female', 'Other']" [value]="sex">
+                                {{sex}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Hypertension</mat-label>
+                        <mat-select [(ngModel)]="prediction.hypertension" name="hypertension" required>
+                            <mat-option *ngFor="let option of ['True','False']" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Heart Disease</mat-label>
+                        <mat-select [(ngModel)]="prediction.heart_disease" name="heart_disease" required>
+                            <mat-option *ngFor="let option of ['True','False']" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Ever married?</mat-label>
+                        <mat-select [(ngModel)]="prediction.ever_married" name="ever_married" required>
+                            <mat-option *ngFor="let option of ['Yes','No']" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Smoking Status</mat-label>
+                        <mat-select [(ngModel)]="prediction.smoking_status" name="smoking_status" required>
+                            <mat-option *ngFor="let option of ['never smoked','formely smoked','unknown']" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Work Type</mat-label>
+                        <mat-select [(ngModel)]="prediction.work_type" name="work_type" required>
+                            <mat-option *ngFor="let option of ['Private','Self-employed','Other']" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Residence Type</mat-label>
+                        <mat-select [(ngModel)]="prediction.Residence_type" name="Residence_type" required>
+                            <mat-option *ngFor="let option of ['Urban','Rural']" [value]="option">
+                                {{option}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field appearance="fill">
+                        <mat-label>BMI</mat-label>
+                        <input matInput [(ngModel)]="prediction.bmi" name="avg_glucose_level" type="number" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Average Glucose Level</mat-label>
+                        <input matInput [(ngModel)]="prediction.avg_glucose_level" name="bmi" type="number"
+                            placeholder="e.g. 1.2" required>
+                    </mat-form-field>
+                </div>
+    
+                <div class="button-container" *ngIf="!loadingPred">
+                    <button mat-raised-button color="accent" (click)="predict()" class="my-button" color="primary"
+                        [disabled]="!f.valid">Predict</button>
+                </div>
+            </form>
+    
+            <mat-spinner *ngIf="loadingPred" diameter="50"></mat-spinner>
+    
+        </div>
+    </div>

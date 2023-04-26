@@ -6,17 +6,15 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { VerifyEmailComponent } from './auth/components/verify-email/verify-email.component';
 import { AuthGuard } from './auth/auth.guard';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { CasesComponent } from './cases/cases.component';
+import { PatientsComponent } from './patients/patients.component';
+import { TabularaiComponent } from './tabularai/tabularai.component';
 
 const routes: Routes = [
   {
     path: '',
-    canActivate: [AuthGuard],
-    component: WorkbenchHomeComponent,
-  },
-  {
-    path: 'settings',
-    canActivate: [AuthGuard],
-    component: SettingsHomeComponent
+    component: LandingPageComponent,
   },
   {
     path: 'login',
@@ -31,8 +29,43 @@ const routes: Routes = [
     component: VerifyEmailComponent
   },
   {
+    path: 'cases',
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: CasesComponent
+      },
+      {
+        path: ':caseId/workbench',
+        component: WorkbenchHomeComponent
+      }
+    ]
+  },
+  {
+    path: 'patients',
+    canActivate: [AuthGuard],
+    component: PatientsComponent,
+  },
+  {
+    path: 'tabularai',
+    canActivate: [AuthGuard],
+    component: TabularaiComponent,
+  },
+  {
+    path: 'workbench',
+    canActivate: [AuthGuard],
+    component: WorkbenchHomeComponent,
+  },
+  {
+    path: 'settings',
+    canActivate: [AuthGuard],
+    component: SettingsHomeComponent
+  },
+
+  {
     path: '**',
-    redirectTo: 'login'
+    redirectTo: ''
   }
 ];
 

@@ -11,7 +11,6 @@ import { FirebaseError } from 'firebase/app';
   providedIn: 'root',
 })
 export class AuthService {
-  userData: any; // Save logged in user data
   loading = false;
   errorPipe: BehaviorSubject<FirebaseError> = new BehaviorSubject(null);
 
@@ -26,8 +25,7 @@ export class AuthService {
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe((user) => {
       if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
+        localStorage.setItem('user', JSON.stringify(user));
         JSON.parse(localStorage.getItem('user')!);
       } else {
         localStorage.setItem('user', 'null');
@@ -44,15 +42,13 @@ export class AuthService {
       .then((result) => {
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
-          if (user.emailVerified) {
-            this.router.navigate(['']);
+          if (user) {
+            this.router.navigate(['/cases']);
+            this.loading = false;
           }
-          else {
-            this.router.navigate(['/verify-email']);
-          }
-          console.log('user');
-          this.loading = false;
         });
+        this.router.navigate(['/verify-email']);
+
       })
       .catch((error: FirebaseError) => {
         this.errorPipe.next(error);
@@ -128,7 +124,7 @@ export class AuthService {
   SignOut() {
     return this.afAuth.signOut().then(() => {
       localStorage.removeItem('user');
-      this.router.navigate(['login']);
+      this.router.navigate(['/login']);
     });
   }
 
@@ -137,7 +133,7 @@ export class AuthService {
   // Sign in with Google
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['cases']);
     });
   }
 
@@ -146,7 +142,7 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate(['dashboard']);
+        this.router.navigate(['cases']);
         this.SetUserData(result.user);
       })
       .catch((error) => {

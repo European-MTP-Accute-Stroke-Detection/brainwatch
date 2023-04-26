@@ -2,11 +2,10 @@ import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angula
 import { VERSION } from '@angular/core';
 import * as dwv from 'dwv';
 import { MatDialog } from '@angular/material/dialog';
-import { TagsDialogComponent } from './tags-dialog.component';
+import { TagsDialogComponent } from './components/tags-dialog.component';
 import { RequestService } from './services/request.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { PredictionResultComponent } from './prediction-result/prediction-result.component';
-import { NewPredictionComponent } from './new-prediction/new-prediction.component';
+import { PredictionResultComponent } from '../tabularai/components/prediction-result/prediction-result.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { FileService } from './../shared/services/file.service';
 
@@ -69,13 +68,6 @@ export class DwvComponent implements OnInit {
   ];
 
   modelRunning: boolean = false;
-
-  async strokePrediction() {
-    this.dialog.open(NewPredictionComponent, {
-      width: '90vw',
-      height: '92vh',
-    });
-  }
 
   public versions: any;
   public tools = {

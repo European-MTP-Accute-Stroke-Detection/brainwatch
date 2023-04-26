@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
-import { Component, HostBinding, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Theme, ThemeService } from '../../services/theme.service';
@@ -14,7 +14,10 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class HeaderComponent implements OnInit {
 
   showHeader = true;
-  reducedHeader = false;
+  reducedHeader = true;
+
+  @Output() sidenavToggled: EventEmitter<void> = new EventEmitter<void>();
+
 
   constructor(
     public themeService: ThemeService,
@@ -27,7 +30,7 @@ export class HeaderComponent implements OnInit {
       if (val instanceof NavigationEnd) {
         if (val.url.startsWith('/register') ||
           val.url.startsWith('/login') ||
-          val.url.startsWith('/verify-email')
+          val.url.startsWith('/verify-email') || val.url == '/'
         ) {
           this.reducedHeader = true;
         }

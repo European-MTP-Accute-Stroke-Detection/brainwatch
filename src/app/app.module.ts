@@ -17,7 +17,10 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireModule } from '@angular/fire/compat';
-
+import { LandingPageModule } from './landing-page/landing-page.module';
+import { CasesModule } from './cases/cases.module';
+import { PatientsModule } from './patients/patients.module';
+import { TabularaiModule } from './tabularai/tabularai.module'
 @NgModule({
   declarations: [
     AppComponent
@@ -37,6 +40,10 @@ import { AngularFireModule } from '@angular/fire/compat';
     SharedModule,
     WorkbenchModule,
     SettingsModule,
+    LandingPageModule,
+    CasesModule,
+    PatientsModule,
+    TabularaiModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [

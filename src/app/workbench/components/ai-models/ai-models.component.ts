@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { PredictionResultComponent } from '../../../dwv/prediction-result/prediction-result.component';
+import { PredictionResultComponent } from '../../../tabularai/components/prediction-result/prediction-result.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestService } from '../../../dwv/services/request.service';
-import { NewPredictionComponent } from '../../../dwv/new-prediction/new-prediction.component';
 import { FileService } from '../../../shared/services/file.service';
 
 @Component({
@@ -16,7 +15,7 @@ export class AiModelsComponent {
     public dialog: MatDialog,
     private requestService: RequestService,
     private fileService: FileService
-  ) {}
+  ) { }
 
   aiModels: any[] = [
     { value: 'combined', viewValue: 'All Stroke Types' },
@@ -38,10 +37,10 @@ export class AiModelsComponent {
 
   modelRunning: boolean = false;
   xaiRunning: boolean = false;
-  
-  get selectedFiles () {
+
+  get selectedFiles() {
     return this.fileService.selectedFiles;
-  } 
+  }
 
   selectedModel: string;
   selectedExplainableAi: string;
@@ -85,5 +84,5 @@ export class AiModelsComponent {
     }
   }
 
-  
+
 }

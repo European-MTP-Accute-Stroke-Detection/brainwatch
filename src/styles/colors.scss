@@ -1,11 +1,15 @@
-app-root[class="darkMode"] {
+body {
+    --surface: #fafafa;
+    --surface-r: #303030;
+    --bg-elevation-1: #f3f3f3;
+    --bg-elevation-2: #f1f1f1;
+}
+
+body[class="mat-app-background mat-body darkMode"] {
     --surface: #303030;
+    --bg-elevation-1: #424242;
+    --bg-elevation-2: #575757;
     --surface-r: #fafafa;
     --footer: #303030;
     --soft-text: #bebebe;
-}
-
-app-root {
-    --surface: #fafafa;
-    --surface-r: #303030;
 }

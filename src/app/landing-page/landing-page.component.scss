@@ -1,0 +1,36 @@
+.top-section {
+    
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    
+
+    div {
+        margin-top: 120px;
+
+         button {
+            display: block;
+            margin: 40px auto 0 auto;
+            width: 120px;
+         }
+    }
+
+    h1 {
+        text-align: center;   
+        font-size:  40px;
+    }
+    
+    .sub-title {
+        
+        font-size: 18px;
+    }
+}
+
+.top-section-wrapper {
+    background-image: url("/assets/images/AdobeStock_162378392.jpeg");
+    background-position: center;
+    background-size: cover;
+    height: 460px;
+}

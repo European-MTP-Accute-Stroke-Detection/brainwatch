@@ -1,6 +1,31 @@
 html, body, app-root, .app-frame {
     overflow-x: hidden;
+    overflow-y: hidden;
     margin: 0;
     height: 100%;
     box-sizing: border-box;
+    
+}
+
+mat-sidenav {
+    height: calc(100vh - 64px);
+    position: fixed;
+    top: 64px;
+    overflow-y: auto;
+}
+
+mat-sidenav-container {
+    min-height: calc(100% - 112px);
+}
+
+
+
+@media (max-width:600px) {
+    mat-sidenav {
+        top: 56px;
+        height: calc(100vh - 54px);
+    }
+    mat-sidenav-container {
+        min-height: calc(100% - 104px);
+    }
 }

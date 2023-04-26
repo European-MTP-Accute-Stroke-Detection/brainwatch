@@ -10,7 +10,7 @@
           </mat-card-title-group>
         </mat-card-header>
         <mat-card-content>
-            <div *ngIf="authService.userData as user">
+            <div *ngIf="user">
                 <p>We have sent a confirmation email to <strong>{{user.email}}</strong>.</p>
                 <p>Please check your email and click on the link to verfiy your email address.</p>
             </div>
