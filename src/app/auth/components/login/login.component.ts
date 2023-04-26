@@ -1,15 +1,17 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormControl, NgForm } from '@angular/forms';
 import { FirebaseError } from 'firebase/app';
 import { ErrorFactory } from '@firebase/util';
+import { User } from 'src/app/model/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
   @ViewChild('form', { static: true }) form: NgForm;
 
@@ -18,10 +20,18 @@ export class LoginComponent implements OnInit {
   emailErrorMessage: string;
 
   constructor(
-    public authService: AuthService
+    public authService: AuthService,
+    private router: Router
   ) { }
 
+  ngAfterViewInit(): void {
+    this.form.valueChanges.subscribe(change => { this.generalErrorMessage = '' });
+  }
+
   ngOnInit() {
+    if (this.authService.isLoggedIn) {
+      this.router.navigateByUrl('/dashboard')
+    }
     this.authService.errorPipe.subscribe((error: FirebaseError) => {
       if (error)
         switch (error?.code) {
@@ -38,8 +48,9 @@ export class LoginComponent implements OnInit {
             this.generalErrorMessage = this.sanitizeError(error.message);
         }
     });
-    this.form.valueChanges.subscribe(change => { this.generalErrorMessage = '' });
+
   }
+
 
   sanitizeError(error: string) {
     return error.split(/\.\s|:\s/)[1];

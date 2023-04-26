@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AuthBoxComponent } from './components/auth-box/auth-box.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
         SharedModule
     ],
     providers: [
-        AuthService
+        AuthService,
+        UserService
     ]
 })
 export class AuthModule { }

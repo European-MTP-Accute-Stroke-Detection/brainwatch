@@ -1,20 +1,14 @@
 .header {
-
-    padding-left: 24px;
-
-    .menu-button {
-        margin-right: 16px;
-    }
     
     .title-container {
         display: flex;
         align-items: center;
         cursor: pointer;
-        margin-left: 32;
+        margin-left: 32px;
 
         img {
             padding-right: 16px;
-            max-height: 40px;
+            max-height: 36px;
             fill: white;
         }
 

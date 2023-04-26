@@ -15,7 +15,7 @@ body {
 body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
   // background-color: var(--surface) !important;
 }
 
@@ -24,7 +24,6 @@ body {
 }
 
 .mat-sidenav-container {
-  height: 100%;
   display: flex;
   flex: 1 1 auto;
 }

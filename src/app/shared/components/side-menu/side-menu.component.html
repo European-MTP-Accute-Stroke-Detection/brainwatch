@@ -1,0 +1,27 @@
+<!-- <mat-accordion displayMode="flat" multi="true">
+    <mat-expansion-panel *ngFor="let patient of patients">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-icon>person</mat-icon>
+            {{patient.firstname}}, {{patient.lastname}}
+          
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list>
+        <mat-action-list>
+            <button mat-list-item *ngFor="let case of patient.cases" class="case-button">
+                <mat-icon matListItemIcon>folder</mat-icon>
+                <div matListItemTitle>Scan #{{case.uid}}</div>
+                <div matListItemLine>{{case.date.toDate() | date}}</div>
+            </button>
+          </mat-action-list>
+      </mat-list>
+    </mat-expansion-panel>
+</mat-accordion> -->
+<mat-action-list #actionList>
+  <button cdkTrapFocus  mat-list-item *ngFor="let item of menuItems" [routerLink]="item.link">
+    <mat-icon color="primary" matListItemIcon [fontSet]="item.icon == 'clinical_notes' ? 'material-symbols-outlined' : 'material-icons'">{{item.icon}}</mat-icon>
+    <div matListItemTitle>{{item.title}}</div>
+  </button>
+</mat-action-list>
+

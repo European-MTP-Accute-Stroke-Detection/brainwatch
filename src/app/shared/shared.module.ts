@@ -8,6 +8,7 @@ import { ThemeSwitchComponent } from './components/theme-switch/theme-switch.com
 import { FooterComponent } from './components/footer/footer.component';
 import { AuthModule } from '../auth/auth.module';
 import { ProfileComponent } from './components/profile/profile.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HeaderComponent,
     ThemeSwitchComponent,
     FooterComponent,
-    ProfileComponent
+    ProfileComponent,
+    SideMenuComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +29,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     HeaderComponent,
     ThemeSwitchComponent,
     FooterComponent,
+    SideMenuComponent
   ]
 })
 export class SharedModule { }
