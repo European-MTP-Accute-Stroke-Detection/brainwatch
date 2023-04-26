@@ -18,7 +18,9 @@ export class UserService {
   ) {
     this.usersRef = db.collection(this.dbPath);
     const user = JSON.parse(localStorage.getItem('user')!);
-    this.currentUser = this.usersRef.doc(user.uid);
+    if (user) {
+      this.currentUser = this.usersRef.doc(user.uid);
+    }
   }
 
   getAll(): AngularFirestoreCollection<User> {

@@ -14,20 +14,18 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 
 import { DwvComponent } from './dwv.component';
-import { TagsDialogComponent } from './tags-dialog.component';
-import { TagsTableComponent } from './tags-table.component';
+import { TagsDialogComponent } from './components/tags-dialog.component';
+import { TagsTableComponent } from './components/tags-table.component';
 import { AngularMaterialModule } from '../angular-material.module';
 import { RequestService } from './services/request.service';
 import { HttpClientModule } from '@angular/common/http';
 import { PredictionResultComponent } from './prediction-result/prediction-result.component';
-import { NewPredictionComponent } from './new-prediction/new-prediction.component';
 @NgModule({
     declarations: [
         DwvComponent,
         TagsDialogComponent,
         TagsTableComponent,
-        PredictionResultComponent,
-        NewPredictionComponent
+        PredictionResultComponent
     ],
     imports: [
         BrowserModule,
@@ -53,4 +51,4 @@ import { NewPredictionComponent } from './new-prediction/new-prediction.componen
     ]
 })
 
-export class DwvModule {}
+export class DwvModule { }

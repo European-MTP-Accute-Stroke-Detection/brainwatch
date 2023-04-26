@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class HeaderComponent implements OnInit {
 
   showHeader = true;
-  reducedHeader = false;
+  reducedHeader = true;
 
   @Output() sidenavToggled: EventEmitter<void> = new EventEmitter<void>();
 
