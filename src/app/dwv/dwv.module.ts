@@ -19,13 +19,12 @@ import { TagsTableComponent } from './components/tags-table.component';
 import { AngularMaterialModule } from '../angular-material.module';
 import { RequestService } from './services/request.service';
 import { HttpClientModule } from '@angular/common/http';
-import { PredictionResultComponent } from './prediction-result/prediction-result.component';
+
 @NgModule({
     declarations: [
         DwvComponent,
         TagsDialogComponent,
         TagsTableComponent,
-        PredictionResultComponent
     ],
     imports: [
         BrowserModule,

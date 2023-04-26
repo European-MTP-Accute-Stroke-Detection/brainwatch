@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TagsDialogComponent } from './components/tags-dialog.component';
 import { RequestService } from './services/request.service';
 import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { PredictionResultComponent } from './prediction-result/prediction-result.component';
+import { PredictionResultComponent } from '../tabularai/components/prediction-result/prediction-result.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { FileService } from './../shared/services/file.service';
 

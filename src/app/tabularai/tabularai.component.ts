@@ -64,8 +64,6 @@ export class TabularaiComponent {
 
     this.predictionResult = await this.requestService.predictStroke(body).toPromise();
 
-    console.log(this.predictionResult);
-
     if (this.predictionResult.result == 0) {
       this.strokeMessage = 'No accute stroke risk detected. Perform further examination for more information.'
     }

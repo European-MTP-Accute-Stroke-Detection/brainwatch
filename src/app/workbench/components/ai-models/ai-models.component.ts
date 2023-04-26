@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PredictionResultComponent } from '../../../dwv/prediction-result/prediction-result.component';
+import { PredictionResultComponent } from '../../../tabularai/components/prediction-result/prediction-result.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestService } from '../../../dwv/services/request.service';
 import { FileService } from '../../../shared/services/file.service';
