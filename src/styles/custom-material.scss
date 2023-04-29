@@ -1,3 +1,11 @@
 /***************************************************************************
 *********** All overwriting material styles go in this file ****************
 ****************************************************************************/
+
+body[class="mat-app-background mat-body darkMode"] {
+    .mat-mdc-snack-bar-container.error-snackbar {
+        --mdc-snackbar-container-color: var(--app-warn-900) !important;
+        --mat-mdc-snack-bar-button-color: #fff;
+        --mdc-snackbar-supporting-text-color: #fff;
+    }
+}

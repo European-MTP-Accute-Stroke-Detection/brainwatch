@@ -7,17 +7,23 @@ import { DwvModule } from '../dwv/dwv.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../../environments/environment';
 import { AiModelsComponent } from './components/ai-models/ai-models.component';
+import { CaseInfoComponent } from './components/case-info/case-info.component';
+import { CasesModule } from '../cases/cases.module';
+import { PatientInfoComponent } from './components/patient-info/patient-info.component';
 
 @NgModule({
   declarations: [
     WorkbenchHomeComponent,
     FileUploadComponent,
     AiModelsComponent,
+    CaseInfoComponent,
+    PatientInfoComponent,
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     DwvModule,
+    CasesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   exports: [

@@ -106,6 +106,7 @@ $red: (
 // mandatory stuff for theming
 $primary: mat-palette($emerald);
 $accent:  mat-palette($pink);
+$warn:  mat-palette($red);
 
 // Generate CSS variables from theme
 
@@ -135,6 +136,7 @@ $accent:  mat-palette($pink);
   @mixin generate-material-classes {
      @include generateColors(primary, $primary);
      @include generateColors(accent, $accent);
+     @include generateColors(warn, $warn);
 }
 
 
@@ -143,6 +145,7 @@ $theme: mat-light-theme((
     color: (
       primary: $primary,
       accent: $accent,
+      warn: $warn
     ),
     typography: define-typography-config(),
     density: 0,
@@ -154,6 +157,7 @@ $dark-theme: mat-dark-theme((
     color: (
       primary: $primary,
       accent: $accent,
+      warn: $warn
     ),
     typography: define-typography-config(),
     density: 0,

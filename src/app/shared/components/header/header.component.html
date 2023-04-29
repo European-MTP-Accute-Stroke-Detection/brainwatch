@@ -13,8 +13,11 @@
         </span>
     </div>
 
+    <div style="display: flex; align-items:center;" *ngIf="reducedHeader">
+        <button mat-stroked-button color="primary" style="margin-right: 16px;" routerLink="/login">Login</button>
+        <app-theme-switch ></app-theme-switch>
+    </div>
     
-    <app-theme-switch *ngIf="reducedHeader"></app-theme-switch>
     <!-- <span class="example-spacer"></span> -->
     <div *ngIf="!reducedHeader">
         <button [matMenuTriggerFor]="profileMenu" mat-icon-button >

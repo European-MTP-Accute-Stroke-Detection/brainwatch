@@ -23,12 +23,13 @@
         flex-grow: 2;
     }
 
-    .patient-data-card {
-       height: 400px;
+    mat-card {
        margin-bottom: 16px;
     }
 
-    .dicom-files-card {
-        height: 400px;
-     }
+
+}
+
+mat-card-title-group {
+    align-items: center;
 }

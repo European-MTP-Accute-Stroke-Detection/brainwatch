@@ -1,0 +1,32 @@
+<div class="main">
+    <mat-list *ngIf="case">
+        <mat-list-item>
+            <div>
+                <span class="key">ID:</span>
+                <span class="value">{{case.uid}}</span>
+            </div>
+        </mat-list-item>
+        <!-- <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Name:</span>
+                <span class="value">{{case.name}}</span>
+            </div>
+        </mat-list-item> -->
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Date:</span>
+                <span class="value">{{case.date.toDate() | date: 'medium'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Notes:</span>
+                <span class="value">{{case.notes}}</span>
+            </div>
+        </mat-list-item>
+    </mat-list>
+</div>
+<mat-spinner *ngIf="!case" diameter="50"></mat-spinner>

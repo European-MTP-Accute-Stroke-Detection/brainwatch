@@ -1,0 +1,26 @@
+
+<div class="main">
+    <mat-list *ngIf="patient">
+        <mat-list-item>
+            <div>
+                <span class="key">Name:</span>
+                <span class="value">{{patient.lastname}}, {{patient.firstname}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Gender:</span>
+                <span class="value">{{patient.gender}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Age:</span>
+                <span class="value">{{patient.age}}</span>
+            </div>
+        </mat-list-item>
+    </mat-list>
+</div>
+<mat-spinner *ngIf="!patient" diameter="50"></mat-spinner>

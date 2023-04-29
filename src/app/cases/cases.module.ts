@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CasesComponent } from './cases.component';
-
+import { CasesService } from './services/cases.service';
 
 
 @NgModule({
@@ -10,6 +10,9 @@ import { CasesComponent } from './cases.component';
   ],
   imports: [
     CommonModule
+  ],
+  providers: [
+    CasesService
   ]
 })
 export class CasesModule { }

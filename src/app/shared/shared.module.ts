@@ -9,7 +9,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AuthModule } from '../auth/auth.module';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SideMenuComponent } from './components/side-menu/side-menu.component';
-
+import { ThemeService } from './services/theme.service';
+import { FbUtilsService } from './services/fb-utils.service';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,10 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     ThemeSwitchComponent,
     FooterComponent,
     SideMenuComponent
+  ],
+  providers: [
+    ThemeService,
+    FbUtilsService
   ]
 })
 export class SharedModule { }
