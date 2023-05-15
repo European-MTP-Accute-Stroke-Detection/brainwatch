@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
 import { AiModelsComponent } from './components/ai-models/ai-models.component';
 import { CaseInfoComponent } from './components/case-info/case-info.component';
 import { CasesModule } from '../cases/cases.module';
+import { DicomViewerModule } from '../dicom-viewer/dicom-viewer.module';
 import { PatientInfoComponent } from './components/patient-info/patient-info.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { PatientInfoComponent } from './components/patient-info/patient-info.com
     CommonModule,
     AngularMaterialModule,
     DwvModule,
+    DicomViewerModule,
     CasesModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],

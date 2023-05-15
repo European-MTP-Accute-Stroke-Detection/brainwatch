@@ -1,13 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { VERSION } from '@angular/core';
 import * as dwv from 'dwv';
+import Konva from 'konva';
 import { MatDialog } from '@angular/material/dialog';
 import { TagsDialogComponent } from './components/tags-dialog.component';
-import { RequestService } from './services/request.service';
-import { firstValueFrom, lastValueFrom } from 'rxjs';
-import { PredictionResultComponent } from '../tabularai/components/prediction-result/prediction-result.component';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { FileService } from './../shared/services/file.service';
+import { BehaviorSubject } from 'rxjs';
+import { Scan } from '../model/scan';
 
 // gui overrides
 
@@ -28,44 +26,18 @@ dwv.image.decoderScripts = {
 
 export class DwvComponent implements OnInit {
 
+  @Input('scans$') scans$: BehaviorSubject<Scan[]>;
+
   constructor(
-    changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,
     public dialog: MatDialog,
-    private requestService: RequestService,
-    private fileService: FileService
   ) {
     this.versions = {
       dwv: dwv.getVersion(),
       angular: VERSION.full
     };
-    this.mobileQuery = media.matchMedia('(max-width: 800px)');
-    this._mobileQueryListener = () => {
-      changeDetectorRef.detectChanges();
-      if (window.innerWidth >= 800) {
-        this.opened = true;
-      }
-      else {
-        this.opened = false;
-      }
-
-    }
-    this.mobileQuery.addListener(this._mobileQueryListener);
-  }
-
-  private _mobileQueryListener: () => void;
-  mobileQuery: MediaQueryList;
-
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
   }
 
   shouldRun = /(^|.)(stackblitz|webcontainer).(io|com)$/.test(window.location.host);
-
-  models: any[] = [
-    { value: 'combined', viewValue: 'All Stroke Types' },
-    { value: 'hemorrhage', viewValue: 'Hemorrhage Stroke' },
-    { value: 'ischemic', viewValue: 'Ischemic Stroke' },
-  ];
 
   modelRunning: boolean = false;
 
@@ -88,30 +60,25 @@ export class DwvComponent implements OnInit {
 
   private orientation: string;
 
-  // drop box class name
-  private dropboxDivId = 'dropBox';
-  private dropboxClassName = 'dropBox';
-  private borderClassName = 'dropBoxBorder';
-  private hoverClassName = 'hover';
-
   opened = false;
 
-
+  savedLayer: any;
 
   ngOnInit() {
-    // this.dialog.open(PredictionResultComponent, {
-    //   width: '80vw',
-    //   height: '92vh',
-    //   data: {
-    //     predictionId: '5522c868-c4ab-11ed-a5ba-58961dd87475'
-    //   }
-    // });
-    // create app
+
     this.dwvApp = new dwv.App();
     // initialise app
     this.dwvApp.init({
       dataViewConfigs: { '*': [{ divId: 'layerGroup0' }] },
-      tools: this.tools
+      tools: this.tools,
+    });
+    // File downloads
+    this.scans$.subscribe(scans => {
+      if (scans) {
+        this.dwvApp.loadURLs(
+          scans.map(scan => scan.downloadUrl)
+        );
+      }
     });
     // handle load events
     let nLoadItem = null;
@@ -125,13 +92,11 @@ export class DwvComponent implements OnInit {
       nReceivedLoadError = 0;
       nReceivedLoadAbort = 0;
       isFirstRender = true;
-      // hide drop box
-      this.showDropbox(false);
     });
     this.dwvApp.addEventListener('loadprogress', (event) => {
       this.loadProgress = event.loaded;
     });
-    this.dwvApp.addEventListener('renderend', (/*event*/) => {
+    this.dwvApp.addEventListener('renderend', (event) => {
       if (isFirstRender) {
         isFirstRender = false;
         // available tools
@@ -152,16 +117,11 @@ export class DwvComponent implements OnInit {
       if (nReceivedLoadError) {
         this.loadProgress = 0;
         alert('Received errors during load. Check log for details.');
-        // show drop box if nothing has been loaded
-        if (!nLoadItem) {
-          this.showDropbox(true);
-        }
       }
       if (nReceivedLoadAbort) {
         this.loadProgress = 0;
         alert('Load was aborted.');
-        this.showDropbox(true);
-      }
+      };
     });
     this.dwvApp.addEventListener('loaditem', (/*event*/) => {
       ++nLoadItem;
@@ -180,12 +140,26 @@ export class DwvComponent implements OnInit {
     });
     // handle window resize
     window.addEventListener('resize', this.dwvApp.onResize);
+  }
 
-    // setup drop box
-    this.setupDropbox();
+  createAnnotation(centerX, centerY, radius) {
 
-    // possible load from location
-    dwv.utils.loadFromUri(window.location.href, this.dwvApp);
+    var layerGroup = this.dwvApp.getLayerGroupByDivId('layerGroup0');
+
+    // get active draw layer
+    var drawLayer = layerGroup.addDrawLayer();
+
+    // Create a Point2D object for the center of the circle
+    const center = new dwv.math.Point2D(centerX, centerY);
+
+    // Create a Circle object with the specified center and radius
+    const circle = new dwv.math.Circle(center, radius);
+
+    // Get the current drawController from the DWV app
+    const drawController = drawLayer.getDrawController();
+
+    // Add the circle annotation to the drawController
+    drawController.addShape(circle);
   }
 
   /**
@@ -290,6 +264,157 @@ export class DwvComponent implements OnInit {
     if (this.dwvApp && this.selectedTool === 'Draw') {
       this.dwvApp.setToolFeatures({ shapeName: shape });
     }
+
+    var layerGroup = this.dwvApp.getActiveLayerGroup();
+    console.log(layerGroup);
+
+    var drawLayer = layerGroup.getActiveDrawLayer()
+    console.log(drawLayer);
+
+    // Get the current drawController from the DWV app
+    const drawController = drawLayer.getDrawController();
+    console.log(drawController);
+
+    const drawDisplayDetails = drawController.getDrawDisplayDetails();
+    console.log(drawDisplayDetails);
+
+    const drawStoreDetails = drawController.getDrawStoreDetails();
+    console.log(drawStoreDetails);
+
+    const convaGroup = drawController.getGroup(drawDisplayDetails[0].id);
+    console.log(convaGroup)
+
+    const myConvaLayer = this.createConvaLayer();
+    console.log(myConvaLayer);
+    this.savedLayer = myConvaLayer;
+
+    const myDrawingDetails = this.createDrawingDetails('187');
+    console.log(myDrawingDetails);
+
+    // create a new Konva rect
+    var rect = new Konva.Rect({
+      x: 20,
+      y: 20,
+      width: 100,
+      height: 50,
+      fill: 'red'
+    });
+
+    // add the rect to a layer
+    var layer = new Konva.Layer();
+    layer.add(rect);
+
+    // create a JSON string from the layer
+    var serializedLayer = JSON.stringify(layer.toJSON());
+
+
+
+
+
+  }
+
+  addLayer() {
+    var layerGroup = this.dwvApp.getActiveLayerGroup();
+    console.log(layerGroup);
+
+    var drawLayer = layerGroup.getActiveDrawLayer()
+    console.log(drawLayer);
+
+    var viewLayer = layerGroup.getActiveViewLayer()
+    console.log(drawLayer);
+
+    // Get the current drawController from the DWV app
+    const drawController = drawLayer.getDrawController();
+    console.log(drawController);
+
+    const viewController = viewLayer.getViewController();
+
+    // define a drawingDetails (an object with metadata for the drawing)
+    const drawingDetails = {
+      "1": {
+        "meta": {
+          "type": "rectangle",
+          "quantification": "1.2 cm x 3.5 cm",
+          "textExpr": "This is a rectangle with dimensions {quantification}"
+        }
+      }
+    };
+
+    // define the callback function to execute after the command has been executed
+    const exeCallback = function (cmd) {
+      console.log('Command executed:', cmd);
+    };
+
+    // define the callback function to use with the DrawCommand
+    const cmdCallback = function (cmd) {
+      console.log('DrawCommand executed:', cmd);
+    };
+
+    console.log(this.savedLayer);
+
+    const arrowShape = new dwv.tool.draw.ArrowFactory().create(
+      [new dwv.math.Point2D(9, 9), new dwv.math.Point2D(49, 49)],
+      null,
+      drawLayer
+    )
+
+    console.log(arrowShape);
+
+    // // call setDrawings() with the arguments
+    // drawController.setDrawings(
+    //   [this.savedLayer],
+    //   [drawingDetails],
+    //   cmdCallback,
+    //   exeCallback
+    // );
+  }
+
+  createDrawingDetails(id: string) {
+    return {
+      "id": id,
+      "position": "(0,0,0)",
+      "type": "Ruler",
+      "color": "#ffff80",
+      "meta": {
+        "textExpr": "{length}",
+        "quantification": {
+          "length": {
+            "value": 78.17939716184543,
+            "unit": "mm"
+          }
+        }
+      }
+    };
+  }
+
+  createConvaLayer() {
+    // create a rectangle
+    var rect = new Konva.Rect({
+      x: 20,
+      y: 20,
+      width: 100,
+      height: 50,
+      fill: 'red',
+    });
+
+    // create a shape group and add the rectangle to it
+    var shapeGroup = new Konva.Group({
+      name: 'shape-group',
+      id: '187',
+      opacity: 1,
+      visible: true
+    });
+
+    shapeGroup.add(rect);
+
+    // create a new layer
+    var layer = new Konva.Layer();
+
+    // add the position group to the layer
+    layer.add(shapeGroup);
+
+    // serialize the layer to JSON
+    return layer;
   }
 
   /**
@@ -322,108 +447,108 @@ export class DwvComponent implements OnInit {
   /**
    * Setup the data load drop box: add event listeners and set initial size.
    */
-  private setupDropbox = () => {
-    this.showDropbox(true);
-  }
+  // private setupDropbox = () => {
+  //   this.showDropbox(true);
+  // }
 
-  /**
-   * Default drag event handling.
-   * @param event The event to handle.
-   */
-  private defaultHandleDragEvent = (event: DragEvent) => {
-    // prevent default handling
-    event.stopPropagation();
-    event.preventDefault();
-  }
+  // /**
+  //  * Default drag event handling.
+  //  * @param event The event to handle.
+  //  */
+  // private defaultHandleDragEvent = (event: DragEvent) => {
+  //   // prevent default handling
+  //   event.stopPropagation();
+  //   event.preventDefault();
+  // }
 
-  /**
-   * Handle a drag over.
-   * @param event The event to handle.
-   */
-  private onBoxDragOver = (event: DragEvent) => {
-    this.defaultHandleDragEvent(event);
-    // update box border
-    const box = document.getElementById(this.dropboxDivId);
-    if (box && box.className.indexOf(this.hoverClassName) === -1) {
-      box.className += ' ' + this.hoverClassName;
-    }
-  }
+  // /**
+  //  * Handle a drag over.
+  //  * @param event The event to handle.
+  //  */
+  // private onBoxDragOver = (event: DragEvent) => {
+  //   this.defaultHandleDragEvent(event);
+  //   // update box border
+  //   const box = document.getElementById(this.dropboxDivId);
+  //   if (box && box.className.indexOf(this.hoverClassName) === -1) {
+  //     box.className += ' ' + this.hoverClassName;
+  //   }
+  // }
 
-  /**
-   * Handle a drag leave.
-   * @param event The event to handle.
-   */
-  private onBoxDragLeave = (event: DragEvent) => {
-    this.defaultHandleDragEvent(event);
-    // update box border
-    const box = document.getElementById(this.dropboxDivId);
-    if (box && box.className.indexOf(this.hoverClassName) !== -1) {
-      box.className = box.className.replace(' ' + this.hoverClassName, '');
-    }
-  }
+  // /**
+  //  * Handle a drag leave.
+  //  * @param event The event to handle.
+  //  */
+  // private onBoxDragLeave = (event: DragEvent) => {
+  //   this.defaultHandleDragEvent(event);
+  //   // update box border
+  //   const box = document.getElementById(this.dropboxDivId);
+  //   if (box && box.className.indexOf(this.hoverClassName) !== -1) {
+  //     box.className = box.className.replace(' ' + this.hoverClassName, '');
+  //   }
+  // }
 
-  /**
-   * Handle a drop event.
-   * @param event The event to handle.
-   */
-  private onDrop = (event: DragEvent) => {
-    this.defaultHandleDragEvent(event);
-    // load files
-    this.fileService.selectedFiles = event.dataTransfer.files;
-    this.dwvApp.loadFiles(event.dataTransfer.files);
-  }
+  // /**
+  //  * Handle a drop event.
+  //  * @param event The event to handle.
+  //  */
+  // private onDrop = (event: DragEvent) => {
+  //   this.defaultHandleDragEvent(event);
+  //   // load files
+  //   this.fileService.selectedFiles = event.dataTransfer.files;
+  //   this.dwvApp.loadFiles(event.dataTransfer.files);
+  // }
 
-  /**
-   * Show/hide the data load drop box.
-   * @param show True to show the drop box.
-   */
-  private showDropbox = (show: boolean) => {
-    const box = document.getElementById(this.dropboxDivId);
-    if (!box) {
-      return;
-    }
-    const layerDiv = document.getElementById('layerGroup0');
+  // /**
+  //  * Show/hide the data load drop box.
+  //  * @param show True to show the drop box.
+  //  */
+  // private showDropbox = (show: boolean) => {
+  //   const box = document.getElementById(this.dropboxDivId);
+  //   if (!box) {
+  //     return;
+  //   }
+  //   const layerDiv = document.getElementById('layerGroup0');
 
-    if (show) {
-      // reset css class
-      box.className = this.dropboxClassName + ' ' + this.borderClassName;
-      // check content
-      if (box.innerHTML === '') {
-        const p = document.createElement('p');
-        p.appendChild(document.createTextNode('Drag and drop data here'));
-        box.appendChild(p);
-      }
-      // show box
-      box.setAttribute('style', 'display:initial');
-      // stop layer listening
-      if (layerDiv) {
-        layerDiv.removeEventListener('dragover', this.defaultHandleDragEvent);
-        layerDiv.removeEventListener('dragleave', this.defaultHandleDragEvent);
-        layerDiv.removeEventListener('drop', this.onDrop);
-      }
-      // listen to box events
-      box.addEventListener('dragover', this.onBoxDragOver);
-      box.addEventListener('dragleave', this.onBoxDragLeave);
-      box.addEventListener('drop', this.onDrop);
-    } else {
-      // remove border css class
-      box.className = this.dropboxClassName;
-      // remove content
-      box.innerHTML = '';
-      // hide box
-      box.setAttribute('style', 'display:none');
-      // stop box listening
-      box.removeEventListener('dragover', this.onBoxDragOver);
-      box.removeEventListener('dragleave', this.onBoxDragLeave);
-      box.removeEventListener('drop', this.onDrop);
-      // listen to layer events
-      if (layerDiv) {
-        layerDiv.addEventListener('dragover', this.defaultHandleDragEvent);
-        layerDiv.addEventListener('dragleave', this.defaultHandleDragEvent);
-        layerDiv.addEventListener('drop', this.onDrop);
-      }
-    }
-  }
+  //   if (show) {
+  //     // reset css class
+  //     box.className = this.dropboxClassName + ' ' + this.borderClassName;
+  //     // check content
+  //     if (box.innerHTML === '') {
+  //       const p = document.createElement('p');
+  //       p.appendChild(document.createTextNode('Drag and drop data here'));
+  //       box.appendChild(p);
+  //     }
+  //     // show box
+  //     box.setAttribute('style', 'display:initial');
+  //     // stop layer listening
+  //     if (layerDiv) {
+  //       layerDiv.removeEventListener('dragover', this.defaultHandleDragEvent);
+  //       layerDiv.removeEventListener('dragleave', this.defaultHandleDragEvent);
+  //       layerDiv.removeEventListener('drop', this.onDrop);
+  //     }
+  //     // listen to box events
+  //     box.addEventListener('dragover', this.onBoxDragOver);
+  //     box.addEventListener('dragleave', this.onBoxDragLeave);
+  //     box.addEventListener('drop', this.onDrop);
+  //   } else {
+  //     // remove border css class
+  //     box.className = this.dropboxClassName;
+  //     // remove content
+  //     box.innerHTML = '';
+  //     // hide box
+  //     box.setAttribute('style', 'display:none');
+  //     // stop box listening
+  //     box.removeEventListener('dragover', this.onBoxDragOver);
+  //     box.removeEventListener('dragleave', this.onBoxDragLeave);
+  //     box.removeEventListener('drop', this.onDrop);
+  //     // listen to layer events
+  //     if (layerDiv) {
+  //       layerDiv.addEventListener('dragover', this.defaultHandleDragEvent);
+  //       layerDiv.addEventListener('dragleave', this.defaultHandleDragEvent);
+  //       layerDiv.addEventListener('drop', this.onDrop);
+  //     }
+  //   }
+  // }
 
   // drag and drop [end] -------------------------------------------------------
 

@@ -21,6 +21,7 @@ import { LandingPageModule } from './landing-page/landing-page.module';
 import { CasesModule } from './cases/cases.module';
 import { PatientsModule } from './patients/patients.module';
 import { TabularaiModule } from './tabularai/tabularai.module'
+
 @NgModule({
   declarations: [
     AppComponent

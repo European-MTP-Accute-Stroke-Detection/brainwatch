@@ -16,7 +16,7 @@
         <button mat-raised-button color="primary" (click)="authService.SignIn(email.value, password.value)">
             <ng-container *ngIf="!authService.loading">
                 Login
-            </ng-container>
+            </ng-container>   
             <mat-spinner *ngIf="authService.loading" diameter="30"></mat-spinner>
         </button>
         <button mat-button routerLink="/register">Go to Sign Up</button>

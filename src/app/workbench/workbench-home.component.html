@@ -26,11 +26,8 @@
     </mat-card>
   </div>
   <div class="center-container">
-    <mat-card>
-      <mat-card-content>
-        <app-dwv></app-dwv>
-      </mat-card-content>
-    </mat-card>
+    <app-dwv *ngIf="!newDicomViewer" [scans$]="scans$"></app-dwv>
+    <app-dicom-viewer *ngIf="newDicomViewer"></app-dicom-viewer>
   </div>
   <div class="right-container">
     <mat-card class="patient-data-card">

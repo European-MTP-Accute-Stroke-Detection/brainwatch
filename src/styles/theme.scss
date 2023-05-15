@@ -169,7 +169,7 @@ $dark-theme: mat-dark-theme((
 @include generate-material-classes();
 
 .darkMode {
-    @include angular-material-theme($dark-theme);
+  @include angular-material-theme($dark-theme);
 }
 
 

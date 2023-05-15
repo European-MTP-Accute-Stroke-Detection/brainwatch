@@ -14,7 +14,9 @@
     </div>
 
     <div style="display: flex; align-items:center;" *ngIf="reducedHeader">
-        <button mat-stroked-button color="primary" style="margin-right: 16px;" routerLink="/login">Login</button>
+        <button mat-stroked-button [color]="themeService.currentTheme.value == 'light' ? null : 'primary'" style="margin-right: 16px;" routerLink="/login">
+            Login
+        </button>
         <app-theme-switch ></app-theme-switch>
     </div>
     

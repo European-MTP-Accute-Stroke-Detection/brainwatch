@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
-
 import { DwvComponent } from './dwv.component';
 import { TagsDialogComponent } from './components/tags-dialog.component';
 import { TagsTableComponent } from './components/tags-table.component';

@@ -32,7 +32,9 @@
                 "output": "/assets/dwv/decoders"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": [],
             "vendorChunk": true,
             "extractLicenses": false,
@@ -107,14 +109,19 @@
                 "output": "/assets/dwv/decoders"
               }
             ],
-            "styles": ["src/styles.scss"],
+            "styles": [
+              "src/styles.scss"
+            ],
             "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         },
         "e2e": {
@@ -133,7 +140,9 @@
     }
   },
   "cli": {
-    "schematicCollections": ["@angular-eslint/schematics"],
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ],
     "analytics": false
   },
   "schematics": {

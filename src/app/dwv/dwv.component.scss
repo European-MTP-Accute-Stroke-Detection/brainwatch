@@ -21,12 +21,18 @@ mat-spinner {
 
 .predict-button-container {
   display: flex;
-  justify-content: center;
+  justify-content: start;
 }
 
+#viewer-spinner {
+  position: absolute;
+  top: 30%;
+  left: calc(50% - 35px);
+}
 
 .button-row {
-  text-align: center;
+  margin-bottom: 16px;
+  margin-left: 1px;
 }
 
 .nav-list {
@@ -35,7 +41,7 @@ mat-spinner {
 
 #dwv .mat-button-toggle-group {
   align-items: center;
-  margin: 0.2em;
+  margin-right: 8px;
 }
 #dwv .mat-button-toggle-checked {
   color: mat.get-color-from-palette($primary);
@@ -54,6 +60,7 @@ mat-spinner {
   display: flex;
   justify-content: center;
   height: 90%;
+  width: 100%;
 }
 .layer {
   position: absolute;
