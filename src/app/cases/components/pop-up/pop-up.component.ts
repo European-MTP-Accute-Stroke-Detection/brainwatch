@@ -33,7 +33,7 @@ constructor(private router: Router,private casesService:CasesService,private pat
 ngOnInit(): void {
   this.patientsService.getPatientsByUserId().valueChanges().subscribe((data: Patient[]) => {
     this.patientsfromDB = data;
-  
+    this.initializeForm();
   });
   
 }

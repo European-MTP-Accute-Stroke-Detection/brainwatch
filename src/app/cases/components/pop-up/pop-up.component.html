@@ -1,9 +1,4 @@
-<form [formGroup]="form">
-
-
-    
-     
-      
+<form [formGroup]="form">  
 
     <mat-form-field appearance="outline">
         <mat-label for="date">Date</mat-label>
@@ -15,14 +10,19 @@
         <mat-label for="text">Add a description of the case</mat-label>
         <input matInput placeholder="Add a description of the case" type="text" id="text" formControlName="text">
     </mat-form-field>
+
     <mat-form-field appearance="fill" id="patientForm">
-        <mat-label>Select Patient</mat-label>
-        <mat-select formControlName="pid" name="patient">
-          <mat-option *ngFor="let patient of patientsfromDB" [value]="patient.uid">
-             {{ patient.firstname }} {{ patient.lastname }} - {{patient.uid}} 
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+      <mat-label>Select Patient</mat-label>
+      <mat-select formControlName="pid" name="patient">
+        <mat-option *ngFor="let patient of patientsfromDB" [value]="patient.uid">
+          <mat-icon *ngIf="patient.gender === 'male'">male</mat-icon>
+          <mat-icon *ngIf="patient.gender === 'female'">female</mat-icon>
+          {{ patient.firstname }} {{ patient.lastname }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    
       
 
   

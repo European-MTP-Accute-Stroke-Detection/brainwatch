@@ -61,17 +61,17 @@ export class CasesComponent {
       });
     }
   
-    editCase(patient:Patient) {
+    editCase(cases:Case) {
       const dialogRef = this.dialog.open(EditPartComponent, {
-        data: { patient }
+        data: { cases }
       });
       
         
     }
-    viewCase(patient:Patient)
+    viewCase(cases:Case)
     {
       const dialogRef = this.dialog.open(ViewPartComponent, {
-        data: { patient  }
+        data: { cases  }
       });
       
     }
