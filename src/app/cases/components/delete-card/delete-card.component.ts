@@ -14,12 +14,12 @@ export class DeleteCardComponent {
   case:Case;
 
 
-  constructor(private _snackBar: MatSnackBar,private casesService:CasesService,private fb: FormBuilder, private dialogRef: MatDialogRef<DeleteCardComponent>, @Inject(MAT_DIALOG_DATA) public data: { case: Case }){
+  constructor(private _snackBar: MatSnackBar,private casesService:CasesService,private fb: FormBuilder, private dialogRef: MatDialogRef<DeleteCardComponent>, @Inject(MAT_DIALOG_DATA) public data: { cases: Case }){
 
   }
   
   ngOnInit(): void {
-    this.case = this.data.case;
+    this.case = this.data.cases;
     console.log(this.case)
    
   }

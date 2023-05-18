@@ -39,7 +39,7 @@ export class CasesService {
     
    // this.casesRef.doc(uid).set(user);
 
-    return this.casesRef.add({ ...user });
+   // return this.casesRef.add({ ...user });
   }
 
   update(id: string, data: any): Promise<void> {
@@ -63,7 +63,7 @@ export class CasesService {
   getPatientsByUserId(): AngularFirestoreCollection<Patient> {
     const userId= JSON.parse(localStorage.getItem('user')!)?.uid;
     return this.db.collection(this.dbPath, (ref) =>
-      ref.where('userId', '==', userId)
+      ref.where('user', '==', userId)
     );
   }
 }

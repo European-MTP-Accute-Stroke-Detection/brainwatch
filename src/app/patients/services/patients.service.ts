@@ -62,7 +62,7 @@ export class PatientsService {
   getPatientsByUserId(): AngularFirestoreCollection<Patient> {
     const userId= JSON.parse(localStorage.getItem('user')!)?.uid;
     return this.db.collection(this.dbPath, (ref) =>
-      ref.where('userId', '==', userId)
+      ref.where('user', '==', userId)
     );
   }
   
