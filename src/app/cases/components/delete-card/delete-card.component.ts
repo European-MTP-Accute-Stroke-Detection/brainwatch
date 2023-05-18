@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Case } from 'src/app/model/case';
 import { CasesService } from '../../services/cases.service';
 import { FormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
+import { Case } from 'src/app/model/case';
 @Component({
   selector: 'app-delete-card',
   templateUrl: './delete-card.component.html',
@@ -14,10 +14,14 @@ export class DeleteCardComponent {
   case:Case;
 
 
-  constructor(private _snackBar: MatSnackBar,private casesService:CasesService,private fb: FormBuilder, private dialogRef: MatDialogRef<DeleteCardComponent>, @Inject(MAT_DIALOG_DATA) public data: { case: Case }){}
+  constructor(private _snackBar: MatSnackBar,private casesService:CasesService,private fb: FormBuilder, private dialogRef: MatDialogRef<DeleteCardComponent>, @Inject(MAT_DIALOG_DATA) public data: { case: Case }){
+
+  }
   
   ngOnInit(): void {
     this.case = this.data.case;
+    console.log(this.case)
+   
   }
 
   deleteCase() {

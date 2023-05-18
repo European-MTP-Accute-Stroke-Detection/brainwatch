@@ -85,7 +85,7 @@ export class EditPartComponent {
    
 
     if (this.form.valid) {
-      this.patientsService.update(this.patient.patientId,this.form.value);
+      this.patientsService.update(this.patient.uid,this.form.value);
       this.openSnackBar()
     }
     close();

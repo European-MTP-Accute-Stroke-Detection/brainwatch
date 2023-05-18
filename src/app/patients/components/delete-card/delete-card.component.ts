@@ -24,7 +24,7 @@ export class DeleteCardComponent {
 
   deletePatient() {
     
-    this.patientsService.delete(this.patient.patientId);
+    this.patientsService.delete(this.patient.uid);
     this.openSnackBar()
     this.dialogRef.close();
       

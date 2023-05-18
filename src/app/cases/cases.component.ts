@@ -55,6 +55,7 @@ export class CasesComponent {
     }
     deleteSafe(cases:Case)
     {
+      
      const dialogRef = this.dialog.open(DeleteCardComponent, {
         data: { cases }
       });

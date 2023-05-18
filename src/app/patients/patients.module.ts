@@ -57,6 +57,7 @@ import { ViewPartComponent } from './components/view-part/view-part.component';
     MatCheckboxModule,
     MatSnackBarModule,
     BrowserAnimationsModule
+    
   ]
 })
 export class PatientsModule { }

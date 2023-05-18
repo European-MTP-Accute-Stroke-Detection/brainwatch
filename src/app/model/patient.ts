@@ -1,8 +1,8 @@
 import { Case } from "./case";
 
 export interface Patient {
-    patientId?:string;
-    userId?:any;
+    uid?:string;
+    user?:any;
     firstname: string;
     lastname: string;
     email: string;

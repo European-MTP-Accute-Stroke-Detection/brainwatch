@@ -31,14 +31,14 @@ export class PatientsService {
     return this.patientsRef.doc(uid);
   }
 
-  create(user: Patient): any {
+  create(patient: Patient): any {
     const userUid = JSON.parse(localStorage.getItem('user')!)?.uid;
     const patientId = this.generateFirebaseId();
-    const patientWithUserId = { ...user, userId: userUid ,patientId: patientId};
+   
+    const patientWithUserId = { ...patient, user: userUid ,uid: patientId};
     
-    this.patientsRef.doc(patientId).set(patientWithUserId);
-
-    //return this.patientsRef.add({ ...user });
+    return this.patientsRef.doc(patientId).set(patientWithUserId);
+    //return this.patientsRef.add({ ...patient });
   }
 
   update(id: string, data: any): Promise<void> {
