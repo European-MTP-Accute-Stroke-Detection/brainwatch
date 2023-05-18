@@ -56,6 +56,8 @@ export class DwvComponent implements OnInit {
   public dataLoaded = false;
 
   private dwvApp: any;
+
+
   private metaData: any[];
 
   private orientation: string;
@@ -78,6 +80,7 @@ export class DwvComponent implements OnInit {
         this.dwvApp.loadURLs(
           scans.map(scan => scan.downloadUrl)
         );
+
       }
     });
     // handle load events
@@ -122,6 +125,10 @@ export class DwvComponent implements OnInit {
         this.loadProgress = 0;
         alert('Load was aborted.');
       };
+      const state = new dwv.io.State();
+      const stateJson = state.toJSON(this.dwvApp);
+      console.log(stateJson);
+      console.log(state);
     });
     this.dwvApp.addEventListener('loaditem', (/*event*/) => {
       ++nLoadItem;
@@ -140,6 +147,12 @@ export class DwvComponent implements OnInit {
     });
     // handle window resize
     window.addEventListener('resize', this.dwvApp.onResize);
+  }
+
+  readState() {
+    const state = new dwv.io.State();
+    const stateJson = state.toJSON(this.dwvApp);
+    console.log(stateJson);
   }
 
   createAnnotation(centerX, centerY, radius) {
@@ -306,10 +319,6 @@ export class DwvComponent implements OnInit {
 
     // create a JSON string from the layer
     var serializedLayer = JSON.stringify(layer.toJSON());
-
-
-
-
 
   }
 

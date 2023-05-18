@@ -1,7 +1,13 @@
-<div>
-    <button (click)="loadDICOMImage()">Load DICOM Image</button>
-    <button (click)="enableDrawingMode()">Enable Drawing Mode</button>
-    <button (click)="disableDrawingMode()">Disable Drawing Mode</button>
-    <button (click)="clearCanvas()">Clear Canvas</button>
-    <div #canvas width="1000" height="1000"></div>
+<div class="main">
+    <div>
+        <button (click)="loadDICOMImage()">Load DICOM Image</button>
+        <button (click)="enableDrawingMode()">Enable Drawing Mode</button>
+        <button (click)="disableDrawingMode()">Disable Drawing Mode</button>
+        <button (click)="clearCanvas()">Clear Canvas</button>
+        <button (click)="drawRectangle()">Draw Rectangle</button>
+    </div>
+    
+    <div #canvas class="canvas-div">
+        <canvas class="cornerstone-canvas"></canvas>
+    </div>
 </div>

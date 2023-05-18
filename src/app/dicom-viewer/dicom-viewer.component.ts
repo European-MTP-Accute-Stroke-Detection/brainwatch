@@ -13,6 +13,7 @@ import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader';
 })
 export class DicomViewerComponent implements OnInit {
   @ViewChild('canvas') canvasRef: ElementRef;
+  canvasEl: HTMLCanvasElement;
   private fabricCanvas: fabric.Canvas;
 
   ngOnInit() {
@@ -34,27 +35,44 @@ export class DicomViewerComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    const canvasEl: HTMLCanvasElement = this.canvasRef.nativeElement;
-    cornerstone.enable(canvasEl);
-    // const rect = new fabric.Rect({
-    //   left: 100,
-    //   top: 100,
-    //   width: 200,
-    //   height: 100,
-    //   fill: 'red'
-    // });
-    // const fabricCanvas = new fabric.Canvas(canvasEl);
-    // fabricCanvas.add(rect);
+    this.canvasEl = this.canvasRef.nativeElement;
+    cornerstone.enable(this.canvasEl);
+    this.loadDICOMImage()
+
+    this.fabricCanvas = new fabric.Canvas(this.canvasEl, { selection: false });
+
+    window.addEventListener('resize', () => {
+      this.resizeCanvas(this.canvasEl);
+    });
+  }
+
+  resizeCanvas(canvasEl: HTMLCanvasElement) {
+    const element = cornerstone.getEnabledElement(canvasEl);
+    console.log(element)
+    if (element.image) {
+      cornerstone.resize(element.element, true);
+    }
   }
 
   loadDICOMImage() {
     const imageId = 'https://firebasestorage.googleapis.com/v0/b/brainwatch-14583.appspot.com/o/Cases%2FlPbQ1cn6zrSBgaWGBcx3%2Fscans%2FLRyqBp6TO4WoNwVMq5br.dcm?alt=media&token=bd3f99f4-a956-4908-90ec-1118cb492c5b';
     cornerstone.loadAndCacheImage("dicomweb:" + imageId).then((imageData: cornerstone.Image) => {
-      console.log(imageData);
-      var viewport = cornerstone.getDefaultViewportForImage(this.canvasRef.nativeElement, imageData);
-      console.log(this.canvasRef.nativeElement);
-      cornerstone.displayImage(this.canvasRef.nativeElement, imageData, viewport);
+      var viewport = cornerstone.getDefaultViewportForImage(this.canvasEl, imageData);
+
+      cornerstone.displayImage(this.canvasEl, imageData, viewport);
+
     }).catch(error => { console.error(error) });
+  }
+
+  drawRectangle() {
+    const rect = new fabric.Rect({
+      top: 100,
+      left: 100,
+      width: 60,
+      height: 70,
+      fill: 'red'
+    });
+    this.fabricCanvas.add(rect);
   }
 
   enableDrawingMode() {

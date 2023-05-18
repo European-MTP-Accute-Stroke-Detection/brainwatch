@@ -10,12 +10,9 @@
 
     .left-container {
         flex-grow: 1;
-
     }
     .center-container {
         flex-grow: 4;
-        max-width: calc(100vh - 160px); 
-
         
         p {
             background-color: var(--02-dp);
