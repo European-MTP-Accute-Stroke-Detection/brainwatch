@@ -1,5 +1,6 @@
 
 
+
 footer {
     height: 48px;
     display: flex;
@@ -18,7 +19,8 @@ footer {
     margin: 3rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    column-gap: 2rem;
+    row-gap: 1rem;
    
    
   }
@@ -72,38 +74,5 @@ footer {
     cursor: pointer;
     margin-top: 1rem;
   }
-
   
-main {
-  // min-height: 82vh;
-  height: 550px;
-   overflow-y: scroll;
   
-}
-
-.tableContainer
-{
-   margin: 3% auto;
-   width: 90%;
-   overflow-x:auto ;
-}
-.btnCentered
-{
-   display: flex;
-   margin: 1% auto;
-   align-items:baseline;
-   justify-content: flex-end;
-}
-
-
-.logoContainer
-{
-   margin: 0 auto;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-}
-#addPatientButton
-{
-  margin : 0 0  24px 0;
-}

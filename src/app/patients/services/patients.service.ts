@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, Reference } from '@angular/fire/compat/firestore';
+import { User } from 'firebase/auth';
 import { Patient } from 'src/app/model/patient';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PatientsService {
+  user: Reference<User>
 
   private dbPath = '/patients';
 
@@ -30,7 +32,13 @@ export class PatientsService {
   }
 
   create(user: Patient): any {
-    return this.patientsRef.add({ ...user });
+    const userUid = JSON.parse(localStorage.getItem('user')!)?.uid;
+    const patientId = this.generateFirebaseId();
+    const patientWithUserId = { ...user, userId: userUid ,patientId: patientId};
+    
+    this.patientsRef.doc(patientId).set(patientWithUserId);
+
+    //return this.patientsRef.add({ ...user });
   }
 
   update(id: string, data: any): Promise<void> {
@@ -40,4 +48,22 @@ export class PatientsService {
   delete(id: string): Promise<void> {
     return this.patientsRef.doc(id).delete();
   }
+  generateFirebaseId(): string {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let id = '';
+  
+    for (let i = 0; i < 20; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      id += chars.charAt(randomIndex);
+    }
+  
+    return id;
+  }
+  getPatientsByUserId(): AngularFirestoreCollection<Patient> {
+    const userId= JSON.parse(localStorage.getItem('user')!)?.uid;
+    return this.db.collection(this.dbPath, (ref) =>
+      ref.where('userId', '==', userId)
+    );
+  }
+  
 }

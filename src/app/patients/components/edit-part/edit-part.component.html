@@ -1,0 +1,86 @@
+<!-- popup.component.html -->
+<form [formGroup]="form">
+
+    <mat-form-field appearance="outline">
+        <mat-label for="first-name">First Name</mat-label>
+        <input matInput placeholder="First Name" type="text" id="firstname" formControlName="firstname">
+       
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label for="last-name">Last Name</mat-label>
+        <input matInput placeholder="Last Name" type="text" id="lastname" formControlName="lastname">
+       
+    </mat-form-field>
+  
+    <mat-form-field appearance="outline">
+      <mat-label for="age">Age</mat-label>
+      <input matInput placeholder="Age" type="number" id="age" formControlName="age">
+    
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label for="bmi">BMI</mat-label>
+    <input matInput placeholder="BMI" type="number" id="bmi" formControlName="bmi">
+  
+  </mat-form-field>
+  
+
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Gender</mat-label>
+          <mat-select placeholder="Select Gender" type="text" id="gender" formControlName="gender">
+            <mat-option value="male">Male</mat-option>
+            <mat-option value="female">Female</mat-option>
+            <mat-option value="undefined">Undefined</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>WorkType</mat-label>
+          <mat-select placeholder="Select Work Type" type="text" id="work" formControlName="work">
+            <mat-option value="chidren">Children</mat-option>
+            <mat-option value="Govt-jov">Govt-job</mat-option>
+            <mat-option value="Never_worked">Never Worked</mat-option>
+            <mat-option value="Private">Private</mat-option>
+            <mat-option value="Self-Employed">Self-Employed</mat-option>
+           
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field appearance="outline">
+          <mat-label>Residency</mat-label>
+          <mat-select placeholder="Select Residency Type" type="text" id="residency" formControlName="residency">
+            <mat-option value="rural">Rural</mat-option>
+            <mat-option value="urban">Urban</mat-option>
+           
+          </mat-select>
+        </mat-form-field>
+        
+   
+    <mat-form-field appearance="outline">
+        <mat-label for="average-glucose-level">Average glucose level</mat-label>
+        <input matInput placeholder="Average glucose level" type="number" id="averageGlucoseLevel" formControlName="averageGlucoseLevel">
+        
+    </mat-form-field>
+   
+    <section class="example-section">
+      <mat-checkbox color="primary"class="example-margin" id="hypertension" value="hypertension" formControlName="hypertension">Hypertension</mat-checkbox>
+      </section>
+
+      <section class="example-section">
+        <mat-checkbox color="primary" class="example-margin" id="heartDisease" value="heartDisease" formControlName="heartDisease">Heart Disease</mat-checkbox>
+        </section>
+
+        <section class="example-section">
+          <mat-checkbox color="primary"class="example-margin" id="married" value="married" formControlName="married">Married</mat-checkbox>
+          </section>
+
+          <section class="example-section">
+            <mat-checkbox color="primary" class="example-margin" id="smoke" value="smoke" formControlName="smoke">Smoke</mat-checkbox>
+            </section>
+  
+  
+    <button  mat-raised-button  [color]="form.valid ? 'primary' : 'default'" [disabled]="!form.valid"  type="submit" (click)="submit()">Submit</button>
+   
+  </form>
+  
+  
