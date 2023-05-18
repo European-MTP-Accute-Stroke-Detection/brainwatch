@@ -66,6 +66,7 @@ export class PopupComponent {
   submit() {
     if (this.form.valid) { 
     this.patientsService.create({ ...this.form.value}); 
+    this.openSnackBar()
     this.dialogRef.close();
       
     }

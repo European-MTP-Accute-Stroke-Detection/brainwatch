@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PatientsService } from 'src/app/patients/services/patients.service';
 import { Router } from '@angular/router';
 import { Reference } from '@angular/fire/compat/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -29,7 +30,7 @@ export class PopUpComponent implements OnInit{
 
 });
 
-constructor(private router: Router,private casesService:CasesService,private patientsService : PatientsService,private fb: FormBuilder, private dialogRef: MatDialogRef<PopUpComponent>) {}
+constructor(private _snackBar: MatSnackBar,private router: Router,private casesService:CasesService,private patientsService : PatientsService,private fb: FormBuilder, private dialogRef: MatDialogRef<PopUpComponent>) {}
 ngOnInit(): void {
   this.patientsService.getPatientsByUserId().valueChanges().subscribe((data: Patient[]) => {
     this.patientsfromDB = data;
@@ -59,8 +60,15 @@ submit() {
   if (this.form.valid) {
    
   this.casesService.create({...this.form.value}); 
+  this.openSnackBar();
   this.dialogRef.close();
     
   }
+}
+openSnackBar() {
+  this._snackBar.open('Case added successfully!', 'Close', {
+    duration: 3000, // Set the duration for how long the snackbar should be visible
+   
+  });
 }
 }

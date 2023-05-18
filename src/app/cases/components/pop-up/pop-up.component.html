@@ -17,6 +17,7 @@
         <mat-option *ngFor="let patient of patientsfromDB" [value]="patient.uid">
           <mat-icon *ngIf="patient.gender === 'male'">male</mat-icon>
           <mat-icon *ngIf="patient.gender === 'female'">female</mat-icon>
+          <mat-icon *ngIf="patient.gender === 'undefined'">person</mat-icon>
           {{ patient.firstname }} {{ patient.lastname }}
         </mat-option>
       </mat-select>
