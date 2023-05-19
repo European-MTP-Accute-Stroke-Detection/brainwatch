@@ -59,7 +59,7 @@ export class WorkbenchHomeComponent implements OnInit {
   }
 
   async fetchPatient() {
-    this.case.patient.get().then(result => this.patient = result.data()).catch(e => {
+    this.case.patientRef.get().then(result => this.patient = result.data()).catch(e => {
       this.patient = {} as any;
     });
   }
