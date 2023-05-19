@@ -1,0 +1,11 @@
+<mat-card >
+    <mat-card-header>
+      <mat-card-title>Warning!</mat-card-title>
+      <mat-card-subtitle>You are about to delete a case parmanently from the database. Are you sure you want to proceed?</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-actions align="end">
+      
+      <button mat-button (click)="exit()" class="btnCancel" >Cancel</button>
+      <button mat-button (click)="deleteCase()" class="btnDelete" >Delete</button>
+    </mat-card-actions>
+  </mat-card>

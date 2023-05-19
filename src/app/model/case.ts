@@ -1,12 +1,13 @@
-import { DocumentReference } from '@angular/fire/compat/firestore';
-import { Scan } from './scan'
-import { Patient } from './patient';
+import { CollectionReference, DocumentReference } from "@angular/fire/compat/firestore";
+import { Patient } from "./patient";
+import { User } from "./user";
 
 export interface Case {
     uid: string;
-    date: any;
-    name: string;
-    scans: Scan[];
+    date: Date;
     notes: string;
-    patient: DocumentReference<Patient>;
+    patient?: Patient;
+    user: User;
+    patientRef?: DocumentReference<Patient>;
+    userRef: DocumentReference<User>;
 }

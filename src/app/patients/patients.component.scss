@@ -1,0 +1,40 @@
+
+main {
+   // min-height: 82vh;
+   height: 550px;
+    overflow-y: scroll;
+   
+}
+
+.tableContainer{
+   padding: 32px 64px;
+   overflow-x:auto ;
+}
+
+.btnCentered
+{
+    display: flex;
+    margin: 1% auto;
+    align-items:baseline;
+    justify-content: space-between;
+}
+
+
+.logoContainer
+{
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchBar{
+    width: 100%;
+}
+    
+.no-data-cell {
+    text-align: center;
+    padding: 32px 0;
+    font-style: italic;
+    color: var(--soft-text);
+}
