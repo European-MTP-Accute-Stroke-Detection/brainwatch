@@ -1,10 +1,13 @@
-import { Reference } from "@angular/fire/compat/storage/interfaces";
+import { CollectionReference, DocumentReference } from "@angular/fire/compat/firestore";
 import { Patient } from "./patient";
+import { User } from "./user";
 
 export interface Case {
     uid: string;
     date: Date;
-    text: string;
-    pid: string;
-    userId:string;
+    notes: string;
+    patient?: Patient;
+    user: User;
+    patientRef?: DocumentReference<Patient>;
+    userRef: DocumentReference<User>;
 }

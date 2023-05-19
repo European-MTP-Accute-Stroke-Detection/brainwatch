@@ -11,33 +11,31 @@ import { Case } from 'src/app/model/case';
   styleUrls: ['./delete-card.component.scss']
 })
 export class DeleteCardComponent {
-  case:Case;
+  case: Case;
 
 
-  constructor(private _snackBar: MatSnackBar,private casesService:CasesService,private fb: FormBuilder, private dialogRef: MatDialogRef<DeleteCardComponent>, @Inject(MAT_DIALOG_DATA) public data: { cases: Case }){
+  constructor(private _snackBar: MatSnackBar, private casesService: CasesService, private fb: FormBuilder, private dialogRef: MatDialogRef<DeleteCardComponent>, @Inject(MAT_DIALOG_DATA) public data: { cases: Case }) {
 
   }
-  
+
   ngOnInit(): void {
     this.case = this.data.cases;
-    console.log(this.case)
-   
   }
 
   deleteCase() {
-    
+
     this.casesService.delete(this.case.uid);
     this.openSnackBar()
     this.dialogRef.close();
-      
+
   }
-  exit(){   
+  exit() {
     this.dialogRef.close();
   }
   openSnackBar() {
     this._snackBar.open('Case deleted successfully!', 'Close', {
       duration: 3000, // Set the duration for how long the snackbar should be visible
-     
+
     });
   }
 

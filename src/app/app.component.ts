@@ -43,7 +43,6 @@ export class AppComponent {
   }
 
   toggleSideNavMode(val: any) {
-    console.log(val.url.endsWith('/workbench'));
     if (val instanceof NavigationEnd && (val.url.endsWith('/workbench'))) {
       this.sideNavMode = 'over'
     }

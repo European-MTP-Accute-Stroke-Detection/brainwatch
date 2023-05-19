@@ -6,12 +6,11 @@ main {
    
 }
 
-.tableContainer
-{
-    margin: 3% auto;
-    width: 90%;
-    overflow-x:auto ;
+.tableContainer{
+   padding: 32px 64px;
+   overflow-x:auto ;
 }
+
 .btnCentered
 {
     display: flex;
@@ -29,22 +28,13 @@ main {
     justify-content: center;
 }
 
-
-.example-form{
-   
-    
-    
-}
 .searchBar{
-   
-   
     width: 100%;
-    height: 10vh;
-    
-    
 }
     
-#addPatientButton
-{
- // align-self: center;
+.no-data-cell {
+    text-align: center;
+    padding: 32px 0;
+    font-style: italic;
+    color: var(--soft-text);
 }

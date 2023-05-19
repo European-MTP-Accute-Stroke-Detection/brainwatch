@@ -15,60 +15,53 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './pop-up.component.html',
   styleUrls: ['./pop-up.component.scss']
 })
-export class PopUpComponent implements OnInit{
-  patientsfromDB: Patient[] = [];  
-  selectedPatient : Reference<Patient>;
+export class PopUpComponent implements OnInit {
+  patientsfromDB: Patient[] = [];
+  selectedPatient: Reference<Patient>;
 
-  dataSource :any;// new MatTableDataSource<Patient>(this.patientsfromDB);
-  form: FormGroup = this.fb.group({
-   
-    date: ['', Validators.required],
-    text: [''],
-    pid: [null]
- 
+  dataSource: any;// new MatTableDataSource<Patient>(this.patientsfromDB);
+  form: FormGroup = new FormGroup({});
 
+  constructor(
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private casesService: CasesService,
+    private patientsService: PatientsService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<PopUpComponent>
+  ) { }
 
-});
-
-constructor(private _snackBar: MatSnackBar,private router: Router,private casesService:CasesService,private patientsService : PatientsService,private fb: FormBuilder, private dialogRef: MatDialogRef<PopUpComponent>) {}
-ngOnInit(): void {
-  this.patientsService.getPatientsByUserId().valueChanges().subscribe((data: Patient[]) => {
-    this.patientsfromDB = data;
+  ngOnInit(): void {
     this.initializeForm();
-  });
-  
-}
-  initializeForm() {
-    
-   
-  this.form= this.fb.group({
-    
-    date: ['', Validators.required],
-    text: [''],
-    pid: [null]
+    this.patientsService.getAll().valueChanges({ idField: 'uid' }).subscribe((data: Patient[]) => {
+      this.patientsfromDB = data;
+    });
 
- 
-   
-  });
-} 
-
-close() {
-  this.dialogRef.close();
-}
-
-submit() {
-  if (this.form.valid) {
-   
-  this.casesService.create({...this.form.value}); 
-  this.openSnackBar();
-  this.dialogRef.close();
-    
   }
-}
-openSnackBar() {
-  this._snackBar.open('Case added successfully!', 'Close', {
-    duration: 3000, // Set the duration for how long the snackbar should be visible
-   
-  });
-}
+
+  initializeForm() {
+    this.form = this.fb.group({
+      date: ['', Validators.required],
+      notes: [''],
+      patient: [{}]
+    });
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  submit() {
+    if (this.form.valid) {
+      this.casesService.create({ ...this.form.value });
+      this.openSnackBar();
+      this.dialogRef.close();
+    }
+  }
+  openSnackBar() {
+    this._snackBar.open('Case added successfully!', 'Close', {
+      duration: 3000, // Set the duration for how long the snackbar should be visible
+
+    });
+  }
 }

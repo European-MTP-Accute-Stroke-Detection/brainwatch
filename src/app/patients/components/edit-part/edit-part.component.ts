@@ -1,4 +1,4 @@
-import { Component,OnInit,Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PatientsService } from '../../services/patients.service';
@@ -13,54 +13,38 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class EditPartComponent {
 
   //private patientId = JSON.parse(localStorage.getItem('patient')!).uid; 
-  form: FormGroup = this.fb.group({
-  
-    firstname: ['', Validators.required   ],
-      lastname: ['', Validators.required],
-      gender:['', Validators.required],
-      age: [18, Validators.required],
-      bmi:[19],
-      work:[''],
-      residency:[''],
-      averageGlucoseLevel: [120],
-      hypertension: [false],
-      heartDisease:[false],
-      married: [false],
-      smoke: [false],
-   
- 
+  form: FormGroup;
 
-  });
+  patient: Patient;
 
-  patient:Patient;
-  
-  constructor(private _snackBar: MatSnackBar,private patientsService: PatientsService,private fb: FormBuilder, private dialogRef: MatDialogRef<EditPartComponent>, @Inject(MAT_DIALOG_DATA) public data: { patient: Patient}) {
-    
-  }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private patientsService: PatientsService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<EditPartComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { patient: Patient }
+  ) { }
 
 
   ngOnInit(): void {
-   
     this.form = this.fb.group({
-      firstname: ['', Validators.required   ],
+      firstname: ['', Validators.required],
       lastname: ['', Validators.required],
-      gender:['', Validators.required],
+      gender: ['', Validators.required],
       age: [18, Validators.required],
-      bmi:[19],
-      work:[''],
-      residency:[''],
+      bmi: [19],
+      work: [''],
+      residency: [''],
       averageGlucoseLevel: [120],
       hypertension: [false],
-      heartDisease:[false],
+      heartDisease: [false],
       married: [false],
       smoke: [false],
-     
     });
     this.patient = this.data.patient;
-   
+
     // Set the form controls to the patient properties
     this.form.patchValue({
-      
       firstname: this.patient.firstname,
       lastname: this.patient.lastname,
       averageGlucoseLevel: this.patient.averageGlucoseLevel,
@@ -69,11 +53,10 @@ export class EditPartComponent {
       smoke: this.patient.smoke,
       age: this.patient.age,
       heartDisease: this.patient.heartDisease,
-      bmi:this.patient.bmi,
-      gender:this.patient.gender,
-      work:this.patient.work,
+      bmi: this.patient.bmi,
+      gender: this.patient.gender,
+      work: this.patient.work,
       residency: this.patient.residency
-
     });
   }
 
@@ -81,19 +64,16 @@ export class EditPartComponent {
     this.dialogRef.close();
   }
 
-  submit() {  
-   
-
+  submit() {
     if (this.form.valid) {
-      this.patientsService.update(this.patient.uid,this.form.value);
+      this.patientsService.update(this.patient.uid, this.form.value);
       this.openSnackBar()
     }
-    close();
+    this.close();
   }
   openSnackBar() {
     this._snackBar.open('Patient edited successfully!', 'Close', {
       duration: 3000, // Set the duration for how long the snackbar should be visible
-     
     });
   }
 }

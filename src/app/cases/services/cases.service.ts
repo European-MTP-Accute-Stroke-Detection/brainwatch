@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
+import { UserService } from 'src/app/auth/services/user.service';
 import { Case } from 'src/app/model/case';
 import { Patient } from 'src/app/model/patient';
+import { User } from 'src/app/model/user';
+import { PatientsService } from 'src/app/patients/services/patients.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +14,16 @@ export class CasesService {
   private dbPath = '/cases';
 
   casesRef: AngularFirestoreCollection<Case>;
-
-  currentUser: AngularFirestoreDocument<Case>;
+  currentUser: AngularFirestoreDocument<User>;
 
   constructor(
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private userService: UserService,
+    private patientsService: PatientsService
   ) {
-    this.casesRef = db.collection(this.dbPath);
-    const user = JSON.parse(localStorage.getItem('user')!);
-    this.currentUser = this.casesRef.doc(user.uid);
+    const user: User = JSON.parse(localStorage.getItem('user')!);
+    this.currentUser = this.userService.getOne(user.uid);
+    this.casesRef = db.collection(this.dbPath, ref => ref.where('userRef', '==', this.currentUser.ref));
   }
 
   getAll(): AngularFirestoreCollection<Case> {
@@ -30,40 +34,27 @@ export class CasesService {
     return this.casesRef.doc(uid);
   }
 
-  create(user: Case): any {
-    const userUid = JSON.parse(localStorage.getItem('user')!)?.uid;
-    const caseId = this.generateFirebaseId();
-    const caseWithUserId = { ...user, userId: userUid ,uid: caseId};
-    
-    this.casesRef.doc(caseId).set(caseWithUserId);
-    
-   // this.casesRef.doc(uid).set(user);
-
-   // return this.casesRef.add({ ...user });
+  create(cs: Case): void {
+    cs = {
+      ...cs,
+      userRef: this.currentUser.ref,
+      patientRef: this.patientsService.getOne(cs.patient.uid).ref
+    };
+    delete cs.patient;
+    this.casesRef.ref.add(cs);
   }
 
-  update(id: string, data: any): Promise<void> {
-    return this.casesRef.doc(id).update(data);
+  update(id: string, cs: Case): Promise<void> {
+    cs = {
+      ...cs,
+      userRef: this.currentUser.ref,
+      patientRef: this.patientsService.getOne(cs.patient?.uid).ref
+    };
+    delete cs.patient;
+    return this.casesRef.doc(id).update(cs);
   }
 
   delete(id: string): Promise<void> {
     return this.casesRef.doc(id).delete();
-  }
-  generateFirebaseId(): string {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let id = '';
-  
-    for (let i = 0; i < 20; i++) {
-      const randomIndex = Math.floor(Math.random() * chars.length);
-      id += chars.charAt(randomIndex);
-    }
-  
-    return id;
-  }
-  getPatientsByUserId(): AngularFirestoreCollection<Patient> {
-    const userId= JSON.parse(localStorage.getItem('user')!)?.uid;
-    return this.db.collection(this.dbPath, (ref) =>
-      ref.where('user', '==', userId)
-    );
   }
 }

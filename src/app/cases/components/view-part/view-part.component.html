@@ -1,23 +1,25 @@
-<form [formGroup]="form">  
+<form [formGroup]="form">
 
     <mat-form-field appearance="outline">
         <mat-label for="date">Date</mat-label>
-        <input matInput placeholder="Date" type="date" id="date" formControlName="date"  [value]="form.get('date').value" readonly>
-       
+        <input matInput placeholder="Date" type="date" id="date" formControlName="date" [value]="form.get('date').value"
+            readonly>
+
     </mat-form-field>
-    
+
     <mat-form-field appearance="outline">
         <mat-label for="text">Description of the case</mat-label>
-        <input matInput placeholder="Add a description of the case" type="text" id="text" formControlName="text" readonly>
+        <input matInput placeholder="Add a description of the case" type="text" id="text" formControlName="notes"
+            readonly>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
         <mat-label for="text">Selected Patient</mat-label>
-        <input matInput placeholder="No Patient Selected" type="text" id="pid" formControlName="pid" readonly>
+        <input matInput placeholder="No Patient Selected" type="text" id="pid" formControlName="patientName" readonly>
     </mat-form-field>
 
 
-   
 
-   
+
+
 </form>

@@ -9,11 +9,6 @@ footer {
     font-size: 14px;
   }
   
-  main {
-    
-    
-  }
-  
   form {
     margin: 3rem;
     display: grid;
@@ -76,19 +71,22 @@ footer {
   
 main {
   // min-height: 82vh;
-  height: 550px;
-   overflow-y: scroll;
+  height: calc(100vh - 150px);
+  overflow-y: auto;
   
 }
 
 .tableContainer
 {
-   margin: 3% auto;
-   width: 90%;
+   padding: 32px 64px;
    overflow-x:auto ;
 }
-.btnCentered
-{
+
+.case-row {
+  cursor: pointer !important;
+}
+
+.btnCentered {
    display: flex;
    margin: 1% auto;
    align-items:baseline;
@@ -103,7 +101,14 @@ main {
    align-items: center;
    justify-content: center;
 }
-#addPatientButton
-{
+
+#addPatientButton {
   margin : 0 0  24px 0;
+}
+
+.no-data-cell {
+  text-align: center;
+  padding: 32px 0;
+  font-style: italic;
+  color: var(--soft-text);
 }

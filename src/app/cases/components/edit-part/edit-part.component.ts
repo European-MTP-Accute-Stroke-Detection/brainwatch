@@ -14,62 +14,58 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./edit-part.component.scss']
 })
 export class EditPartComponent {
-  patientsfromDB: Patient[] = [];  
- 
+  patientsfromDB: Patient[] = [];
+  dataSource: any;
+  form: FormGroup;
+  case: Case;
 
-  dataSource :any;// new MatTableDataSource<Patient>(this.patientsfromDB);
-  form: FormGroup = this.fb.group({
-   
-    date: ['', Validators.required],
-    text: [''],
-    pid: [null]
- 
+  constructor(
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private casesService: CasesService,
+    private patientsService: PatientsService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<EditPartComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { cases: Case }
+  ) { }
 
-
-});
-case:Case;
-constructor(private _snackBar: MatSnackBar,private router: Router,private casesService:CasesService,private patientsService : PatientsService,private fb: FormBuilder, private dialogRef: MatDialogRef<EditPartComponent>, @Inject(MAT_DIALOG_DATA) public data: { cases: Case}) {}
-ngOnInit(): void {
-  this.patientsService.getPatientsByUserId().valueChanges().subscribe((data: Patient[]) => {
-    this.patientsfromDB = data;
-    
-  });
-
-    
-  this.form= this.fb.group({
-    
-    date: ['', Validators.required],
-    text: [''],
-    pid: [null]
-
- 
-   
-  });
-  this.case = this.data.cases;
-  this.form.patchValue({
-    date: this.case.date,
-    text: this.case.text,
-    pid:this.case.pid
-  });
-}
- 
-close() {
-  this.dialogRef.close();
-}
-
-submit() {  
-   
-
-  if (this.form.valid) {
-    this.casesService.update(this.case.uid,this.form.value);
-    this.openSnackBar()
+  ngOnInit(): void {
+    this.patientsService.getAll().valueChanges({ idField: 'uid' }).subscribe((data: Patient[]) => {
+      this.patientsfromDB = data;
+    });
+    this.form = this.fb.group({
+      date: ['', Validators.required],
+      notes: [''],
+      patient: [null]
+    });
+    this.case = this.data.cases;
+    this.form.patchValue({
+      date: this.case.date,
+      notes: this.case.notes,
+      patient: this.case.patient
+    });
   }
-  close();
-}
-openSnackBar() {
-  this._snackBar.open('Case edited successfully!', 'Close', {
-    duration: 3000, // Set the duration for how long the snackbar should be visible
-   
-  });
-}
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  submit() {
+    if (this.form.valid) {
+      this.casesService.update(this.case.uid, this.form.value);
+      this.openSnackBar();
+      this.close();
+    }
+
+  }
+
+  openSnackBar() {
+    this._snackBar.open('Case edited successfully!', 'Close', {
+      duration: 3000
+    });
+  }
+
+  compare(val1: Patient, val2: Patient) {
+    return val1?.uid === val2?.uid;
+  }
 }

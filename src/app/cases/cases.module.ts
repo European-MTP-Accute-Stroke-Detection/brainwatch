@@ -5,8 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import {AddPartComponent} from '../casesPage/add-part/add-part.component'
-import {MatButtonModule} from '@angular/material/button';
+import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
@@ -15,17 +14,20 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { PopUpComponent } from './components/pop-up/pop-up.component';
 import { DeleteCardComponent } from './components/delete-card/delete-card.component';
 import { EditPartComponent } from './components/edit-part/edit-part.component';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ViewPartComponent } from './components/view-part/view-part.component';
+import { AngularMaterialModule } from '../angular-material.module';
+import { AuthModule } from '../auth/auth.module';
+import { PatientsModule } from '../patients/patients.module';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 
 @NgModule({
   declarations: [
     CasesComponent,
-    AddPartComponent,
     PopUpComponent,
     DeleteCardComponent,
     EditPartComponent,
@@ -34,19 +36,12 @@ import { ViewPartComponent } from './components/view-part/view-part.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
     FormsModule,
-    MatMenuModule,
-    MatIconModule,
-    MatPaginatorModule,
-    MatStepperModule,
-    MatSelectModule,
-    MatSnackBarModule
+    AngularMaterialModule,
+    AuthModule,
+    PatientsModule,
+    AppRoutingModule
   ]
 })
 export class CasesModule {
- }
+}
