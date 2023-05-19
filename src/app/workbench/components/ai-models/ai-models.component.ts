@@ -18,14 +18,15 @@ export class AiModelsComponent {
   ) { }
 
   aiModels: any[] = [
-    { value: 'combined', viewValue: 'All Stroke Types' },
-    { value: 'hemorrhage', viewValue: 'Hemorrhage Stroke' },
-    { value: 'ischemic', viewValue: 'Ischemic Stroke' },
+    { value: 'combined', viewValue: 'All Stroke Types TF' },
+    { value: 'hemorrhage', viewValue: 'Hemorrhage Stroke TF' },
+    { value: 'ischemic', viewValue: 'Ischemic Stroke TF' },
+    { value: 'torch', viewValue: 'All Stoke Types Torch' },
   ];
 
   explainableAiModels: any[] = [
     { value: 'lime', viewValue: 'Lime' },
-    { value: 'shap', viewValue: 'Shap' },
+    { value: 'shap', viewValue: 'Grad-CAM' },
 
   ];
 
@@ -45,6 +46,7 @@ export class AiModelsComponent {
   selectedModel: string;
   selectedExplainableAi: string;
   selectedComplexity: string;
+  panelOpenState: boolean;
 
   async runPrediction() {
     if (this.selectedFiles.length == 1) {
@@ -72,6 +74,44 @@ export class AiModelsComponent {
       const formData = new FormData();
       formData.append("file", file);
       const prediction$ = this.requestService.explain(formData, this.selectedModel, this.selectedExplainableAi, this.selectedComplexity).toPromise();
+      const result = await prediction$;
+      this.dialog.open(PredictionResultComponent, {
+        width: '90vw',
+        height: '92vh',
+        data: {
+          predictionId: result.predictionId
+        }
+      });
+      this.xaiRunning = false;
+    }
+  }
+
+  async runPredictionSimple() {
+    if (this.selectedFiles.length == 1) {
+      this.modelRunning = true;
+      const file = this.selectedFiles[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const prediction$ = this.requestService.predict_simple(formData).toPromise();
+      const result = await prediction$;
+      this.dialog.open(PredictionResultComponent, {
+        width: '90vw',
+        height: '92vh',
+        data: {
+          predictionId: result.predictionId
+        }
+      });
+      this.modelRunning = false;
+    }
+  }
+
+  async runExplanationSimple() {
+    if (this.selectedFiles.length == 1) {
+      this.xaiRunning = true;
+      const file = this.selectedFiles[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const prediction$ = this.requestService.explain_simple(formData).toPromise();
       const result = await prediction$;
       this.dialog.open(PredictionResultComponent, {
         width: '90vw',

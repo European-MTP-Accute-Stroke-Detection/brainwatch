@@ -28,9 +28,25 @@ export class RequestService {
     );
   }
 
+  predict_simple(body: any): Observable<any> {
+    return this.http.post<any>(    
+      this.baseUrl + '/predict',
+      body
+    );
+  }
+  explain_simple(body: any): Observable<any> {
+    return this.http.post<any>(    
+      this.baseUrl + '/explain',
+      body
+    );
+  }
+
+  
+
   predictStroke(body: any): Observable<any> {
     return this.http.post<any>(    
-      'https://stroke-detection-380821.ew.r.appspot.com/tabular/predict',
+      this.baseUrl + '/tabular/predict',
+      //'https://stroke-detection-380821.ew.r.appspot.com/tabular/predict',
       body
     );
   }
