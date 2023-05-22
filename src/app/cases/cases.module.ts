@@ -22,8 +22,11 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { AuthModule } from '../auth/auth.module';
 import { PatientsModule } from '../patients/patients.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { MatNativeDateModule } from '@angular/material/core';
 
-
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,11 @@ import { AppRoutingModule } from '../app-routing.module';
     AngularMaterialModule,
     AuthModule,
     PatientsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatNativeDateModule,
+    TimepickerModule,
+    DatePipe
+
   ]
 })
 export class CasesModule {

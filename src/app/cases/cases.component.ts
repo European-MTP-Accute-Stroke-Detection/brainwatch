@@ -11,6 +11,7 @@ import { EditPartComponent } from './components/edit-part/edit-part.component';
 import { ViewPartComponent } from './components/view-part/view-part.component';
 import { PatientsService } from '../patients/services/patients.service';
 
+
 @Component({
   selector: 'app-cases',
   templateUrl: './cases.component.html',

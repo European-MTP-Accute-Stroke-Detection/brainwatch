@@ -18,6 +18,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PopUpComponent implements OnInit {
   patientsfromDB: Patient[] = [];
   selectedPatient: Reference<Patient>;
+  selectedTime: Date;
 
   dataSource: any;// new MatTableDataSource<Patient>(this.patientsfromDB);
   form: FormGroup = new FormGroup({});
@@ -29,7 +30,9 @@ export class PopUpComponent implements OnInit {
     private patientsService: PatientsService,
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<PopUpComponent>
-  ) { }
+  ) { 
+    this.selectedTime = new Date();
+  }
 
   ngOnInit(): void {
     this.initializeForm();
