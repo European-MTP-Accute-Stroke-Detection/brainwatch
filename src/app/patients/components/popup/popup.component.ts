@@ -15,7 +15,13 @@ export class PopupComponent {
 
   form: FormGroup;
 
-  constructor(private _snackBar: MatSnackBar, private patientsService: PatientsService, private fb: FormBuilder, private dialogRef: MatDialogRef<PopupComponent>) { }
+  constructor(
+    private _snackBar: MatSnackBar,
+    private patientsService: PatientsService,
+    private fb: FormBuilder,
+    private dialogRef: MatDialogRef<PopupComponent>
+  ) { }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       firstname: ['', Validators.required],

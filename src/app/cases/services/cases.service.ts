@@ -38,7 +38,7 @@ export class CasesService {
     cs = {
       ...cs,
       userRef: this.currentUser.ref,
-      patientRef: this.patientsService.getOne(cs.patient.uid).ref
+      ...cs.patient && { patientRef: this.patientsService.getOne(cs.patient?.uid).ref }
     };
     delete cs.patient;
     this.casesRef.ref.add(cs);

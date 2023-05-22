@@ -20,38 +20,39 @@ import { ViewPartComponent } from './components/view-part/view-part.component';
   styleUrls: ['./patients.component.scss']
 })
 export class PatientsComponent implements OnInit, AfterViewInit {
+
   patientsfromDB: Patient[] = [];
+  dataSource: any;
+  filteredUsers: Patient[];
+  searchText: string = '';
 
-  dataSource: any;// new MatTableDataSource<Patient>(this.patientsfromDB);
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
+  constructor(
+    private router: Router,
+    private patientsService: PatientsService,
+    private dialog: MatDialog
+  ) { }
 
-  constructor(private router: Router, private patientsService: PatientsService, private dialog: MatDialog) { }
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Patient>(this.patientsfromDB);
     this.patientsService.getAll().valueChanges({ idField: 'uid' }).subscribe((data: Patient[]) => {
       this.patientsfromDB = data;
       this.dataSource.data = data;
     });
-
-
   }
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
 
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-
-
-
   addPatient() {
-
     const dialogRef = this.dialog.open(PopupComponent);
-
-
   }
+
   deleteSafe(patient: Patient) {
     const dialogRef = this.dialog.open(DeleteCardComponent, {
       data: { patient }
@@ -62,20 +63,16 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(EditPartComponent, {
       data: { patient }
     });
-
-
   }
   viewPatient(patient: Patient) {
     const dialogRef = this.dialog.open(ViewPartComponent, {
       data: { patient }
     });
-
   }
-  filteredUsers: Patient[];
-  searchText: string = '';
+
+
 
   search() {
-
     if (this.searchText == '') {
       this.dataSource = new MatTableDataSource<Patient>(this.patientsfromDB);
       this.dataSource.paginator = this.paginator;

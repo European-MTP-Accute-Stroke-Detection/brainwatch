@@ -43,7 +43,7 @@ export class PopUpComponent implements OnInit {
     this.form = this.fb.group({
       date: ['', Validators.required],
       notes: [''],
-      patient: [{}]
+      patient: [null]
     });
   }
 

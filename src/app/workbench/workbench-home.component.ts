@@ -44,7 +44,7 @@ export class WorkbenchHomeComponent implements OnInit {
     this.newDicomViewer = this.route.snapshot.queryParamMap.get('new') === 'true';
     this.casesService.getOne(this.caseId).valueChanges({ idField: 'uid' })
       .subscribe(data => {
-        if (Object.keys(data).length > 1) {
+        if (data && Object.keys(data).length > 1) {
           this.case = data;
           this.fetchScans();
           this.fetchPatient();
