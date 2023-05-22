@@ -21,7 +21,7 @@ import { ViewPartComponent } from './components/view-part/view-part.component';
 })
 export class PatientsComponent implements OnInit, AfterViewInit {
   patientsfromDB: Patient[] = [];
-
+  loading:Boolean = true;
   dataSource: any;// new MatTableDataSource<Patient>(this.patientsfromDB);
 
 
@@ -32,6 +32,7 @@ export class PatientsComponent implements OnInit, AfterViewInit {
     this.patientsService.getAll().valueChanges({ idField: 'uid' }).subscribe((data: Patient[]) => {
       this.patientsfromDB = data;
       this.dataSource.data = data;
+      this.loading = false;
     });
 
 

@@ -27,6 +27,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { DatePipe } from '@angular/common';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -45,8 +46,8 @@ import { DatePipe } from '@angular/common';
     PatientsModule,
     AppRoutingModule,
     MatNativeDateModule,
-    TimepickerModule,
-    DatePipe
+    DatePipe,
+    MatProgressBarModule
 
   ]
 })

@@ -20,7 +20,7 @@ import { PatientsService } from '../patients/services/patients.service';
 export class CasesComponent {
 
   casesfromDB: Case[] = [];
-
+  loading: boolean = true;
   dataSource: any;
 
   constructor(
@@ -29,6 +29,7 @@ export class CasesComponent {
   ) { }
 
   ngOnInit(): void {
+    
     this.dataSource = new MatTableDataSource<Case>(this.casesfromDB);
     this.casesService.getAll().valueChanges({ idField: 'uid' }).subscribe(async (data: Case[]) => {
       for (let cases of data) {
@@ -39,8 +40,11 @@ export class CasesComponent {
           }
         }
       }
+      
       this.casesfromDB = data;
       this.dataSource.data = data;
+      this.loading = false; 
+     
     });
   }
   @ViewChild(MatPaginator) paginator!: MatPaginator;
