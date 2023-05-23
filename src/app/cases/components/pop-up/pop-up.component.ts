@@ -8,6 +8,8 @@ import { PatientsService } from 'src/app/patients/services/patients.service';
 import { Router } from '@angular/router';
 import { Reference } from '@angular/fire/compat/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FileService } from 'src/app/shared/services/file.service';
+import { ScansService } from 'src/app/scans/services/scans.service';
 
 
 @Component({
@@ -19,8 +21,12 @@ export class PopUpComponent implements OnInit {
   patientsfromDB: Patient[] = [];
   selectedPatient: Reference<Patient>;
 
+  uploading: boolean = false;
+
   dataSource: any;// new MatTableDataSource<Patient>(this.patientsfromDB);
   form: FormGroup = new FormGroup({});
+
+  dicomFiles: any[] = [];
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -28,6 +34,8 @@ export class PopUpComponent implements OnInit {
     private casesService: CasesService,
     private patientsService: PatientsService,
     private fb: FormBuilder,
+    private fileService: FileService,
+    private scansService: ScansService,
     private dialogRef: MatDialogRef<PopUpComponent>
   ) { }
 
@@ -43,7 +51,8 @@ export class PopUpComponent implements OnInit {
     this.form = this.fb.group({
       date: ['', Validators.required],
       notes: [''],
-      patient: [null]
+      patient: [null],
+      file: [null]
     });
   }
 
@@ -51,17 +60,37 @@ export class PopUpComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  submit() {
+  async submit() {
     if (this.form.valid) {
-      this.casesService.create({ ...this.form.value });
+      this.uploading = true;
+      this.dialogRef.disableClose = true;
+      const cs_ref = await this.casesService.create({ ...this.form.value });
+      const cs_doc = await cs_ref.get();
+      const cs = cs_doc.data();
+      const scans_result = await this.scansService.createMultiple(
+        cs_doc.ref,
+        this.dicomFiles.map((obj) => { return Object.assign({}, obj) })
+      )
+      for (let [index, scanRes] of scans_result.entries()) {
+        await this.fileService.upload(cs_ref.id, scanRes.id, this.dicomFiles[index]);
+      }
       this.openSnackBar();
       this.dialogRef.close();
     }
   }
+
   openSnackBar() {
     this._snackBar.open('Case added successfully!', 'Close', {
       duration: 3000, // Set the duration for how long the snackbar should be visible
 
     });
+  }
+
+  onFileChange($event: any) {
+    for (var i = 0; i < $event.target.files.length; i++) {
+      this.dicomFiles.push($event.target.files[i]);
+    }
+
+    console.log(this.dicomFiles)
   }
 }

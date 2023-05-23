@@ -10,6 +10,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { HttpClient } from '@angular/common/http';
 //import { TagsDialogComponent } from './tags-dialog.component';
 import { BehaviorSubject, Observable, firstValueFrom, lastValueFrom } from 'rxjs';
+import { AnyMxRecord } from 'dns';
 
 
 
@@ -59,9 +60,10 @@ export class WorkbenchHomeComponent implements OnInit {
   }
 
   async fetchPatient() {
-    this.case.patientRef.get().then(result => this.patient = result.data()).catch(e => {
+    if (this.case.patientRef)
+      this.case.patientRef.get().then(result => this.patient = result.data())
+    else
       this.patient = {} as any;
-    });
   }
 
   fetchScans() {

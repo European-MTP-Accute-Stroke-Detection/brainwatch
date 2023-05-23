@@ -32,7 +32,7 @@ export class PatientsService {
     return this.patientsRef.doc(uid);
   }
 
-  create(patient: Patient): any {
+  create(patient: Patient) {
     patient = {
       ...patient,
       userRef: this.currentUser.ref

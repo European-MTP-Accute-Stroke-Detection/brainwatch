@@ -43,9 +43,9 @@ export class PopupComponent {
     this.dialogRef.close();
   }
 
-  submit() {
+  async submit() {
     if (this.form.valid) {
-      this.patientsService.create({ ...this.form.value });
+      const result = this.patientsService.create({ ...this.form.value });
       this.openSnackBar()
       this.dialogRef.close();
 

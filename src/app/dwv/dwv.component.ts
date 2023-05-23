@@ -27,6 +27,7 @@ dwv.image.decoderScripts = {
 export class DwvComponent implements OnInit, OnDestroy {
 
   @Input('scans$') scans$: BehaviorSubject<Scan[]>;
+  scans: Scan[];
 
   constructor(
     public dialog: MatDialog,
@@ -81,9 +82,10 @@ export class DwvComponent implements OnInit, OnDestroy {
     });
     // Load Dicom Files
     this.scans$.subscribe(scans => {
-      if (scans) {
+      if (scans && !this.scans) {
+        this.scans = scans;
         this.dwvApp.loadURLs(
-          scans.map(scan => scan.downloadUrl)
+          this.scans.map(scan => scan.downloadUrl)
         );
       }
     });
