@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { PredictionResultComponent } from '../../../tabularai/components/prediction-result/prediction-result.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestService } from '../../../dwv/services/request.service';
 import { FileService } from '../../../shared/services/file.service';
@@ -56,13 +55,6 @@ export class AiModelsComponent {
       formData.append("file", file);
       const prediction$ = this.requestService.predict(formData, this.selectedModel).toPromise();
       const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
       this.modelRunning = false;
     }
   }
@@ -75,13 +67,6 @@ export class AiModelsComponent {
       formData.append("file", file);
       const prediction$ = this.requestService.explain(formData, this.selectedModel, this.selectedExplainableAi, this.selectedComplexity).toPromise();
       const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
       this.xaiRunning = false;
     }
   }
@@ -94,13 +79,13 @@ export class AiModelsComponent {
       formData.append("file", file);
       const prediction$ = this.requestService.predict_simple(formData).toPromise();
       const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
+      // this.dialog.open(PredictionResultComponent, {
+      //   width: '90vw',
+      //   height: '92vh',
+      //   data: {
+      //     predictionId: result.predictionId
+      //   }
+      // });
       this.modelRunning = false;
     }
   }
@@ -113,13 +98,13 @@ export class AiModelsComponent {
       formData.append("file", file);
       const prediction$ = this.requestService.explain_simple(formData).toPromise();
       const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
+      // this.dialog.open(PredictionResultComponent, {
+      //   width: '90vw',
+      //   height: '92vh',
+      //   data: {
+      //     predictionId: result.predictionId
+      //   }
+      // });
       this.xaiRunning = false;
     }
   }

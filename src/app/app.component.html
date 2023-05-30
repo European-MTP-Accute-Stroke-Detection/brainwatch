@@ -1,12 +1,13 @@
 <div class="mat-typography app-frame mat-app-background">
     <app-header (sidenavToggled)="sidenav.toggle()"></app-header>
     <mat-sidenav-container>
-        <mat-sidenav #sidenav [mode]="sideNavMode" autoFocus="false" [(opened)]="opened">
+        <mat-sidenav #sidenav [mode]="sideNavMode" autoFocus="false" [(opened)]="opened"
+            (openedChange)="sidenavToggled()">
             <app-side-menu></app-side-menu>
         </mat-sidenav>
         <mat-sidenav-content>
             <router-outlet #outlet="outlet"></router-outlet>
-            
+
         </mat-sidenav-content>
     </mat-sidenav-container>
     <app-footer></app-footer>

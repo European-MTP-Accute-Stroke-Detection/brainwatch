@@ -21,6 +21,8 @@ export class AppComponent {
   ) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('sideNavOpened') == 'true')
+      this.opened = true;
 
     this.themeService.currentTheme.subscribe((theme) => {
       if (this.bodyElement.classList.contains('darkMode')) {
@@ -49,6 +51,10 @@ export class AppComponent {
     else {
       this.sideNavMode = 'side';
     }
+  }
+
+  sidenavToggled() {
+    localStorage.setItem('sideNavOpened', this.opened ? 'true' : 'false')
   }
 
 }

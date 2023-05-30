@@ -64,13 +64,14 @@ export class PopUpComponent implements OnInit {
     if (this.form.valid) {
       this.uploading = true;
       this.dialogRef.disableClose = true;
+      // Save Case Data
       const cs_ref = await this.casesService.create({ ...this.form.value });
-      const cs_doc = await cs_ref.get();
-      const cs = cs_doc.data();
+      // Save Scan Data
       const scans_result = await this.scansService.createMultiple(
-        cs_doc.ref,
+        cs_ref,
         this.dicomFiles.map((obj) => { return Object.assign({}, obj) })
       )
+      // Store Scans in Storage
       for (let [index, scanRes] of scans_result.entries()) {
         await this.fileService.upload(cs_ref.id, scanRes.id, this.dicomFiles[index]);
       }
