@@ -103,7 +103,17 @@
       </mat-button-toggle>
     </mat-button-toggle-group>
   </div>
-  <div id="layerGroup0" class="layerGroup" [style.visibility]="scans$.value ? 'visible' : 'hidden' "></div>
+
+  <div class="dwv-wrapper">
+    <div id="layerGroup0" class="layerGroup" [style.visibility]="scans$.value ? 'visible' : 'hidden' ">
+
+    </div>
+    <mat-slider vertical="true">
+      <input matSliderThumb>
+    </mat-slider>
+
+  </div>
+
   <!-- <mat-slider width="10">
       <input matSliderThumb>
     </mat-slider> -->

@@ -5,7 +5,7 @@ $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 
 #dwv {
-  height: calc(100vh - 80px); 
+  
 }
 
 a {
@@ -53,9 +53,14 @@ mat-spinner {
   margin: 1em;
 }
 
-.layergroup0-container {
+.dwv-wrapper {
+  height: calc(100vh - 160px);
+  max-width: calc(100vh - 100px);
+  width: 100%;
 
-
+  mat-slider {
+    width: 100%;
+  }
 }
 
 /* Layers */
@@ -64,9 +69,10 @@ mat-spinner {
   padding: 0;
   display: flex;
   justify-content: center;
-  height: 90%;
   width: 100%;
+  height: calc(40vw);
 }
+
 .layer {
   position: absolute;
   pointer-events: none;

@@ -70,8 +70,6 @@ export class TabularaiComponent {
     this.patientsService.getAll().valueChanges({ idField: 'uid' }).subscribe((data: Patient[]) => {
       this.patients = data;
     });
-
-    this.predictionResult = await this.tabularaiService.predict(null);
   }
 
   patientSelected($event: MatSelectChange) {

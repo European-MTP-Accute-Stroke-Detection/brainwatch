@@ -27,7 +27,7 @@ export class TabularaiService {
             gender: 0.1111783168,
             smoking_status: 0.0584052403,
             avg_glucose_level: 0.0318080812,
-            result: 0,
+            result: 1,
             probability_stroke: 0.9710097104,
             probability_no_stroke: 0.0289902896
           }
