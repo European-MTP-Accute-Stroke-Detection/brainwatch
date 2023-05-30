@@ -1,17 +1,18 @@
 <div class="main">
 
   <div class="button_alignment">
-    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning">
+    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning "  >
       <button mat-raised-button color="primary" (click)="runPredictionSimple()"
-      [disabled]="!selectedFiles || selectedFiles!.length != 1">Predict</button>
+      >Predict</button>
     </div>
   
-    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning">
+    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning ">
       <button mat-raised-button color="primary" (click)="runExplanationSimple()"
-      [disabled]="!selectedFiles || selectedFiles!.length != 1">Explain</button>
+      >Explain</button>
     </div>
 
   </div>
+
 
   <mat-expansion-panel (opened)="panelOpenState = true"
                        (closed)="panelOpenState = false">
