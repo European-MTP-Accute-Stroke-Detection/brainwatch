@@ -12,6 +12,7 @@ import { Case } from 'src/app/model/case';
   providedIn: 'root'
 })
 export class ScansService {
+  [x: string]: any;
 
   private dbPath = '/scans';
 

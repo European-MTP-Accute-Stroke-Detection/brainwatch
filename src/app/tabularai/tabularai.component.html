@@ -5,7 +5,7 @@
             <h2 style="margin-top: 0px;">
                 Fast Stroke Prediction
             </h2>
-            <mat-form-field appearance="fill" id="patientForm">
+            <mat-form-field appearance="fill">
                 <mat-label>Select Patient</mat-label>
                 <mat-select matInput name="patient" (selectionChange)="patientSelected($event)">
                     <mat-option *ngFor="let patient of patients" [value]="patient">
@@ -87,7 +87,9 @@
                         <mat-form-field appearance="fill">
                             <mat-label>Work Type</mat-label>
                             <mat-select [(ngModel)]="prediction.work_type" name="work_type" required>
-                                <mat-option *ngFor="let option of ['Private','Self-employed','Other']" [value]="option">
+                                <mat-option
+                                    *ngFor="let option of ['Private','Self-employed','Govt_jov','children','Other']"
+                                    [value]="option">
                                     {{option}}
                                 </mat-option>
                             </mat-select>

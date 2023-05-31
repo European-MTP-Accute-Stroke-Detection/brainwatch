@@ -48,7 +48,6 @@ export class DicomViewerComponent implements OnInit {
 
   resizeCanvas(canvasEl: HTMLCanvasElement) {
     const element = cornerstone.getEnabledElement(canvasEl);
-    console.log(element)
     if (element.image) {
       cornerstone.resize(element.element, true);
     }

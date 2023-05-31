@@ -30,9 +30,14 @@ mat-spinner {
   left: calc(50% - 35px);
 }
 
+.model-field {
+  width: 300px;
+}
+
 .button-row {
-  margin-bottom: 16px;
   margin-left: 1px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-list {
@@ -47,6 +52,10 @@ mat-spinner {
   color: mat.get-color-from-palette($primary);
 }
 
+.first-button-group {
+
+}
+
 .legend {
   text-align: center;
   font-size: 8pt;
@@ -54,8 +63,7 @@ mat-spinner {
 }
 
 .dwv-wrapper {
-  height: calc(100vh - 160px);
-  max-width: calc(100vh - 100px);
+  height: calc(100vh - 220px);
   width: 100%;
 
   mat-slider {
@@ -70,7 +78,7 @@ mat-spinner {
   display: flex;
   justify-content: center;
   width: 100%;
-  height: calc(40vw);
+  height: 100%;
 }
 
 .layer {

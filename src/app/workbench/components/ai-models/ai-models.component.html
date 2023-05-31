@@ -1,21 +1,18 @@
 <div class="main">
 
   <div class="button_alignment">
-    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning "  >
-      <button mat-raised-button color="primary" (click)="runPredictionSimple()"
-      >Predict</button>
-    </div>
-  
     <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning ">
-      <button mat-raised-button color="primary" (click)="runExplanationSimple()"
-      >Explain</button>
+      <button mat-raised-button color="primary" (click)="runPredictionSimple()">Run Prediction</button>
+    </div>
+
+    <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning ">
+      <button mat-raised-button color="primary" (click)="runExplanationSimple()">Run Explanation</button>
     </div>
 
   </div>
 
 
-  <mat-expansion-panel (opened)="panelOpenState = true"
-                       (closed)="panelOpenState = false">
+  <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Advanced Settings
@@ -30,7 +27,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field appearance="fill" class="model-select">
         <mat-label>Select Explainable AI Model</mat-label>
         <mat-select [(ngModel)]="selectedExplainableAi" name="model">
@@ -39,7 +36,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-  
+
       <mat-form-field appearance="fill" class="model-select">
         <mat-label>Select Explanation Complexity</mat-label>
         <mat-select [(ngModel)]="selectedComplexity" name="model">
@@ -48,7 +45,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-  
+
     </div>
 
     <div class="button_alignment">
@@ -56,7 +53,7 @@
         <button mat-raised-button color="primary" (click)="runPrediction()"
           [disabled]="!selectedModel || !selectedFiles || selectedFiles!.length != 1">Predict</button>
       </div>
-    
+
       <div class="predict-button-container" *ngIf="!xaiRunning && !modelRunning">
         <button mat-raised-button color="primary" (click)="runExplanation()"
           [disabled]="!selectedModel || !selectedExplainableAi || !selectedFiles || !selectedComplexity || selectedFiles!.length != 1">Explain</button>

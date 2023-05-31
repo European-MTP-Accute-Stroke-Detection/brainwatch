@@ -15,36 +15,29 @@ export class RequestService {
   ) { }
 
   predict(body: any, model: string): Observable<any> {
-    console.log(this.baseUrl + '/'+ model +'/explain');
-    return this.http.post<any>(    
-      this.baseUrl + '/'+ model + '/predict',
+    console.log(this.baseUrl + '/' + model + '/explain');
+    return this.http.post<any>(
+      this.baseUrl + '/' + model + '/predict',
       body
     );
   }
   explain(body: any, model: string, explanation: string, complexity: string): Observable<any> {
-    console.log(this.baseUrl + '/'+ model +'/explain/'+ explanation);
-    return this.http.post<any>(    
-      this.baseUrl + '/'+ model +'/explain/'+ explanation +'_' + complexity,
+    console.log(this.baseUrl + '/' + model + '/explain/' + explanation);
+    return this.http.post<any>(
+      this.baseUrl + '/' + model + '/explain/' + explanation + '_' + complexity,
       body
     );
   }
 
-  predict_simple(body: any, uid:string): Observable<any> {
-    return this.http.post<any>(    
-      this.baseUrl + '/predict_complete/'+uid,
-      body
-      );
-  }
-  explain_simple(body: any, uid:string): Observable<any> {
-    return this.http.post<any>(    
-      this.baseUrl + '/explain_complete/'+uid,
+  predict_simple(body: any, uid: string): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + '/predict_complete/' + uid,
       body
     );
   }
-
-  predictStroke(body: any): Observable<any> {
-    return this.http.post<any>(    
-      this.baseUrl + '/tabular/predict',
+  explain_simple(body: any, uid: string): Observable<any> {
+    return this.http.post<any>(
+      this.baseUrl + '/explain_complete/' + uid,
       body
     );
   }

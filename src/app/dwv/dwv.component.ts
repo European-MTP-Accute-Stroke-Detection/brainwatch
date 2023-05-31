@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { TagsDialogComponent } from './components/tags-dialog.component';
 import { BehaviorSubject } from 'rxjs';
 import { Scan } from '../model/scan';
+import { DicomsService } from '../workbench/services/dicoms.service';
+import { SelectionChange } from '@angular/cdk/collections';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 // gui overrides
 
@@ -26,11 +29,12 @@ dwv.image.decoderScripts = {
 
 export class DwvComponent implements OnInit, OnDestroy {
 
-  @Input('scans$') scans$: BehaviorSubject<Scan[]>;
   scans: Scan[];
 
   constructor(
     public dialog: MatDialog,
+    public dicomsService: DicomsService,
+    private fbStorage: AngularFireStorage,
   ) {
     this.versions = {
       dwv: dwv.getVersion(),
@@ -61,15 +65,15 @@ export class DwvComponent implements OnInit, OnDestroy {
   public dataLoaded = false;
 
   private dwvApp: any;
-
-
   private metaData: any[];
-
   private orientation: string;
 
   opened = false;
 
   savedLayer: any;
+  selectedModelValue: string = 'default';
+  showXai: boolean = false;
+
 
   segFile = 'https://firebasestorage.googleapis.com/v0/b/brainwatch-14583.appspot.com/o/Cases%2FaHTVkHc4fJfkyG7OY0C2%2Fscans%2FvFnqKPWi881GSagLQj0U.dcm?alt=media&token=180965b3-4949-47ea-b0be-499ca2004be8'
 
@@ -81,7 +85,7 @@ export class DwvComponent implements OnInit, OnDestroy {
       tools: this.tools,
     });
     // Load Dicom Files
-    this.scans$.subscribe(scans => {
+    this.dicomsService.scans$.subscribe(scans => {
       if (scans && !this.scans) {
         this.scans = scans;
         this.dwvApp.loadURLs(
@@ -246,9 +250,9 @@ export class DwvComponent implements OnInit, OnDestroy {
     // update slider on slice change (for ex via mouse wheel)
     this.dwvApp.addEventListener('positionchange', (event) => {
       var lg = this.dwvApp.getLayerGroupByDivId('layerGroup0');
-      var vc = lg.getActiveViewLayer().getViewController();
-      console.log(event);
-      console.log(vc.getCurrentIndex().get(2));
+      this.dicomsService.currentScan$.next(
+        this.scans.find(s => s.dicom_uid == event.data.imageUid)
+      )
     });
     // handle window resize
     window.addEventListener('resize', this.dwvApp.onResize);
@@ -291,6 +295,10 @@ export class DwvComponent implements OnInit, OnDestroy {
     this.dwvApp.addEventListener('load', (/*event*/) => {
       // set dicom tags
       this.metaData = dwv.utils.objectToArray(this.dwvApp.getMetaData(0));
+      // set initial dicom scan
+      this.dicomsService.currentScan$.next(
+        this.scans.find(s => s.dicom_uid == this.dwvApp.getImage(0).getImageUid())
+      )
       // set data loaded flag
       this.dataLoaded = true;
     });
@@ -316,6 +324,35 @@ export class DwvComponent implements OnInit, OnDestroy {
       ++nReceivedLoadError;
     });
   }
+
+  async modelSelected($event: any) {
+    const model = this.dicomsService.availableModels$.value.find(m => m.value == $event.value);
+
+    // Clears the layer group
+    if (model.value == 'default') {
+      var lg = this.dwvApp.getActiveLayerGroup();
+      lg.empty();
+      console.log(this.scans.map(scan => scan.downloadUrl))
+      this.dwvApp.loadURLs(
+        this.scans.map(scan => scan.downloadUrl)
+      );
+    }
+    else {
+      this.fbStorage
+        .ref(`Cases/${this.dicomsService.currentCase$.value.uid}/results/${model.value}`)
+        .listAll()
+        .subscribe(async scans => {
+          const urls = [];
+          for (let scan of scans.items) {
+            urls.push(await scan.getDownloadURL());
+          }
+          var lg = this.dwvApp.getActiveLayerGroup();
+          lg.empty();
+          this.dwvApp.loadURLs(urls);
+        });
+    }
+  }
+
 
   // drag and drop [begin] -----------------------------------------------------
 

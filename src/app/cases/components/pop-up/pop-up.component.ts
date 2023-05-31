@@ -10,6 +10,7 @@ import { Reference } from '@angular/fire/compat/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FileService } from 'src/app/shared/services/file.service';
 import { ScansService } from 'src/app/scans/services/scans.service';
+import * as dicomParser from 'dicom-parser';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class PopUpComponent implements OnInit {
   form: FormGroup = new FormGroup({});
 
   dicomFiles: any[] = [];
+  dicomFilesMetadata: any[] = [];
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -69,7 +71,7 @@ export class PopUpComponent implements OnInit {
       // Save Scan Data
       const scans_result = await this.scansService.createMultiple(
         cs_ref,
-        this.dicomFiles.map((obj) => { return Object.assign({}, obj) })
+        this.dicomFilesMetadata
       )
       // Store Scans in Storage
       for (let [index, scanRes] of scans_result.entries()) {
@@ -77,6 +79,34 @@ export class PopUpComponent implements OnInit {
       }
       this.openSnackBar();
       this.dialogRef.close();
+    }
+  }
+
+  getDicomScansMetaData(): void {
+    this.dicomFilesMetadata = [];
+    for (let file of this.dicomFiles) {
+      const fileReader: FileReader = new FileReader();
+      fileReader.onload = (e: any) => {
+        const arrayBuffer: ArrayBuffer = e.target.result;
+        const byteArray: Uint8Array = new Uint8Array(arrayBuffer);
+
+        // Parse the DICOM tags
+        const dataSet: dicomParser.DataSet = dicomParser.parseDicom(byteArray);
+
+        console.log(dataSet.string('x00080018'))
+
+        this.dicomFilesMetadata.push({
+          dicom_uid: dataSet.string('x00080018')
+        })
+        // Print DICOM tags
+        // console.log(`DICOM Tags for File ${i + 1}:`);
+        // for (const tag in dataSet.elements) {
+        //   if (dataSet.elements.hasOwnProperty(tag)) {
+        //     console.log(`${tag}: ${dataSet.string(tag)}`);
+        //   }
+        // }
+      };
+      fileReader.readAsArrayBuffer(file);
     }
   }
 
@@ -88,10 +118,10 @@ export class PopUpComponent implements OnInit {
   }
 
   onFileChange($event: any) {
+    this.dicomFiles = [];
     for (var i = 0; i < $event.target.files.length; i++) {
       this.dicomFiles.push($event.target.files[i]);
     }
-
-    console.log(this.dicomFiles)
+    this.getDicomScansMetaData()
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CasesService } from '../cases/services/cases.service';
 import { Case } from '../model/case';
@@ -11,6 +11,9 @@ import { HttpClient } from '@angular/common/http';
 //import { TagsDialogComponent } from './tags-dialog.component';
 import { BehaviorSubject, Observable, firstValueFrom, lastValueFrom } from 'rxjs';
 import { AnyMxRecord } from 'dns';
+import { DicomsService } from './services/dicoms.service';
+import { AiModelsComponent } from './components/ai-models/ai-models.component';
+import { Model } from '../model/model';
 
 
 
@@ -19,13 +22,12 @@ import { AnyMxRecord } from 'dns';
   templateUrl: './workbench-home.component.html',
   styleUrls: ['./workbench-home.component.scss']
 })
-export class WorkbenchHomeComponent implements OnInit {
+export class WorkbenchHomeComponent implements OnInit, OnDestroy {
 
   loadProgress = 0;
 
   caseId: string;
   case: Case;
-  scans$: BehaviorSubject<Scan[]> = new BehaviorSubject(null);
   patient: Patient;
 
   newDicomViewer: boolean = false;
@@ -38,7 +40,12 @@ export class WorkbenchHomeComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private router: Router,
     private http: HttpClient,
+    private dicomsService: DicomsService
   ) { }
+
+  ngOnDestroy(): void {
+    this.dicomsService.reset();
+  }
 
   ngOnInit(): void {
     this.caseId = this.route.snapshot.paramMap.get('caseId');
@@ -47,8 +54,11 @@ export class WorkbenchHomeComponent implements OnInit {
       .subscribe(data => {
         if (data && Object.keys(data).length > 1) {
           this.case = data;
+          this.dicomsService.currentCase$.next(this.case);
+          console.log('initing workbench')
           this.fetchScans();
           this.fetchPatient();
+          this.fetchModels();
         } else {
           this._snackBar.open('No case found for the specified ID', 'Close', {
             duration: 3000,
@@ -57,6 +67,13 @@ export class WorkbenchHomeComponent implements OnInit {
           this.router.navigateByUrl('/cases')
         }
       });
+  }
+
+  async fetchModels() {
+    this.fbStorage.ref(`Cases/${this.case.uid}/results/`).listAll().subscribe(async list => {
+      const modelVals = list.prefixes.map(obj => obj.name);
+      this.dicomsService.updateModels(modelVals);
+    })
   }
 
   async fetchPatient() {
@@ -71,8 +88,13 @@ export class WorkbenchHomeComponent implements OnInit {
       .subscribe(async data => {
         for (let scan of data) {
           scan.downloadUrl = await firstValueFrom(this.fbStorage.ref(`Cases/${this.case.uid}/scans/${scan.uid}.dcm`).getDownloadURL());
+          if (scan.results_combined) {
+            const pred = scan.results_combined.prediction.predictions as unknown as string;
+            const numbers = pred.substring(1, pred.length - 1).split(" ");
+            scan.results_combined.prediction.predictions = numbers.map(substring => Number(substring));
+          }
         }
-        this.scans$.next(data);
+        this.dicomsService.scans$.next(data);
       });
   }
 

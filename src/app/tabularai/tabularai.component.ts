@@ -78,14 +78,14 @@ export class TabularaiComponent {
       ...this.prediction,
       gender: patient.gender,
       age: patient.age,
-      hypertension: patient.hypertension,
-      heart_disease: patient.heartDisease,
-      ever_married: patient.married,
+      hypertension: patient.hypertension ? 'True' : 'False',
+      heart_disease: patient.heartDisease ? 'True' : 'False',
+      ever_married: patient.married ? 'Yes' : 'No',
       work_type: patient.work,
-      Residence_type: patient.residency,
+      Residence_type: patient.residency == 'rural' ? 'Rural' : 'Urban',
       avg_glucose_level: patient.averageGlucoseLevel,
       bmi: patient.bmi,
-      smoking_status: patient.smoke
+      smoking_status: patient.smoke ? 'formely smoked' : 'never smoked',
     }
   }
 
@@ -106,7 +106,7 @@ export class TabularaiComponent {
       smoking_status: [this.prediction.smoking_status]
     }
 
-    this.predictionResult = await this.tabularaiService.predict(body);
+    this.predictionResult = (await this.tabularaiService.predict(body))[0];
 
     console.log(this.predictionResult);
 
