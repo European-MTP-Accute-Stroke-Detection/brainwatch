@@ -10,4 +10,5 @@ export class PatientInfoComponent {
 
   @Input('patient') patient: Patient;
 
+
 }

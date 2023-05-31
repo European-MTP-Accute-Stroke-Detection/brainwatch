@@ -3,19 +3,24 @@ import { CommonModule } from '@angular/common';
 import { TabularaiComponent } from './tabularai.component';
 import { FormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
-import { PredictionResultComponent } from './components/prediction-result/prediction-result.component';
-
+import { TabularaiService } from './services/tabularai.service';
+import { ChartComponent } from './components/chart/chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 
 @NgModule({
   declarations: [
     TabularaiComponent,
-    PredictionResultComponent
+    ChartComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    NgxChartsModule
+  ],
+  providers: [
+    TabularaiService
   ]
 })
 export class TabularaiModule { }

@@ -1,39 +1,54 @@
-<form [formGroup]="form">
+<div class="main">
+  <mat-stepper *ngIf="!uploading" linear="false">
+    <mat-step [stepControl]="form" label="Add Case Information">
+      <form [formGroup]="form">
 
 
-  <mat-form-field>
-    <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date" [(ngModel)]="selectedTime" formControlName="date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+        <mat-form-field>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="date"
+            [(ngModel)]="selectedTime" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
 
- 
- 
+        <mat-form-field appearance="outline">
+          <mat-label for="text">Add a description of the case</mat-label>
+          <input matInput placeholder="Add a description of the case" type="text" id="text" formControlName="notes">
+        </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label for="text">Add a description of the case</mat-label>
-    <input matInput placeholder="Add a description of the case" type="text" id="text" formControlName="notes">
-  </mat-form-field>
+        <mat-form-field appearance="fill" id="patientForm">
+          <mat-label>Select Patient</mat-label>
+          <mat-select formControlName="patient" name="patient">
+            <mat-option *ngFor="let patient of patientsfromDB" [value]="patient">
+              <mat-icon *ngIf="patient.gender === 'male'">male</mat-icon>
+              <mat-icon *ngIf="patient.gender === 'female'">female</mat-icon>
+              <mat-icon *ngIf="patient.gender === 'undefined'">person</mat-icon>
+              {{ patient.firstname }} {{ patient.lastname }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-  <mat-form-field appearance="fill" id="patientForm">
-    <mat-label>Select Patient</mat-label>
-    <mat-select formControlName="patient" name="patient">
-      <mat-option *ngFor="let patient of patientsfromDB" [value]="patient">
-        <mat-icon *ngIf="patient.gender === 'male'">male</mat-icon>
-        <mat-icon *ngIf="patient.gender === 'female'">female</mat-icon>
-        <mat-icon *ngIf="patient.gender === 'undefined'">person</mat-icon>
-        {{ patient.firstname }} {{ patient.lastname }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+        <div class="button-wrapper">
+          <button color="primary" class="form-button" mat-raised-button [color]="form.valid ? 'primary' : 'default'"
+            [disabled]="!form.valid" matStepperNext>Next</button>
+        </div>
 
-
-
-
-
-  <button color="primary" mat-raised-button [color]="form.valid ? 'primary' : 'default'" [disabled]="!form.valid"
-    (click)="submit()" type="submit">Submit</button>
-
-
-
-</form>
+      </form>
+    </mat-step>
+    <mat-step label="Upload Scans">
+      <form [formGroup]="form">
+        <div class="file-input-wrapper">
+          <input id="file" type="file" multiple class="form-control" (change)="onFileChange($event)">
+        </div>
+        <div class="button-wrapper">
+          <button color="primary" mat-raised-button [color]="form.valid ? 'primary' : 'default'"
+            [disabled]="!form.valid || dicomFiles.length == 0" (click)="submit()" type="submit">Submit</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+  <div *ngIf="uploading">
+    <mat-spinner></mat-spinner>
+    <p>Uploading Files...</p>
+  </div>
+</div>

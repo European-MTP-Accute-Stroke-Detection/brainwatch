@@ -11,6 +11,7 @@ import { CaseInfoComponent } from './components/case-info/case-info.component';
 import { CasesModule } from '../cases/cases.module';
 import { DicomViewerModule } from '../dicom-viewer/dicom-viewer.module';
 import { PatientInfoComponent } from './components/patient-info/patient-info.component';
+import { AiResultsComponent } from './components/ai-results/ai-results.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { PatientInfoComponent } from './components/patient-info/patient-info.com
     AiModelsComponent,
     CaseInfoComponent,
     PatientInfoComponent,
+    AiResultsComponent,
   ],
   imports: [
     CommonModule,

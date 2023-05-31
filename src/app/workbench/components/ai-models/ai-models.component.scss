@@ -9,15 +9,24 @@
       justify-content: center;
     }
 
+    .button_alignment{
+
+      display: flex;
+      justify-content: space-evenly;
+      
+      .predict-button-container{
+        button {
+          display: block
+        }
+        margin-bottom: 16px;
+    
+        
+      }
+    }
+
     .form-container {
         display: flex;
         flex-direction: column;
     }
 }
 
-.button_alignment{
-  .predict-button-container{
-    margin-right: 10px;
-    margin-bottom: 10px;
-  }
-}

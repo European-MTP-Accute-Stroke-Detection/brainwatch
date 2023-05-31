@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
-import { PredictionResultComponent } from '../../../tabularai/components/prediction-result/prediction-result.component';
+import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RequestService } from '../../../dwv/services/request.service';
 import { FileService } from '../../../shared/services/file.service';
+import { Case } from 'src/app/model/case';
 
 @Component({
   selector: 'app-ai-models',
@@ -10,6 +10,8 @@ import { FileService } from '../../../shared/services/file.service';
   styleUrls: ['./ai-models.component.scss']
 })
 export class AiModelsComponent {
+
+  @Input('case') case: Case;
 
   constructor(
     public dialog: MatDialog,
@@ -56,13 +58,6 @@ export class AiModelsComponent {
       formData.append("file", file);
       const prediction$ = this.requestService.predict(formData, this.selectedModel).toPromise();
       const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
       this.modelRunning = false;
     }
   }
@@ -75,54 +70,28 @@ export class AiModelsComponent {
       formData.append("file", file);
       const prediction$ = this.requestService.explain(formData, this.selectedModel, this.selectedExplainableAi, this.selectedComplexity).toPromise();
       const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
       this.xaiRunning = false;
     }
   }
 
   async runPredictionSimple() {
-    if (this.selectedFiles.length == 1) {
-      this.modelRunning = true;
-      const file = this.selectedFiles[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      const prediction$ = this.requestService.predict_simple(formData).toPromise();
-      const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
-      this.modelRunning = false;
-    }
-  }
+    this.modelRunning = true;
+    const formData = new FormData();
+    formData.append("case", 'case');
+    const prediction$ = this.requestService.predict_simple(formData, this.case.uid).toPromise();
+    const result = await prediction$;
+    this.modelRunning = false;
+}
 
-  async runExplanationSimple() {
-    if (this.selectedFiles.length == 1) {
-      this.xaiRunning = true;
-      const file = this.selectedFiles[0];
-      const formData = new FormData();
-      formData.append("file", file);
-      const prediction$ = this.requestService.explain_simple(formData).toPromise();
-      const result = await prediction$;
-      this.dialog.open(PredictionResultComponent, {
-        width: '90vw',
-        height: '92vh',
-        data: {
-          predictionId: result.predictionId
-        }
-      });
-      this.xaiRunning = false;
-    }
-  }
+async runExplanationSimple() {
+    this.xaiRunning = true;
+    const formData = new FormData();
+    formData.append("case", 'case');
+    const prediction$ = this.requestService.explain_simple(formData, this.case.uid).toPromise();
+    const result = await prediction$;
+    this.xaiRunning = false;
+  
+}
 
 
 }

@@ -8,6 +8,6 @@ import { Case } from 'src/app/model/case';
 })
 export class CaseInfoComponent {
 
-  @Input('case') case: Case;
+  @Input('case') case: any;
 
 }

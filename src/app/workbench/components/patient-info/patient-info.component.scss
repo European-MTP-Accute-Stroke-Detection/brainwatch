@@ -2,10 +2,18 @@
     border-top: 1px solid lightgray;
     margin: 12px 0 0 0;
 
-    div {
-      margin: 0;
-      display: flex;
-      justify-content: center;
+    // div {
+    //   margin: 0;
+    //   display: flex;
+    //   justify-content: center;
+    // }
+
+    .no-data {
+        display: flex;
+        padding-top: 0;
+        p {
+            color: var(--soft-text)
+        }
     }
 
     mat-list-item {

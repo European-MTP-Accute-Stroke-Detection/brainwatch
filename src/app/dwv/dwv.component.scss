@@ -5,7 +5,7 @@ $primary: map-get($theme, primary);
 $accent: map-get($theme, accent);
 
 #dwv {
-  height: calc(100vh - 80px); 
+  
 }
 
 a {
@@ -30,9 +30,14 @@ mat-spinner {
   left: calc(50% - 35px);
 }
 
+.model-field {
+  width: 300px;
+}
+
 .button-row {
-  margin-bottom: 16px;
   margin-left: 1px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .nav-list {
@@ -47,10 +52,23 @@ mat-spinner {
   color: mat.get-color-from-palette($primary);
 }
 
+.first-button-group {
+
+}
+
 .legend {
   text-align: center;
   font-size: 8pt;
   margin: 1em;
+}
+
+.dwv-wrapper {
+  height: calc(100vh - 220px);
+  width: 100%;
+
+  mat-slider {
+    width: 100%;
+  }
 }
 
 /* Layers */
@@ -59,9 +77,10 @@ mat-spinner {
   padding: 0;
   display: flex;
   justify-content: center;
-  height: 90%;
   width: 100%;
+  height: 100%;
 }
+
 .layer {
   position: absolute;
   pointer-events: none;

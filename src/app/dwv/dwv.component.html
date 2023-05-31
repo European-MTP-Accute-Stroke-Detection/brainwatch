@@ -1,5 +1,5 @@
 <!-- <mat-sidenav-container> -->
-  <!-- Sidenav
+<!-- Sidenav
   <mat-sidenav [style.marginTop.px]="mobileQuery.matches ? 56 : 0" #sidenav [fixedInViewport]="mobileQuery.matches"
     [mode]="mobileQuery.matches ? 'over' : 'over'" [(opened)]="opened">
     <mat-nav-list class="nav-list">
@@ -34,7 +34,7 @@
 
 
   </mat-sidenav> -->
-  <!-- <mat-sidenav-content>
+<!-- <mat-sidenav-content>
     <div id="dwv">
       <button *ngIf="mobileQuery.matches" mat-icon-button (click)="sidenav.toggle()"
         style="margin-right: 16px;"><mat-icon>apps</mat-icon></button>
@@ -69,41 +69,56 @@
       </div>
     </div>
   </mat-sidenav-content> -->
-  <!-- Main content -->
+<!-- Main content -->
 
 <!-- </mat-sidenav-container> -->
 
 <div id="dwv">
   <div class="button-row">
-    <mat-button-toggle-group name="tool" [disabled]="!dataLoaded">
-      <mat-button-toggle value="{{ tool }}" color="primary" *ngFor="let tool of toolNames" title="{{ tool }}"
-        (click)="onChangeTool(tool)" [disabled]="!dataLoaded || !canRunTool(tool)">
-        <mat-icon>{{ getToolIcon(tool) }}</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+    <div class="first-button-group">
+      <mat-button-toggle-group name="tool" [disabled]="!dataLoaded">
+        <mat-button-toggle value="{{ tool }}" color="primary" *ngFor="let tool of toolNames" title="{{ tool }}"
+          (click)="onChangeTool(tool)" [disabled]="!dataLoaded || !canRunTool(tool)">
+          <mat-icon>{{ getToolIcon(tool) }}</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
 
-    <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
-      <mat-button-toggle color="primary" title="Reset" (click)="onReset()">
-        <mat-icon>refresh</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+      <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
+        <mat-button-toggle color="primary" title="Reset" (click)="onReset()">
+          <mat-icon>refresh</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle color="primary" title="Toggle Orientation" (click)="toggleOrientation()">
+          <mat-icon>cameraswitch</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle color="primary" title="Tags" (click)="openTagsDialog()">
+          <mat-icon>library_books</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
 
-    <mat-button-toggle-group name="reset" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
-      <mat-button-toggle color="primary" title="Toggle Orientation" (click)="toggleOrientation()">
-        <mat-icon>cameraswitch</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
 
-    <mat-button-toggle-group name="tags" [disabled]="!dataLoaded" (change)="onSingleToogleChange($event)">
-      <mat-button-toggle color="primary" title="Tags" (click)="openTagsDialog()">
-        <mat-icon>library_books</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle color="primary" title="Tags" (click)="readState()">
-        <mat-icon>library_books</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+    <mat-form-field appearance="fill" class="model-field">
+      <mat-label>Select Explanation Model</mat-label>
+      <mat-select matInput name="aiModels" (selectionChange)="modelSelected($event)" [(ngModel)]="selectedModelValue">
+        <mat-option *ngFor="let model of dicomsService.availableModels$.value" [value]="model.value">
+          {{model.key}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
-  <div id="layerGroup0" class="layerGroup" [style.visibility]="scans$.value ? 'visible' : 'hidden' "></div>
-  <mat-spinner *ngIf="!scans$.value" id="viewer-spinner" diameter="70"></mat-spinner>
-</div>
 
+  <div class="dwv-wrapper">
+    <div id="layerGroup0" class="layerGroup" [style.visibility]="dicomsService.scans$.value ? 'visible' : 'hidden' ">
+      <!-- <mat-slider vertical="true">
+      <input matSliderThumb>
+    </mat-slider> -->
+
+    </div>
+
+    <!-- <mat-slider width="10">
+      <input matSliderThumb>
+    </mat-slider> -->
+
+
+    <mat-spinner *ngIf="!dicomsService.scans$.value" id="viewer-spinner" diameter="70"></mat-spinner>
+  </div>

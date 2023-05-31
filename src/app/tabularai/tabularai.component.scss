@@ -1,9 +1,10 @@
 
 .main-container {
-    padding: 16px 32px;
+    padding: 16px 64px;
+    overflow-x:auto ;
+
     h2 {
-        margin-top: 0;
-        margin-bottom: 5px;
+        font-weight: 400;
     }
 
     .subheading {
@@ -11,6 +12,21 @@
         font-weight: normal;
         
     }
+
+    .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .predictionResult {
+        justify-content: start;
+        button {
+            margin-right: 8px;
+        }
+    }
+
+    
 
     mat-form-field {
         font-size: 15px;
@@ -27,8 +43,20 @@
         }
     }
 
-    .content {
-        margin-top: 20px;
+    .patient-card {
+        padding: 0 16px 16px 16px;
+
+        mat-card-header {
+            padding: 24px 16px;
+        }
+
+        mat-card-title {
+            display: flex;
+            align-items: center;
+            mat-icon {
+                margin-right: 16px;
+            }
+        }
     }
 
     .button-container {
@@ -70,4 +98,69 @@
         }
     }
 
+    .result-scores {
+        display: flex;
+        justify-content: space-between;
+        margin: 8px 0 ;
+
+        .negative {
+            text-align: right;
+        }
+
+        .val {
+            color: var(--surface-r)
+        }
+    }
+
+    .result-labels {
+        display: flex;
+        justify-content: space-between;
+        color: var(--soft-text);
+        margin-top: 16px;
+    }
+
+    .chart-card {
+        margin-top: 16px;
+    }
+
+    .result-card {
+        margin-top: 16px;
+    }
+
+    .details-button {
+        margin-top: 16px;
+    }
+
+    .info-card {
+        .container {
+            margin: 4px 0;
+            display: flex;
+            align-items: center;
+            color: var(--app-warn-default);
+
+            mat-icon {
+                color:  var(--app-warn-darker);
+                margin-right: 12px;
+            }
+
+            p {
+                font-size: 18px;
+                margin: 0;
+            }
+        }
+
+        .nostroke {
+            color: var(--app-primary-text);
+            mat-icon {
+                color: var(--app-primary-darker);
+            }
+        }
+    }
 }
+
+::ng-deep mat-progress-bar { height: 8px !important; }
+
+::ng-deep mat-progress-bar  .mdc-linear-progress__bar-inner {
+    border-top-width: 8px;
+  }
+

@@ -1,0 +1,40 @@
+<div class="main">
+    <mat-list *ngIf="currentScan">
+        <mat-list-item>
+            <div>
+                <span class="key">Model:</span>
+                <span class="value">Single Scan - Combined Prediction</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Result:</span>
+                <span class="value">{{currentScan.results_combined.prediction.result}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Probability of Stroke:</span>
+                <span class="value">{{1 - currentScan.results_combined.prediction.predictions[0] | percent:
+                    '1.2-2'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Probability Ischemic:</span>
+                <span class="value">{{currentScan.results_combined.prediction.predictions[1] | percent: '1.2-2'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Probability Hemorrhage:</span>
+                <span class="value">{{currentScan.results_combined.prediction.predictions[2] | percent: '1.2-2'}}</span>
+            </div>
+        </mat-list-item>
+    </mat-list>
+</div>
+<mat-spinner *ngIf="!currentScan" diameter="50"></mat-spinner>

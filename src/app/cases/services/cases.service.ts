@@ -34,14 +34,14 @@ export class CasesService {
     return this.casesRef.doc(uid);
   }
 
-  create(cs: Case): void {
+  create(cs: Case) {
     cs = {
       ...cs,
       userRef: this.currentUser.ref,
-      patientRef: this.patientsService.getOne(cs.patient.uid).ref
+      ...cs.patient && { patientRef: this.patientsService.getOne(cs.patient?.uid).ref }
     };
     delete cs.patient;
-    this.casesRef.ref.add(cs);
+    return this.casesRef.ref.add(cs);
   }
 
   update(id: string, cs: Case): Promise<void> {
