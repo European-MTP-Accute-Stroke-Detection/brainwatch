@@ -10,7 +10,7 @@
         <mat-list-item>
             <div>
                 <span class="key">Gender:</span>
-                <span class="value">{{patient.gender}}</span>
+                <span class="value">{{patient.gender == 'male' ? 'Male' : 'Female'}}</span>
             </div>
         </mat-list-item>
         <mat-divider></mat-divider>
@@ -18,6 +18,34 @@
             <div>
                 <span class="key">Age:</span>
                 <span class="value">{{patient.age}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">BMI:</span>
+                <span class="value">{{patient.bmi}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Avg. Glucose Level:</span>
+                <span class="value">{{patient.averageGlucoseLevel}} mg/dl</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Heart Disease:</span>
+                <span class="value">{{patient.heartDisease ? 'Yes' : 'No'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Hypertension:</span>
+                <span class="value">{{patient.hypertension ? 'Yes' : 'No'}}</span>
             </div>
         </mat-list-item>
     </mat-list>

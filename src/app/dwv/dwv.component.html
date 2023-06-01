@@ -108,7 +108,7 @@
   </div>
 
   <div class="dwv-wrapper">
-    <div id="layerGroup0" class="layerGroup" [style.visibility]="dicomsService.scans$.value ? 'visible' : 'hidden' ">
+    <div id="layerGroup0" class="layerGroup" [style.visibility]="isLoading ? 'hidden' : 'visible'">
       <!-- <mat-slider vertical="true">
       <input matSliderThumb>
     </mat-slider> -->
@@ -120,5 +120,5 @@
     </mat-slider> -->
 
 
-    <mat-spinner *ngIf="!dicomsService.scans$.value" id="viewer-spinner" diameter="70"></mat-spinner>
+    <mat-spinner *ngIf="isLoading" id="viewer-spinner" diameter="70"></mat-spinner>
   </div>

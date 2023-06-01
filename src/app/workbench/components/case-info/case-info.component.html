@@ -24,7 +24,7 @@
         <mat-list-item>
             <div>
                 <span class="key">Notes:</span>
-                <span class="value">{{case.notes}}</span>
+                <span class="value">{{case.notes == '' ? 'None' : case.notes}}</span>
             </div>
         </mat-list-item>
     </mat-list>

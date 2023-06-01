@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument, DocumentReference } from '@angular/fire/compat/firestore';
 import { UserService } from 'src/app/auth/services/user.service';
-import { Scan } from 'src/app/model/scan';
-import { Patient } from 'src/app/model/patient';
 import { User } from 'src/app/model/user';
-import { PatientsService } from 'src/app/patients/services/patients.service';
 import { CasesService } from 'src/app/cases/services/cases.service';
 import { Case } from 'src/app/model/case';
+import { Scan } from '../../model/scan';
 
 @Injectable({
   providedIn: 'root'

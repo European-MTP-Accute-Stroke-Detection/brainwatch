@@ -72,7 +72,7 @@ export class DwvComponent implements OnInit, OnDestroy {
 
   savedLayer: any;
   selectedModelValue: string = 'default';
-  showXai: boolean = false;
+  isLoading: boolean = true;
 
 
   segFile = 'https://firebasestorage.googleapis.com/v0/b/brainwatch-14583.appspot.com/o/Cases%2FaHTVkHc4fJfkyG7OY0C2%2Fscans%2FvFnqKPWi881GSagLQj0U.dcm?alt=media&token=180965b3-4949-47ea-b0be-499ca2004be8'
@@ -91,6 +91,7 @@ export class DwvComponent implements OnInit, OnDestroy {
         this.dwvApp.loadURLs(
           this.scans.map(scan => scan.downloadUrl)
         );
+        this.isLoading = false;
       }
     });
     this.handleLoadEvents();
@@ -339,16 +340,16 @@ export class DwvComponent implements OnInit, OnDestroy {
   }
 
   async modelSelected($event: any) {
+    this.isLoading = true;
     const model = this.dicomsService.availableModels$.value.find(m => m.value == $event.value);
-
     // Clears the layer group
     if (model.value == 'default') {
       var lg = this.dwvApp.getActiveLayerGroup();
       lg.empty();
-      console.log(this.scans.map(scan => scan.downloadUrl))
       this.dwvApp.loadURLs(
         this.scans.map(scan => scan.downloadUrl)
       );
+      this.isLoading = false;
     }
     else {
       this.fbStorage
@@ -362,6 +363,7 @@ export class DwvComponent implements OnInit, OnDestroy {
           var lg = this.dwvApp.getActiveLayerGroup();
           lg.empty();
           this.dwvApp.loadURLs(urls);
+          this.isLoading = false;
         });
     }
   }
