@@ -9,7 +9,8 @@ import { Scan } from '../model/scan';
 import { DicomsService } from '../workbench/services/dicoms.service';
 import { SelectionChange } from '@angular/cdk/collections';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-
+import * as dicomParser from 'dicom-parser';
+import { DwvService } from './services/dwv.service';
 // gui overrides
 
 // Image decoders (for web workers)
@@ -35,6 +36,7 @@ export class DwvComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public dicomsService: DicomsService,
     private fbStorage: AngularFireStorage,
+    private dwvService: DwvService
   ) {
     this.versions = {
       dwv: dwv.getVersion(),
@@ -79,25 +81,40 @@ export class DwvComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dwvApp = new dwv.App();
+    this.dwvService.setDwvApp(this.dwvApp);
     // initialise app
     this.dwvApp.init({
       dataViewConfigs: { '*': [{ divId: 'layerGroup0' }] },
       tools: this.tools,
     });
     // Load Dicom Files
-    this.dicomsService.scans$.subscribe(scans => {
+    this.dicomsService.scans$.subscribe(async scans => {
       if (scans && !this.scans) {
         this.scans = scans;
-        this.dwvApp.loadURLs(
-          this.scans.map(scan => scan.downloadUrl)
+        const scansBuffer = [];
+        for (let scan of scans) {
+          const response = await fetch(scan.downloadUrl)
+          const buffer = await response.arrayBuffer();
+          scansBuffer.push({
+            name: scan.uid,
+            filename: scan.uid + '.dcm',
+            data: buffer
+          });
+        }
+        this.dwvApp.loadImageObject(
+          scansBuffer
         );
         this.isLoading = false;
       }
     });
+
+
+
     this.handleLoadEvents();
     this.handleTools();
     this.handleActionEvents();
   }
+
 
   readState() {
     var lg = this.dwvApp.getLayerGroupByDivId('layerGroup0');
@@ -263,11 +280,12 @@ export class DwvComponent implements OnInit, OnDestroy {
     });
     // update slider on slice change (for ex via mouse wheel)
     this.dwvApp.addEventListener('positionchange', (event) => {
-      var lg = this.dwvApp.getLayerGroupByDivId('layerGroup0');
       this.dicomsService.currentScan$.next(
         this.scans.find(s => s.dicom_uid == event.data.imageUid)
-      )
+      );
+      this.dicomsService.currentIndex$.next(event.value['0'][2]);
     });
+
     // handle window resize
     window.addEventListener('resize', this.dwvApp.onResize);
   }
@@ -308,11 +326,13 @@ export class DwvComponent implements OnInit, OnDestroy {
     });
     this.dwvApp.addEventListener('load', (/*event*/) => {
       // set dicom tags
-      this.metaData = dwv.utils.objectToArray(this.dwvApp.getMetaData(0));
+      this.dicomsService.metadata = this.dwvApp.getMetaData(0);
+      this.metaData = dwv.utils.objectToArray(this.dicomsService.metadata);
       // set initial dicom scan
       this.dicomsService.currentScan$.next(
         this.scans.find(s => s.dicom_uid == this.dwvApp.getImage(0).getImageUid())
       )
+      this.dicomsService.currentIndex$.next(0);
       // set data loaded flag
       this.dataLoaded = true;
     });

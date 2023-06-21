@@ -2,14 +2,24 @@
 
     display: flex;
     width: 100%;
+    height: calc(100vh - 96px);
 
     .left-container {
         flex-grow: 1;
         margin: 16px;
+        overflow: auto;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 
     .center-container {
-        margin: 16px 16px 0 16px;
+        margin: 16px 16px 16px 16px;
+        height: calc(100vh - 96px);
 
         
         p {
@@ -20,6 +30,14 @@
     .right-container {
         margin: 16px;
         flex-grow: 1;
+        overflow: auto;
+        
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
     }
 
     mat-card {

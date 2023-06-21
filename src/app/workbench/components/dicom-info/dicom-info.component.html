@@ -1,0 +1,32 @@
+<div class="main">
+    <mat-list *ngIf="dicomInfo">
+        <mat-list-item>
+            <div>
+                <span class="key">Study Description:</span>
+                <span class="value">{{dicomInfo.StudyDescription.value}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Slice Thickness:</span>
+                <span class="value">{{dicomInfo.SliceThickness.value}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Slice Location:</span>
+                <span class="value">{{dicomInfo.SliceLocation.value[currentIndex].value}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Images:</span>
+                <span class="value">{{currentIndex}} / {{dicomService.scans$.value.length}}</span>
+            </div>
+        </mat-list-item>
+    </mat-list>
+</div>
+<mat-spinner *ngIf="!dicomInfo" diameter="50"></mat-spinner>

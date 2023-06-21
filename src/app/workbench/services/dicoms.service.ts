@@ -23,6 +23,10 @@ export class DicomsService {
 
   public currentCase$: BehaviorSubject<Case> = new BehaviorSubject(null);
 
+  public currentIndex$: BehaviorSubject<number> = new BehaviorSubject(0);
+
+  public metadata: any;
+
   constructor() { }
 
   updateModels(modelVals: string[]) {
@@ -50,6 +54,8 @@ export class DicomsService {
   reset() {
     this.scans$.next(null);
     this.currentScan$.next(null);
-    this.currentCase$.next(null)
+    this.currentCase$.next(null);
+    this.metadata = null;
+    this.currentIndex$.next(0);
   }
 }

@@ -1,0 +1,36 @@
+.main{
+    border-top: 1px solid lightgray;
+    padding-top: 16px;
+    margin: 12px 0 0 0;
+    
+    div {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    .select {
+        width: 100%;
+    }
+
+    .button_alignment{
+
+      display: flex;
+      justify-content: space-evenly;
+      
+      .predict-button-container{
+        button {
+          display: block
+        }
+        margin-bottom: 16px;
+    
+        
+      }
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+    }
+}
+

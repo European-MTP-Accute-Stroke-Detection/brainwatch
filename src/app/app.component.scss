@@ -8,10 +8,8 @@ html, body, app-root, .app-frame {
 }
 
 mat-sidenav {
-    
     position: fixed;
     top: 64px;
-    overflow-y: auto;
 }
 
 .main-wrapper {
@@ -22,7 +20,6 @@ mat-sidenav {
 .scrollable {
     overflow-y: auto;
     height: calc(100vh - 64px);
-    overflow-y: auto;
     min-height: calc(100vh - 112px);
 }
 

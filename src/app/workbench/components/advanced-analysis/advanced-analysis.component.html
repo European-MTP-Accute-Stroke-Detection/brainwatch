@@ -1,0 +1,10 @@
+<div class="main">
+    <mat-form-field appearance="fill" class="select">
+        <mat-label>Select Window Settings</mat-label>
+        <mat-select [(ngModel)]="selectedWindow" name="model" (selectionChange)="windowSelected()">
+            <mat-option *ngFor="let window of windows" [value]="window">
+                {{window}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

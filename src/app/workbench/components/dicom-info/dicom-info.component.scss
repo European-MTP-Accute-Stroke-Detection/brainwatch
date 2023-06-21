@@ -1,0 +1,40 @@
+.main{
+    border-top: 1px solid lightgray;
+    margin: 12px 0 0 0;
+
+    div {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    mat-list-item {
+        padding: 0 4px;
+        overflow-x: auto;
+
+        ::ng-deep .mdc-list-item__content {
+            overflow: auto;          
+        }
+
+        
+        
+
+        div {
+            display: flex;
+            justify-content: start;
+
+            .key {
+                color: var(--soft-text);
+                margin-right: 8px;
+            }
+            .value {
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+
+    mat-list {
+        padding-bottom: 0;
+    }
+}
