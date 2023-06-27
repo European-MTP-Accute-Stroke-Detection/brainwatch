@@ -75,9 +75,10 @@ export class DwvComponent implements OnInit, OnDestroy {
   savedLayer: any;
   selectedModelValue: string = 'default';
   isLoading: boolean = true;
-
-
-  segFile = 'https://firebasestorage.googleapis.com/v0/b/brainwatch-14583.appspot.com/o/Cases%2FaHTVkHc4fJfkyG7OY0C2%2Fscans%2FvFnqKPWi881GSagLQj0U.dcm?alt=media&token=180965b3-4949-47ea-b0be-499ca2004be8'
+  currentPos: {
+    x: number,
+    y: number
+  }
 
   ngOnInit() {
     this.dwvApp = new dwv.App();
@@ -94,7 +95,9 @@ export class DwvComponent implements OnInit, OnDestroy {
         const scansBuffer = [];
         for (let scan of scans) {
           const response = await fetch(scan.downloadUrl)
-          const buffer = await response.arrayBuffer();
+          let buffer = await response.arrayBuffer();
+          // buffer = this.modifyDicom(buffer);
+          this.dicomsService.originalDicomsBuffer.push(buffer)
           scansBuffer.push({
             name: scan.uid,
             filename: scan.uid + '.dcm',
@@ -113,6 +116,30 @@ export class DwvComponent implements OnInit, OnDestroy {
     this.handleLoadEvents();
     this.handleTools();
     this.handleActionEvents();
+  }
+
+  modifyDicom(buffer: ArrayBuffer) {
+    const byteArray = new Uint8Array(buffer);
+    const dataSet = dicomParser.parseDicom(byteArray);
+
+    // Access the pixel data element
+    const pixelDataElement = dataSet.elements.x7fe00010;
+
+    // Get the pixel data as an array
+    const pixelArray = new Uint16Array(
+      byteArray.buffer,
+      pixelDataElement.dataOffset,
+      pixelDataElement.length / 2
+    );
+
+    // Modify the pixel values
+    for (let i = 0; i < pixelArray.length; i++) {
+      // Perform your modifications here
+      // Example: Increase pixel value by 100
+      pixelArray[i] += 400;
+    }
+
+    return pixelArray.buffer
   }
 
 
@@ -280,6 +307,10 @@ export class DwvComponent implements OnInit, OnDestroy {
     });
     // update slider on slice change (for ex via mouse wheel)
     this.dwvApp.addEventListener('positionchange', (event) => {
+      console.log(event);
+      var lg = this.dwvApp.getLayerGroupByDivId('layerGroup0');
+      var vc = lg.getActiveViewLayer().getViewController();
+      this.currentPos = vc.getPlanePositionFromPosition(vc.getCurrentPosition());
       this.dicomsService.currentScan$.next(
         this.scans.find(s => s.dicom_uid == event.data.imageUid)
       );

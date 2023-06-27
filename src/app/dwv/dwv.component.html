@@ -115,7 +115,6 @@
 
     </div>
 
-
     <!-- <mat-slider width="10">
       <input matSliderThumb>
     </mat-slider> -->
@@ -123,3 +122,7 @@
 
     <mat-spinner *ngIf="isLoading" id="viewer-spinner" diameter="70"></mat-spinner>
   </div>
+  <div *ngIf="currentPos" class="bottom-bar">
+    X: {{ currentPos?.x | number: '1.1-2'}} px Y: {{ currentPos?.y | number: '1.1-2'}} px
+  </div>
+</div>

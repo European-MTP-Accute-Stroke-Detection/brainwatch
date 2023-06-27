@@ -24,5 +24,4 @@ export class DwvService {
     this.dwvApp = dwvApp;
   }
 
-
 }

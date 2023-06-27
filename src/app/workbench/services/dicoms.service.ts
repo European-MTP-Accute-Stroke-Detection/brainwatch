@@ -27,6 +27,8 @@ export class DicomsService {
 
   public metadata: any;
 
+  public originalDicomsBuffer: ArrayBuffer[] = [];
+
   constructor() { }
 
   updateModels(modelVals: string[]) {
@@ -57,5 +59,6 @@ export class DicomsService {
     this.currentCase$.next(null);
     this.metadata = null;
     this.currentIndex$.next(0);
+    this.originalDicomsBuffer = [];
   }
 }

@@ -85,7 +85,7 @@ mat-spinner {
 }
 
 .dwv-wrapper {
-  height: calc(100vh - 220px);
+  height: calc(100vh - 239px);
   width: 100%;
 
   mat-slider {
@@ -106,6 +106,12 @@ mat-spinner {
 .layer {
   position: absolute;
   pointer-events: none;
+}
+
+.bottom-bar {
+  display: flex;
+  justify-content: end;
+  margin-top: 8px;
 }
 
 .model-heading {
