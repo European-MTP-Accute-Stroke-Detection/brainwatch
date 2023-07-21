@@ -92,6 +92,13 @@ export class WorkbenchHomeComponent implements OnInit, OnDestroy {
             const pred = scan.results_combined.prediction.predictions as unknown as string;
             const numbers = pred.substring(1, pred.length - 1).split(" ");
             scan.results_combined.prediction.predictions = numbers.map(substring => Number(substring));
+            console.log(pred);
+          }
+          if (scan.results_combined.prediction.uncertainty) {
+            const uncertainty = scan.results_combined.prediction.uncertainty as unknown as string;
+            const numbers = uncertainty.substring(1, uncertainty.length - 1).split(" ");
+            scan.results_combined.prediction.uncertainty = numbers.map(substring => Number(substring));
+            console.log(uncertainty)
           }
         }
         this.dicomsService.scans$.next(data);

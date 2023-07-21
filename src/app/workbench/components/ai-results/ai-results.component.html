@@ -18,21 +18,47 @@
             <div>
                 <span class="key">Probability of Stroke:</span>
                 <span class="value">{{1 - currentScan.results_combined.prediction.predictions[0] | percent:
-                    '1.2-2'}}</span>
+                    '2.2-2'}}</span>
             </div>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
             <div>
                 <span class="key">Probability Ischemic:</span>
-                <span class="value">{{currentScan.results_combined.prediction.predictions[1] | percent: '1.2-2'}}</span>
+                <span class="value">{{1 - currentScan.results_combined.prediction.predictions[1] | percent:
+                    '1.2-2'}}</span>
             </div>
         </mat-list-item>
         <mat-divider></mat-divider>
         <mat-list-item>
             <div>
                 <span class="key">Probability Hemorrhage:</span>
-                <span class="value">{{currentScan.results_combined.prediction.predictions[2] | percent: '1.2-2'}}</span>
+                <span class="value">{{1 - currentScan.results_combined.prediction.predictions[2] | percent:
+                    '1.2-2'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Uncertainty of Stroke:</span>
+                <span class="value">{{currentScan.results_combined.prediction.uncertainty[0] | percent:
+                    '1.2-2'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Uncertainty of Ischemic:</span>
+                <span class="value">{{currentScan.results_combined.prediction.uncertainty[1] | percent:
+                    '1.2-2'}}</span>
+            </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+            <div>
+                <span class="key">Uncertainty of Hemorrhage:</span>
+                <span class="value">{{currentScan.results_combined.prediction.uncertainty[2] | percent:
+                    '1.2-2'}}</span>
             </div>
         </mat-list-item>
     </mat-list>

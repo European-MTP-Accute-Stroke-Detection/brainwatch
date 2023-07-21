@@ -12,5 +12,6 @@ export interface PredictionResult {
     prediction: {
         predictions: number[];
         result: string;
+        uncertainty: number[];
     }
 }
